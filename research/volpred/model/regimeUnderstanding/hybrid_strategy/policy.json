@@ -1,0 +1,11 @@
+{
+  "status": "FORWARD_PAPER_TEST_ONLY",
+  "recommended_variant": "conservative_hybrid",
+  "iv_lt_predicted_rv": "choose the larger positive expected edge between a directional ATM long option and the 120-minute short two-strike OTM strangle",
+  "iv_eq_predicted_rv": "no trade",
+  "iv_gt_predicted_rv": "no validated live trade; short two-strike OTM strangle is research-only",
+  "same_monthly_expiry": true,
+  "horizon_minutes": 120,
+  "latest_entry": "13:30",
+  "portfolio_rule": "one open trade; simultaneous candidates ranked by expected net rupees"
+}

@@ -1,0 +1,4 @@
+Index,_1,signal_datetime,strike,expiry,probability,quality_entry_ok,legacy_three_rule_signal,rule_above,rule_near,rule_below,entry_straddle_price,exit_datetime,exit_straddle_price,gross_pnl_inr,exit_reason,explicit_costs_inr,net_pnl_inr
+0,0,2026-10-27 10:19:00,54500.0,2026-10-27,0.8181241515522191,True,True,True,False,False,353.9,2026-10-27 10:59:00,303.20000000000005,1520.999999999998,profit_target,24.486395442000003,1496.513604557998
+1,1,2026-10-27 10:20:00,54400.0,2026-10-27,0.8212192306437087,False,True,True,False,False,362.45,2026-10-27 10:59:00,309.65,1584.0000000000005,profit_target,25.066145742,1558.9338542580006
+2,2,2026-10-27 10:22:00,54400.0,2026-10-27,0.7657947090853267,True,True,True,False,False,357.75,2026-10-27 11:00:00,302.5,1657.5,profit_target,24.698746455,1632.801253545

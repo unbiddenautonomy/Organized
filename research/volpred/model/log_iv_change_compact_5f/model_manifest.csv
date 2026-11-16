@@ -1,0 +1,5 @@
+horizon_min,alpha,validation_pinball,model_file,training_rows
+15,0.0001,0.0062772769807830685,compact_log_iv_15m_q50.joblib,4992
+30,1e-05,0.008760115428480104,compact_log_iv_30m_q50.joblib,4810
+60,1e-05,0.011350537529279288,compact_log_iv_60m_q50.joblib,4489
+120,0.001,0.01530410035439105,compact_log_iv_120m_q50.joblib,3615

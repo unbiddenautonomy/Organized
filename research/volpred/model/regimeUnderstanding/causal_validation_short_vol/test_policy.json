@@ -1,0 +1,13 @@
+{
+  "status": "TEST_UNPROFITABLE_AND_VALIDATION_REJECTION_UNCHANGED",
+  "live_deployment": false,
+  "original_validation_status": "REJECT_FAILED_UNTOUCHED_VALIDATION",
+  "threshold_frozen_from_2023_H1": 0.3243334068747103,
+  "test_period": "2024-01-01 through 2025-05-09",
+  "test_data_used_for_retuning": false,
+  "not_pristine_holdout_warning": "2024-2025 outcomes were inspected in earlier research iterations",
+  "structure": "one-lot short ATM straddle",
+  "same_monthly_expiry": true,
+  "horizon_minutes": 180,
+  "slippage_bps": 25.0
+}

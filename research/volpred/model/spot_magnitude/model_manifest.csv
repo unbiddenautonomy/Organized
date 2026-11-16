@@ -1,0 +1,5 @@
+horizon_min,model_file,train_start,train_end,training_days,training_rows,champion_algorithm,validation_qlike,validation_winner,validation_winner_qlike,parameters
+15,spot_magnitude_15m_model.joblib,2025-01-22,2025-05-09,60,6935,har,0.22498397248181548,lightgbm,0.20044083752012137,"{""alpha"": 1.0}"
+30,spot_magnitude_30m_model.joblib,2025-01-22,2025-05-09,60,6504,har,0.16678070738089365,lightgbm,0.14673004266965473,"{""alpha"": 1.0}"
+60,spot_magnitude_60m_model.joblib,2025-01-22,2025-05-09,60,5704,har,0.14641649517878041,full_ridge,0.12359337153844391,"{""alpha"": 1.0}"
+120,spot_magnitude_120m_model.joblib,2025-01-22,2025-05-09,60,3974,har,0.15492475210112744,full_ridge,0.11651809001598977,"{""alpha"": 1.0}"

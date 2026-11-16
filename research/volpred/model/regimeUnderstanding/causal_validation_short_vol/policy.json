@@ -1,0 +1,18 @@
+{
+  "status": "REJECT_FAILED_UNTOUCHED_VALIDATION",
+  "live_deployment": false,
+  "model": "standardized_logistic_regression_C_0.01",
+  "train_period": "2019-01-01 through 2022-12-31",
+  "threshold_calibration_period": "2023-01-01 through 2023-06-30",
+  "untouched_validation_period": "2023-07-01 through 2023-12-31",
+  "probability_threshold": 0.3243334068747103,
+  "selection_rule": "first timestamp at or above the frozen threshold",
+  "structure": "short_atm_straddle",
+  "same_monthly_expiry": true,
+  "horizon_minutes": 180,
+  "lots": 1,
+  "stop_or_take_profit": null,
+  "slippage_bps": 25.0,
+  "minimum_calibration_coverage": 0.8,
+  "validation_was_not_used_for_parameter_selection": true
+}

@@ -1,0 +1,6 @@
+check,violations,passed
+cross_day_windows,0,True
+outside_0915_1530,0,True
+holding_period_mismatch,0,True
+overlapping_positions,0,True
+expiry_before_trade_date,0,True

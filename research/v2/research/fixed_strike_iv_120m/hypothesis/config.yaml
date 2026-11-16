@@ -1,0 +1,28 @@
+data:
+  fixed_strike_dataset: ../artifacts/fixed_strike_iv_120m_dataset.csv
+  entry_surface_csv: ../../../data/icharts_option_banknifty_monthly_atm_5strikes.csv
+  full_chain_csv: ../../../data/icharts_option_banknifty.csv
+  chunksize: 250000
+
+hypothesis:
+  rv_window_minutes: 120
+  rv_min_covered_minutes: 60
+  rv_max_gap_minutes: 15
+  annual_trading_days: 252
+  minutes_per_trading_day: 375
+  primary_near_tolerance_iv: 0.02
+  tolerance_grid_iv: [0.01, 0.02, 0.03, 0.05]
+  require_both_legs: false
+
+risk:
+  stop_loss_per_lot: 750.0
+  profit_target_per_lot: 1500.0
+  round_trip_cost_per_lot: 0.0
+  lot_size_by_expiry:
+    - {before: "2020-07-01", lot_size: 20}
+    - {before: "2023-07-01", lot_size: 25}
+    - {before: "2025-02-01", lot_size: 15}
+    - {before: "2100-01-01", lot_size: 30}
+
+output:
+  directory: artifacts

@@ -1,0 +1,4 @@
+check,violations,passed
+one_trade_per_day,0,True
+cross_day_window,0,True
+outside_0915_1530,0,True

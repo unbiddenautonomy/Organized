@@ -1,0 +1,5 @@
+year,exit_reason,trades,profitable_days,net_pnl
+2023,scheduled_exit,220,116,7588.411493409904
+2023,stop_loss,2,0,-11884.007296317504
+2024,scheduled_exit,211,126,93342.80502321522
+2025,scheduled_exit,71,40,88620.53826553197

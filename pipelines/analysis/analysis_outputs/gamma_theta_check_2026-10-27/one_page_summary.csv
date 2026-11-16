@@ -1,0 +1,10 @@
+test,result,pass_fail,sample_size
+Greek computation coverage,304/304 trades computed; 0 failures,PASS,304
+Book snapshot coverage,299/304 entry-time books complete; 6 missing position-minute prices across 5 books,PARTIAL,304
+Theta/gamma consistency,Pearson r=1.0000; >10% outliers=0,SANITY,304
+Top-bottom tercile bootstrap,"Difference ₹-154.47; 95% CI [-525.42, 222.97]",FAIL,304
+LOMO percentile filter,Baseline Sharpe 4.905; held-out filtered 4.419,FAIL,304
+Within-day ratio placebo,Adjusted p=0.4905; real percentile 100.0%,FAIL,1000
+Book-level tail comparison,Worst/rest mean max ratio 9.69831e-06/1.05972e-05; p=0.4817,DIAGNOSTIC,74
+Deflated Sharpe,Probability 0.9979; N=29,PASS,141
+Pre-declared overall criterion,no evidence,FAIL,304

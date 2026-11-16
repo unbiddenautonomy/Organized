@@ -1,0 +1,19 @@
+# Install with Python 3.13: py -3.13 -m pip install -r requirements.txt
+# Shared versions match the existing model packages and frozen requirements.
+numpy==2.5.2
+pandas==2.3.3
+scikit-learn==1.9.0
+scipy==1.18.1
+joblib==1.5.3
+lightgbm==4.7.0
+xgboost==3.4.1
+duckdb==1.5.6
+pytest==9.1.1
+
+# Additional dependencies used by inference and analysis scripts.
+ngboost
+psycopg[binary]
+PyYAML
+matplotlib
+statsmodels
+hmmlearn==0.3.3

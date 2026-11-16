@@ -1,0 +1,17 @@
+data:
+  feature_csv: ../../research/fixed_strike_iv_rv_convergence/artifacts/fixed_strike_convergence_features.csv
+  feature_manifest: ../../research/fixed_strike_iv_rv_convergence/artifacts/fixed_strike_convergence_features_column_manifest.json
+
+training:
+  exclude_features_over_minutes: 60
+  random_seed: 42
+  train_fraction: 0.70
+  validation_fraction: 0.15
+  horizon_minutes: 120
+  cv_splits: 4
+  max_training_rows: 60000
+  n_jobs: 2
+  top_candidates_per_family: 1
+
+output:
+  artifact_directory: artifacts_rv_improved

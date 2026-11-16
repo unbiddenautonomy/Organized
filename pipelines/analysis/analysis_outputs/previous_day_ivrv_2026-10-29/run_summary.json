@@ -1,0 +1,15 @@
+{
+  "source_rows": 3750,
+  "feature_rows": 315,
+  "predictions": 315,
+  "invalid_minutes": [],
+  "quality_entry_ok": 315,
+  "routed_signals": 45,
+  "evaluated_t120": 195,
+  "spot_source": "option CSV future_ltp, user-authorized proxy",
+  "days_to_expiry_model_feature": "actual expiry interval",
+  "feature_option_price": "best bid/ask midpoint",
+  "entry_price": "best bid",
+  "t120_exit_price": "best ask",
+  "leakage_check": "t120 columns never passed to feature builder or model"
+}

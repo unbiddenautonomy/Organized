@@ -1,0 +1,29 @@
+{
+  "status": "FROZEN_NOT_DEPLOYED",
+  "created": "2026-10-12",
+  "artifact": "model\\candidates\\enhanced_rv_120_frozen_20261012.joblib",
+  "artifact_sha256": "5eb68028723c7c53595b79546610da3c855ead1601d382b1a911d4121f63b19a",
+  "source_panel": "outputs\\enhanced_rv_models\\enhanced_spot_panel.parquet",
+  "source_panel_sha256": "40dbe5c32647139d267a4f8e448bba4db03157b8a9224e3a591af8e7d204730e",
+  "training_start": "2025-02-27",
+  "training_end": "2025-06-25",
+  "training_days": 60,
+  "training_rows": 10995,
+  "alpha": 0.1,
+  "features": [
+    "log_rv_past_5",
+    "log_rv_past_15",
+    "log_rv_past_60",
+    "log_current_r2",
+    "log_ewma_r2",
+    "log_rq_15",
+    "downside_share_15",
+    "jump_share_15",
+    "time_sin",
+    "time_cos",
+    "minutes_to_close_fraction",
+    "dow_sin",
+    "dow_cos"
+  ],
+  "deployment_note": "This artifact is excluded from the live registry. HAR remains deployed."
+}

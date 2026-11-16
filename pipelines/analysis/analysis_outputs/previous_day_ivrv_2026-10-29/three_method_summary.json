@@ -1,0 +1,35 @@
+[
+  {
+    "method": "iv_above_rv_convergence",
+    "predictions": 270,
+    "qualifying_signals": 0,
+    "trades_closed": 0,
+    "skipped": 0,
+    "gross_profit": 0,
+    "gross_loss": 0,
+    "net_gross_pnl": 0,
+    "still_open": 0
+  },
+  {
+    "method": "iv_near_rv_sharp_rv_decline",
+    "predictions": 39,
+    "qualifying_signals": 39,
+    "trades_closed": 4,
+    "skipped": 35,
+    "gross_profit": 501.0000000000048,
+    "gross_loss": -205.5000000000041,
+    "net_gross_pnl": 295.5000000000007,
+    "still_open": 0
+  },
+  {
+    "method": "iv_below_rv_sharp_rv_decline",
+    "predictions": 6,
+    "qualifying_signals": 6,
+    "trades_closed": 3,
+    "skipped": 3,
+    "gross_profit": 1447.5000000000034,
+    "gross_loss": 0,
+    "net_gross_pnl": 1447.5000000000034,
+    "still_open": 0
+  }
+]

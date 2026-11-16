@@ -1,0 +1,27 @@
+{
+  "assumptions": {
+    "pricing_model": "Black-76 on synthetic forward derived from call-put parity F=K+exp(rT)*(C-P)",
+    "risk_free_rate_continuously_compounded": 0.065,
+    "expiry_time_local": "15:30:00",
+    "calendar_basis_days": 365.0,
+    "lot_size": 30,
+    "option_style": "European approximation",
+    "dividend_or_carry_handling": "Embedded in the synthetic forward; no separate dividend yield assumed",
+    "gamma_unit": "rupees per one index-point squared per lot; standard gamma coefficient, before the 0.5 Taylor factor",
+    "theta_unit": "rupees per calendar day per lot",
+    "position": "short one call plus short one put at the fixed strike",
+    "entry_iv": "simple mean of independently solved call and put Black-76 IVs",
+    "book_snapshot": "At every executed entry timestamp, all positions still open are repriced from that minute's call/put prices and spot; exposures are summed after including the new entry",
+    "sanity_check": "Because theta is reported daily, |theta/gamma| is multiplied by 365 before comparison with 0.5*IV^2*F^2; rate terms cause expected residual error",
+    "rule_b": "Fractional research weights min(1, median ratio / trade ratio); this is not integer-lot executable"
+  },
+  "limitations": [
+    "Option and spot observations are one-minute values, not ticks.",
+    "No historical bid/ask quotes are available, so IV and Greeks use recorded option prices without spread modelling.",
+    "Black-76 uses a synthetic forward derived from same-strike call-put parity because a matched futures series was not supplied.",
+    "Some tercile/quintile, route, month and tail-day subsets are small; their Sharpe and stop rates are unstable.",
+    "Rule A and Rule B full-sample results are in-sample. The leave-one-month-out filter is the less-biased filter estimate.",
+    "Greeks are model estimates and do not include discrete strike-surface interpolation or intraminute movement.",
+    "Book-level analysis stops rather than imputes at 5 entry timestamps (6 position-minute prices missing); those book ratios are blank and excluded."
+  ]
+}

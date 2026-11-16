@@ -1,0 +1,3 @@
+period,one_lot_days,three_lot_days,lot_equivalents,net_pnl,net_pnl_per_lot_equivalent
+test_2024,117,94,399,121123.48229930562,303.5676248102898
+holdout_2025_partial,47,24,119,36183.13843835462,304.05998687692954

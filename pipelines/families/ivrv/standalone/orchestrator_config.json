@@ -1,0 +1,16 @@
+{
+  "intraday_refresh_minutes": 120,
+  "eod_refresh_after": "15:45",
+  "selection": {
+    "min_observations": 100,
+    "window_observations": 500,
+    "min_relative_improvement": 0.02,
+    "min_direction_improvement": 0.0,
+    "switch_cooldown_minutes": 60,
+    "max_model_age_minutes": 1440
+  },
+  "state": {
+    "registry": "artifacts/orchestrator/registry.json",
+    "evaluation_database": "artifacts/orchestrator/evaluation.db"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "status": "INVALID_INTRADAY_LOOKAHEAD_SUPERSEDED",
+  "superseded_by": "../near_daily_short_vol_causal/policy.json",
+  "research_only": true,
+  "structure": "short_atm_straddle",
+  "same_monthly_expiry": true,
+  "horizon_max_minutes": 180,
+  "stop_fraction": 0.5,
+  "take_fraction": 1.0,
+  "take_profit_interpretation": "1.0 means effectively disabled; otherwise exit at 180 minutes",
+  "score_quantile": 0.05,
+  "dte_floor": 0,
+  "ordinary_lots": 1,
+  "high_confidence_lots": 3,
+  "high_confidence_probability_threshold": 0.6382219825441634,
+  "train": "2019-2022",
+  "validation_selection": "2023 only",
+  "test": "2024",
+  "holdout": "2025 through 2025-05-09",
+  "slippage_bps": 25.0,
+  "live_deployment": false
+}

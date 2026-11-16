@@ -1,0 +1,106 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>IVRV Logs Dashboard</title>
+<style>
+:root{--bg:#0f1420;--card:#171e2e;--tx:#e6eaf2;--mut:#8b95ab;--b:#2a3550;--blue:#4c9aff;--amb:#f5a524;--grn:#3ecf8e;--red:#ef5b5b;--pur:#b48cf2}
+*{box-sizing:border-box}body{margin:0;font:14px system-ui,sans-serif;background:var(--bg);color:var(--tx);padding:20px}
+h1{font-size:20px;margin:0 0 4px}h2{font-size:14px;margin:0 0 10px;color:var(--mut);text-transform:uppercase;letter-spacing:.05em}
+.top{display:flex;gap:16px;align-items:center;flex-wrap:wrap;margin-bottom:16px}select{background:var(--card);color:var(--tx);border:1px solid var(--b);padding:6px 10px;border-radius:6px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(480px,1fr));gap:14px}.card{background:var(--card);border:1px solid var(--b);border-radius:10px;padding:14px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:14px}.kpi{background:var(--card);border:1px solid var(--b);border-radius:10px;padding:10px 12px}
+.kpi b{display:block;font-size:20px;margin-top:2px}.kpi span{color:var(--mut);font-size:12px}
+canvas{width:100%;height:240px;display:block}table{width:100%;border-collapse:collapse;font-size:13px}th,td{text-align:left;padding:5px 8px;border-bottom:1px solid var(--b)}th{color:var(--mut);font-weight:500}
+.badge{background:var(--amb);color:#111;border-radius:4px;padding:1px 6px;font-size:11px;font-weight:600}.pos{color:var(--grn)}.neg{color:var(--red)}
+.leg span{margin-right:14px;font-size:12px;color:var(--mut)}.leg i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px}.note{color:var(--mut);font-size:12px;margin-top:6px}
+.bar{display:flex;align-items:center;gap:8px;margin:4px 0}.bar div{height:10px;background:var(--blue);border-radius:3px}
+.scroll{max-height:320px;overflow:auto}
+</style></head><body>
+<div class="top"><div><h1>IVRV Live Logs Dashboard</h1></div>
+<label>Date <select id="day"></select></label></div>
+<div class="kpis" id="kpis"></div>
+<div class="grid">
+<div class="card"><h2>Spot: actual vs predicted</h2><div class="leg" id="l1"></div><canvas id="c1"></canvas><div class="note" id="n1"></div></div>
+<div class="card"><h2>Implied vol: actual vs predicted</h2><div class="leg" id="l2"></div><canvas id="c2"></canvas></div>
+<div class="card"><h2>Long-vol model signals &amp; fills</h2><table id="man"></table></div>
+<div class="card"><h2>Trades &amp; decisions</h2><div class="scroll"><table id="ev"></table></div></div>
+<div class="card"><h2>Entry rejection reasons</h2><div id="rej"></div></div>
+<div class="card"><h2>Retraining outputs (latest per target)</h2><table id="rt"></table></div>
+</div>
+<script>
+const DATA=/*DATA*/null;
+const $=id=>document.getElementById(id);
+const days=Object.keys(DATA);
+const sel=$("day");
+days.forEach(d=>sel.add(new Option(d,d)));
+sel.value=days[days.length-1];
+sel.onchange=render;
+const fmt=(x,n=2)=>x==null?"-":(+x).toLocaleString(undefined,{maximumFractionDigits:n});
+
+function chart(cv,series,cols,band,marks){
+  const dpr=window.devicePixelRatio||1,W=cv.clientWidth,H=cv.clientHeight;
+  cv.width=W*dpr;cv.height=H*dpr;
+  const g=cv.getContext("2d");g.scale(dpr,dpr);g.clearRect(0,0,W,H);
+  const times=[...new Set(series.flatMap(s=>s.map(r=>r[0])))].sort();
+  if(!times.length){g.fillStyle="#8b95ab";g.font="13px system-ui";g.fillText("No model data logged for this day",12,24);return;}
+  const vals=series.flatMap(s=>s.flatMap(r=>r.slice(1).filter(v=>v!=null)));
+  if(band)vals.push(band[0],band[1]);
+  let lo=Math.min(...vals),hi=Math.max(...vals);const p=(hi-lo)*.08||1;lo-=p;hi+=p;
+  const L=58,R=10,T=8,B=22;
+  const x=t=>L+(times.indexOf(t)/Math.max(times.length-1,1))*(W-L-R);
+  const y=v=>T+(1-(v-lo)/(hi-lo))*(H-T-B);
+  g.strokeStyle="#2a3550";g.fillStyle="#8b95ab";g.font="11px system-ui";
+  for(let i=0;i<=4;i++){const v=lo+(hi-lo)*i/4;g.beginPath();g.moveTo(L,y(v));g.lineTo(W-R,y(v));g.stroke();g.fillText(fmt(v,hi<1?4:0),4,y(v)+4);}
+  for(let i=0;i<times.length;i+=Math.ceil(times.length/8))g.fillText(times[i],x(times[i])-12,H-6);
+  if(band){g.fillStyle="rgba(245,165,36,.22)";g.fillRect(L,y(band[1]),W-L-R,y(band[0])-y(band[1]));}
+  (marks||[]).forEach(m=>{const k=times.find(t=>t>=m.t);if(!k)return;g.strokeStyle=m.c;g.setLineDash([4,4]);g.beginPath();g.moveTo(x(k),T);g.lineTo(x(k),H-B);g.stroke();g.setLineDash([]);g.fillStyle=m.c;g.fillText(m.l,x(k)+3,T+10);});
+  cols.forEach(c=>{g.strokeStyle=c.c;g.lineWidth=1.5;g.beginPath();let st=false;
+    series[c.s].forEach(r=>{if(r[c.i]==null)return;if(st)g.lineTo(x(r[0]),y(r[c.i]));else g.moveTo(x(r[0]),y(r[c.i]));st=true;});g.stroke();});
+}
+function legend(el,items){el.innerHTML=items.map(i=>'<span><i style="background:'+i[1]+'"></i>'+i[0]+'</span>').join("");}
+
+function render(){
+  const d=DATA[sel.value];
+  const exits=d.events.filter(e=>e.event=="paper_exit"),entries=d.events.filter(e=>e.event=="paper_entry");
+  const pnl=exits.reduce((a,e)=>a+(e.net_pnl||0),0);
+  const fills=d.manual.filter(m=>m.event=="long_vol_fill").map(m=>m.detail);
+  let fp=0;fills.forEach(f=>{fp+=(f.side=="SELL"?1:-1)*f.price*f.qty;});
+  const closed=fills.filter(f=>f.side=="BUY").length==fills.filter(f=>f.side=="SELL").length;
+  const rejN=Object.values(d.rej).reduce((a,b)=>a+b,0);
+  const nd=(n)=>n?n:"no data";
+  const k=[["Spot predictions",nd(d.spot.length)],["IV predictions",nd(d.iv.length)],["Entries rejected",nd(rejN)],
+    ["Model entries / exits",entries.length+" / "+exits.length],["Model net P&L",fmt(pnl)],
+    ["Broker fills P&L"+(closed?"":" (open)"),fills.length?fmt(fp):"-"],["Long-vol model rows",d.manual.length]];
+  $("kpis").innerHTML=k.map(x=>'<div class="kpi"><span>'+x[0]+'</span><b class="'+(String(x[1]).startsWith("-")?"neg":"")+'">'+x[1]+'</b></div>').join("");
+
+  const noModel=!d.spot.length;
+  const sp=d.manual.find(m=>m.file=="spot_predictions");
+  const band=sp?[sp.detail.predicted_range_low,sp.detail.predicted_range_high]:null;
+  const ent=d.manual.find(m=>m.event=="paper_entry");
+  const marks=[];
+  if(ent)marks.push({t:"12:30",c:"#3ecf8e",l:"12:30 LONG VOL (to 14:30)"});
+  if(fills.length)marks.push({t:"14:32",c:"#ef5b5b",l:"exit fills"});
+  const lg=[["Actual","#e6eaf2"],["Pred 5m","#4c9aff"],["Pred 15m","#b48cf2"]];
+  if(band)lg.push(["Long-vol model range "+fmt(band[0],0)+"-"+fmt(band[1],0),"#f5a524"]);
+  legend($("l1"),lg);
+  const pad=(a)=>a.length?a:[["12:30",null,null,null],["14:32",null,null,null]];
+  chart($("c1"),[pad(d.spot)],[{s:0,i:1,c:"#e6eaf2"},{s:0,i:2,c:"#4c9aff"},{s:0,i:3,c:"#b48cf2"}],band,marks);
+  $("n1").textContent=sp?"Orange band = long-vol model range ("+sp.time+"). Spot/IV model logs have no rows for this selected date.":"";
+  legend($("l2"),lg.slice(0,3));
+  chart($("c2"),[d.iv],[{s:0,i:1,c:"#e6eaf2"},{s:0,i:2,c:"#4c9aff"},{s:0,i:3,c:"#b48cf2"}],null,marks);
+
+  $("man").innerHTML=d.manual.length?"<tr><th>Time</th><th>File</th><th>Detail</th></tr>"+d.manual.map(m=>{
+    const x=m.detail;let s;
+    if(m.event=="long_vol_fill")s="#"+x.order_no+" "+x.side+" "+x.symbol+" x"+x.qty+" @ "+fmt(x.price)+" "+x.status;
+    else if(x.predicted_range_low)s="Spot range "+x.predicted_range_low+" - "+x.predicted_range_high;
+    else s=(x.reason_descriptions||[""])[0];
+    return "<tr><td>"+m.time+'</td><td>'+m.file+' <span class="badge">LONG-VOL MODEL</span></td><td>'+s+"</td></tr>";}).join(""):"<tr><td>None</td></tr>";
+
+  $("ev").innerHTML="<tr><th>Time</th><th>Event</th><th>Detail</th></tr>"+(d.events.slice(0,300).map(e=>
+    "<tr><td>"+e.time+"</td><td>"+e.event+"</td><td>"+[e.decision,e.strike,e.horizon&&e.horizon+"m",e.net_pnl!=null&&"P&L "+fmt(e.net_pnl),[].concat(e.reasons||[]).join(",")].filter(Boolean).join(" &middot; ")+"</td></tr>").join("")||"<tr><td colspan=3>No model trade events</td></tr>");
+
+  const mx=Math.max(1,...Object.values(d.rej));
+  $("rej").innerHTML=Object.entries(d.rej).sort((a,b)=>b[1]-a[1]).map(([n,v])=>'<div class="bar"><div style="width:'+(v/mx*55)+'%"></div><span>'+n+" &middot; "+v+"</span></div>").join("")||'<span class="note">No rejections logged</span>';
+
+  $("rt").innerHTML="<tr><th>Target</th><th>Current</th><th>Base</th><th>Intraday</th><th>EOD</th></tr>"+(Object.entries(d.retrain).map(([n,r])=>
+    "<tr><td>"+n+"</td><td>"+fmt(r.current,4)+"</td><td>"+fmt(r.base_prediction,4)+"</td><td>"+fmt(r.intraday_prediction,4)+"</td><td>"+fmt(r.eod_prediction,4)+"</td></tr>").join("")||"<tr><td colspan=5>No retraining rows logged for this date</td></tr>");
+}
+render();window.addEventListener("resize",render);
+</script></body></html>

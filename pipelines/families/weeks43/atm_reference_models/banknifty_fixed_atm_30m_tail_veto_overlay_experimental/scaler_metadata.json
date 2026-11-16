@@ -1,0 +1,5 @@
+{
+  "entry_model": "no scaler (tree model)",
+  "tail_logistic_component": "fitted StandardScaler in scaler.joblib",
+  "tail_tree_components": "no scaler"
+}

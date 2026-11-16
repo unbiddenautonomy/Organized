@@ -1,0 +1,17 @@
+data:
+  feature_csv: ../../research/combined_atm_iv_rv_convergence_v2/artifacts/combined_atm_iv_convergence_v2_features.csv
+  feature_manifest: ../../research/combined_atm_iv_rv_convergence_v2/artifacts/combined_atm_iv_convergence_v2_features_column_manifest.json
+
+target:
+  horizon_minutes: 120
+  minimum_rv_drop: 0.02
+  minimum_rv_drop_beyond_iv: 0.01
+
+training:
+  random_seed: 42
+  train_fraction: 0.70
+  validation_fraction: 0.15
+  cv_splits: 3
+  max_feature_lookback_minutes: 60
+  n_jobs: 2
+

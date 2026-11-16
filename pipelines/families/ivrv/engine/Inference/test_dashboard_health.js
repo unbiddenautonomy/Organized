@@ -1,0 +1,23 @@
+const fs=require('fs'),vm=require('vm'),assert=require('assert'),path=require('path');
+const html=fs.readFileSync(path.join(__dirname,'live','live_dashboard.html'),'utf8');
+new vm.Script(html.match(/<script>([\s\S]*?)<\/script>/)[1]);
+const context=vm.createContext({Date,Object,Number,String,Math});
+vm.runInContext(html.split('// HEALTH_FUNCTION_START')[1].split('// HEALTH_FUNCTION_END')[0],context);
+const now=Date.parse('2026-10-29T10:30:00+05:30');
+const minute=Math.floor((now+330*60000-Date.UTC(1980,0,1))/60000);
+const base={state:'READY',predictions:{rv:.2},runtime:{mode:'scheduled_live',latest_spot_minute:minute,latest_future_minute:minute},pipeline_health:{state:'SESSION',updated_at:new Date(now).toISOString(),contracts:{downloaded:true},feed:{last_receive:now/1000},pipelines:{ivrv:{state:'RUNNING',worker:{heartbeat:now/1000}}}}};
+function test(label,edit,expected){const s=structuredClone(base);edit(s);assert.strictEqual(context.dashboardHealth(s,now).label,expected,label);}
+test('current predictions',s=>{},'Live predictions');
+test('preview HTTP success is not live',s=>s.runtime.mode='43Weeks_preview_only','Preview only');
+test('blocked contracts',s=>{s.pipeline_health.contracts=null;s.pipeline_health.pipelines.ivrv.state='WAITING_FOR_CONTRACTS'},'Waiting for contracts');
+test('loading',s=>s.pipeline_health.pipelines.ivrv.state='STARTING','Loading models');
+test('worker fault',s=>s.pipeline_health.pipelines.ivrv.fault='FEED_QUEUE_OVERFLOW','Pipeline needs attention');
+test('dead service',s=>s.pipeline_health.updated_at=new Date(now-20000).toISOString(),'Service stale');
+test('dead worker',s=>s.pipeline_health.pipelines.ivrv.worker.heartbeat-=20,'Worker stale');
+test('no packets',s=>s.pipeline_health.feed.last_receive-=20,'Waiting for feed');
+test('old instrument prices',s=>s.runtime.latest_spot_minute-=5,'Market data stale');
+test('future instrument timestamp',s=>s.runtime.latest_spot_minute+=5,'Market data stale');
+test('no instrument observation',s=>s.runtime.latest_future_minute=null,'Waiting for market data');
+test('warmup',s=>{s.state='WARMUP';s.predictions={}},'Live feed · warming up');
+test('outside session',s=>s.pipeline_health.state='WAITING_FOR_SESSION','Waiting for session');
+console.log('13 dashboard health scenarios passed; complete inline JavaScript parses.');

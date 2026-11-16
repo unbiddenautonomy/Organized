@@ -1,0 +1,18 @@
+{
+  "probability_threshold": 0.7,
+  "edge_threshold": 5.0,
+  "historical_rows": 4316,
+  "holdout_rows": 1050,
+  "metrics_2026": {
+    "prediction_threshold_net_points": 0.7,
+    "trades": 0,
+    "signal_days": 0,
+    "win_rate_after_slippage": null,
+    "gross_points_before_cost": 0.0,
+    "net_points_after_2pt_slippage": 0.0,
+    "average_net_points": null,
+    "profit_factor": "Infinity",
+    "maximum_drawdown_points": null,
+    "wilson_win_rate_lower_95": 0.0
+  }
+}

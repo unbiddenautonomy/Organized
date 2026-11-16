@@ -1,0 +1,17 @@
+horizon_min,model,model_file,alpha,train_start,train_end,training_rows
+15,quantile_0.1,log_iv_15m_q10.joblib,0.001,2025-01-24,2025-05-09,4992
+15,quantile_0.5,log_iv_15m_q50.joblib,0.001,2025-01-24,2025-05-09,4992
+15,quantile_0.9,log_iv_15m_q90.joblib,1e-05,2025-01-24,2025-05-09,4992
+15,lightgbm,log_iv_15m_lightgbm.joblib,,2025-01-24,2025-05-09,4992
+30,quantile_0.1,log_iv_30m_q10.joblib,0.001,2025-01-24,2025-05-09,4810
+30,quantile_0.5,log_iv_30m_q50.joblib,0.001,2025-01-24,2025-05-09,4810
+30,quantile_0.9,log_iv_30m_q90.joblib,0.001,2025-01-24,2025-05-09,4810
+30,lightgbm,log_iv_30m_lightgbm.joblib,,2025-01-24,2025-05-09,4810
+60,quantile_0.1,log_iv_60m_q10.joblib,0.001,2025-01-23,2025-05-09,4489
+60,quantile_0.5,log_iv_60m_q50.joblib,0.001,2025-01-23,2025-05-09,4489
+60,quantile_0.9,log_iv_60m_q90.joblib,1e-05,2025-01-23,2025-05-09,4489
+60,lightgbm,log_iv_60m_lightgbm.joblib,,2025-01-23,2025-05-09,4489
+120,quantile_0.1,log_iv_120m_q10.joblib,0.001,2025-01-23,2025-05-09,3615
+120,quantile_0.5,log_iv_120m_q50.joblib,0.001,2025-01-23,2025-05-09,3615
+120,quantile_0.9,log_iv_120m_q90.joblib,0.001,2025-01-23,2025-05-09,3615
+120,lightgbm,log_iv_120m_lightgbm.joblib,,2025-01-23,2025-05-09,3615

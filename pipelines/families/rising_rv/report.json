@@ -1,0 +1,145 @@
+{
+  "definition": "At t, average call/put IV > trailing 120-minute spot RV. At t+120, RV has risen and the absolute IV/RV gap is smaller. Option IV at both times uses the strike ATM at t.",
+  "units": "annualized volatility percentage points",
+  "sampling": "all eligible entry minutes; adjacent labels overlap",
+  "coverage_rule": "At least 60 observed spot returns in each 120-minute window; source has missing minutes",
+  "source": "E:\\Letsss Start Again\\data\\icharts_option_banknifty_monthly_atm_up_to_5strikes.csv",
+  "features": [
+    "current_iv",
+    "rv_30",
+    "rv_60",
+    "iv_skew",
+    "spot_price",
+    "strike",
+    "moneyness",
+    "days_to_expiry",
+    "minute_of_day",
+    "weekday",
+    "delta_call",
+    "delta_put",
+    "gamma_call",
+    "gamma_put",
+    "vega_call",
+    "vega_put",
+    "call_oi",
+    "put_oi",
+    "future_open"
+  ],
+  "event_count": 1426,
+  "expiry_count": 21,
+  "split": {
+    "train": [
+      "2020-01-30 00:00:00",
+      "2023-10-26 00:00:00",
+      806
+    ],
+    "validation": [
+      "2023-11-30 00:00:00",
+      "2024-06-26 00:00:00",
+      273
+    ],
+    "test": [
+      "2024-07-31 00:00:00",
+      "2025-01-30 00:00:00",
+      347
+    ]
+  },
+  "selection_metric": "training-fold mean ROC AUC for LightGBM hyperparameters",
+  "excluded_features": [
+    "current_rv",
+    "current_gap"
+  ],
+  "winner": "lightgbm",
+  "results": [
+    {
+      "model": "prevalence_baseline",
+      "params": {},
+      "validation": {
+        "n": 273,
+        "prevalence": 0.29304029304029305,
+        "roc_auc": 0.5,
+        "average_precision": 0.29304029304029305,
+        "brier": 0.26924007847324904,
+        "log_loss": 0.7317232739811008,
+        "accuracy_at_0_5": 0.29304029304029305
+      },
+      "test": {
+        "n": 347,
+        "prevalence": 0.24495677233429394,
+        "roc_auc": 0.5,
+        "average_precision": 0.24495677233429394,
+        "brier": 0.2732967526767328,
+        "log_loss": 0.7398559548358982,
+        "accuracy_at_0_5": 0.24495677233429394
+      }
+    },
+    {
+      "model": "lightgbm",
+      "params": {
+        "reg_lambda": 2,
+        "num_leaves": 7,
+        "n_estimators": 300,
+        "min_child_samples": 100,
+        "learning_rate": 0.1
+      },
+      "cv_auc": 0.5674514143264143,
+      "cv_fold_auc": [
+        0.5,
+        0.809325396825397,
+        0.39302884615384615
+      ],
+      "validation": {
+        "n": 273,
+        "prevalence": 0.29304029304029305,
+        "roc_auc": 0.8533678756476684,
+        "average_precision": 0.6560190772908525,
+        "brier": 0.28081805389762343,
+        "log_loss": 0.8374156621919099,
+        "accuracy_at_0_5": 0.5604395604395604
+      },
+      "test": {
+        "n": 347,
+        "prevalence": 0.24495677233429394,
+        "roc_auc": 0.9151773686573866,
+        "average_precision": 0.7679580068744051,
+        "brier": 0.13650162684835518,
+        "log_loss": 0.48224134190918205,
+        "accuracy_at_0_5": 0.8155619596541787
+      }
+    }
+  ],
+  "test_by_expiry": {
+    "2024-07-31": {
+      "n": 22,
+      "prevalence": 1.0,
+      "mean_probability": 0.8296431242653625
+    },
+    "2024-08-28": {
+      "n": 154,
+      "prevalence": 0.1038961038961039,
+      "mean_probability": 0.23928426532924646,
+      "roc_auc": 0.9954710144927537
+    },
+    "2024-09-25": {
+      "n": 62,
+      "prevalence": 0.3870967741935484,
+      "mean_probability": 0.2227438465102286,
+      "roc_auc": 1.0
+    },
+    "2024-12-24": {
+      "n": 59,
+      "prevalence": 0.0,
+      "mean_probability": 0.30032261186363923
+    },
+    "2025-01-30": {
+      "n": 50,
+      "prevalence": 0.46,
+      "mean_probability": 0.7990351371442072,
+      "roc_auc": 0.9983896940418681
+    }
+  },
+  "test_expiry_bootstrap_auc_95pct": [
+    0.8188851767188324,
+    0.9908364661654135
+  ]
+}

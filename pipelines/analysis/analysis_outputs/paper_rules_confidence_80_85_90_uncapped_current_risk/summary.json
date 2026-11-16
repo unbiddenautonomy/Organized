@@ -1,0 +1,122 @@
+{
+  "source_csv": "E:\\SmileSkew method\\data\\icharts_option_banknifty_monthly_atm_up_to_5strikes.csv",
+  "evaluation_window": {
+    "start": "2024-09-19",
+    "end": "2025-05-09"
+  },
+  "evaluation_status": "reused held-out diagnostic; not a fresh post-training holdout",
+  "accounting": "gross before costs and slippage",
+  "mark_price_source": "E:\\v2\\data\\icharts_option_banknifty.csv",
+  "historical_entry_assumption": "entry at the signal minute's recorded fixed-strike prices",
+  "constraints": {
+    "fixed_entry_strike_and_expiry": true,
+    "one_lot_quantity": 30,
+    "maximum_open_positions": 3,
+    "confidence_filtered_maximum_open_positions": null,
+    "profit_target_inr": 1500.0,
+    "stop_loss_inr": -750.0,
+    "maximum_holding_minutes": 120,
+    "square_off_time": "15:14:30",
+    "confidence_rules": [
+      "strictly greater than 0.80",
+      "strictly greater than 0.85",
+      "strictly greater than 0.90"
+    ]
+  },
+  "prediction_rows": 6478,
+  "base_eligible_rows": 3447,
+  "scenarios": [
+    {
+      "scenario": "without_probability_filter",
+      "target_inr": 1500.0,
+      "stop_loss_inr": -750.0,
+      "maximum_open_positions": 3,
+      "trades": 659,
+      "gross_pnl_inr": 182362.49999999997,
+      "wins": 435,
+      "losses": 224,
+      "win_rate_pct": 66.00910470409713,
+      "average_pnl_inr": 276.726100151745,
+      "profit_factor": 1.9637642097252384,
+      "maximum_drawdown_inr": -22305.0,
+      "exit_reasons": {
+        "time_exit_120m": 318,
+        "stop_loss": 175,
+        "profit_target": 83,
+        "session_square_off_151430": 83
+      },
+      "qualified_signals": 3447,
+      "signals_skipped_at_position_cap": 2788,
+      "signals_skipped_missing_entry_price": 0
+    },
+    {
+      "scenario": "with_probability_gt_0.80",
+      "target_inr": 1500.0,
+      "stop_loss_inr": -750.0,
+      "maximum_open_positions": null,
+      "trades": 417,
+      "gross_pnl_inr": 191347.50000000006,
+      "wins": 318,
+      "losses": 99,
+      "win_rate_pct": 76.2589928057554,
+      "average_pnl_inr": 458.86690647482027,
+      "profit_factor": 3.2565495038120686,
+      "maximum_drawdown_inr": -26965.499999999978,
+      "exit_reasons": {
+        "stop_loss": 76,
+        "profit_target": 48,
+        "time_exit_120m": 250,
+        "session_square_off_151430": 43
+      },
+      "qualified_signals": 417,
+      "signals_skipped_at_position_cap": 0,
+      "signals_skipped_missing_entry_price": 0
+    },
+    {
+      "scenario": "with_probability_gt_0.85",
+      "target_inr": 1500.0,
+      "stop_loss_inr": -750.0,
+      "maximum_open_positions": null,
+      "trades": 143,
+      "gross_pnl_inr": 88371.00000000001,
+      "wins": 119,
+      "losses": 24,
+      "win_rate_pct": 83.21678321678321,
+      "average_pnl_inr": 617.9790209790211,
+      "profit_factor": 5.001222493887533,
+      "maximum_drawdown_inr": -6634.5,
+      "exit_reasons": {
+        "profit_target": 26,
+        "stop_loss": 19,
+        "session_square_off_151430": 20,
+        "time_exit_120m": 78
+      },
+      "qualified_signals": 143,
+      "signals_skipped_at_position_cap": 0,
+      "signals_skipped_missing_entry_price": 0
+    },
+    {
+      "scenario": "with_probability_gt_0.90",
+      "target_inr": 1500.0,
+      "stop_loss_inr": -750.0,
+      "maximum_open_positions": null,
+      "trades": 18,
+      "gross_pnl_inr": 15093.00000000003,
+      "wins": 16,
+      "losses": 2,
+      "win_rate_pct": 88.88888888888889,
+      "average_pnl_inr": 838.5000000000016,
+      "profit_factor": 10.081227436823124,
+      "maximum_drawdown_inr": -1662.0,
+      "exit_reasons": {
+        "time_exit_120m": 7,
+        "profit_target": 6,
+        "session_square_off_151430": 3,
+        "stop_loss": 2
+      },
+      "qualified_signals": 18,
+      "signals_skipped_at_position_cap": 0,
+      "signals_skipped_missing_entry_price": 0
+    }
+  ]
+}

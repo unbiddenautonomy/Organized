@@ -1,0 +1,17 @@
+[
+  {
+    "Algorithm": "SHA256",
+    "Hash": "8EA217D721FA8E95FCE12687B3817CB6EF0EA3D458D7FA12B55D17A7E4E9ACEB",
+    "Path": "E:\\inference Pipeline\\Inference_full_2026-10-24\\Inference\\live\\live_inference.py"
+  },
+  {
+    "Algorithm": "SHA256",
+    "Hash": "DE58512F6B371DF6F11C09EFE32C94FC538F6862CF60876B1710ED6D5384D05D",
+    "Path": "E:\\inference Pipeline\\Inference_full_2026-10-24\\Inference\\live\\live_config.json"
+  },
+  {
+    "Algorithm": "SHA256",
+    "Hash": "3882C5DA1100ED5F289D76FE7C153B962D908B41D73ACCDE4FB4172445FA77E4",
+    "Path": "E:\\inference Pipeline\\Inference_full_2026-10-24\\Inference\\live\\live_dashboard.html"
+  }
+]

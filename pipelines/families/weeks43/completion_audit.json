@@ -1,0 +1,110 @@
+{
+  "checked_at": "2026-10-28T20:56:51.562272",
+  "implementation_status": "COMPLETE",
+  "live_activation": "At the next normal start of the existing paper-trading program; no market-feed session was started by this audit.",
+  "dashboard_endpoint": "/firstTwoWeeks",
+  "package": "E:\\inference Pipeline\\weeks43",
+  "tests": {
+    "extension": 40,
+    "original_app": 24,
+    "total": 64
+  },
+  "copied_artifacts_verified": 222,
+  "joblib_files_verified": 77,
+  "real_models_scored": {
+    "otm": 6,
+    "atm_diagnostic_only": 11
+  },
+  "policy": {
+    "thresholds": {
+      "3_week": 0.5,
+      "4_week": 0.5
+    },
+    "max_open_positions": 3,
+    "comparison": ">=",
+    "revision": "3305c437c28f4cfe95343d2fa57d2123",
+    "source": "pre_2024_validation",
+    "updated_at": "2026-10-28T20:32:44+05:30"
+  },
+  "exit_rules": {
+    "net_profit_target": 1500,
+    "net_stop_loss": -750,
+    "horizon_minutes": 120
+  },
+  "persistence": [
+    "models and preprocessors",
+    "all model outputs",
+    "accepted and rejected signals",
+    "pending/entry/exit events",
+    "every filled trade",
+    "gross P&L, itemized costs and net P&L",
+    "fixed strikes and minute price paths",
+    "cutoff version history",
+    "per-replay settings snapshots",
+    "daily results including zero-trade runs"
+  ],
+  "startup_checks": {
+    "daily_session_attach_hook": true,
+    "real_isolated_worker_started": true,
+    "cutoff_reload_observed": true,
+    "clean_shutdown": true,
+    "restart_restored_saved_cutoffs": true
+  },
+  "original_application_unchanged": [
+    {
+      "path": "E:\\inference Pipeline\\engine\\Inference\\live\\live_inference.py",
+      "unchanged": true,
+      "sha256": "809F9F6319E843F9994E99F2DE2A7BFBCDFEFDDD038673484C3613493C4FBBDB"
+    },
+    {
+      "path": "E:\\inference Pipeline\\engine\\Inference\\live\\live_config.json",
+      "unchanged": true,
+      "sha256": "DE58512F6B371DF6F11C09EFE32C94FC538F6862CF60876B1710ED6D5384D05D"
+    },
+    {
+      "path": "E:\\inference Pipeline\\engine\\Inference\\live\\live_dashboard.html",
+      "unchanged": true,
+      "sha256": "3882C5DA1100ED5F289D76FE7C153B962D908B41D73ACCDE4FB4172445FA77E4"
+    }
+  ],
+  "replay": {
+    "run": "replay_20261028_204043",
+    "summary": {
+      "trades": 31,
+      "win_rate": 0.5161290322580645,
+      "net_pnl": -3210.7487707950067,
+      "gross_pnl": -851.2500000000068,
+      "total_costs": 2359.498770795,
+      "profit_factor": 0.5885261923746475,
+      "maximum_drawdown": -5002.401942416993,
+      "signal_days": 20,
+      "green_days": 9,
+      "red_days": 11,
+      "flat_days": 0,
+      "eligible_days": 150,
+      "no_trade_days": 130,
+      "coverage": 0.13333333333333333
+    },
+    "maximum_concurrency": 3,
+    "signals": 17861,
+    "strike_path_records": 192592,
+    "fixed_strike_mismatches": 0
+  },
+  "completion_fix": "Zero-trade replays now retain full daily exports and no-trade-day counts.",
+  "model_status": "Experimental; pre-2024 coverage and minimum-trade validation constraints were not met.",
+  "evidence": {
+    "worker_test": "runtime/completion_worker_verified_20261028",
+    "zero_trade_test": "runtime/completion_audit_20261028/test_no_trade_replay_still_exp0",
+    "synthetic_outputs": "E:\\inference Pipeline\\weeks43\\runtime\\completion_diagnostic_output\\synthetic_model_outputs.json"
+  },
+  "completion_fixes": [
+    "Zero-trade replays retain full daily exports and no-trade-day counts.",
+    "ATM diagnostics show probability and tail score separately, with complete raw outputs."
+  ],
+  "dashboard_checks": {
+    "http_status": 200,
+    "cutoff_controls_present": true,
+    "all_atm_fields_present": true,
+    "javascript_syntax": "PASS"
+  }
+}

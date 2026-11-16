@@ -1,0 +1,39 @@
+{
+  "model_family": "P0_StandardScaler_Ridge",
+  "horizon_minutes": 120,
+  "features": [
+    "p0_log_rv_5",
+    "p0_log_rv_15",
+    "p0_log_rv_60"
+  ],
+  "params": {
+    "alpha": 0.01
+  },
+  "smearing_log_adjustment": 0.16140215966268617,
+  "selection": "training-only purged final-20%-sessions inner validation",
+  "selection_candidates": [
+    0.01,
+    0.1,
+    1.0,
+    10.0,
+    100.0
+  ],
+  "trained_splits": [
+    "development",
+    "walk_forward_validation"
+  ],
+  "training_rows": 44679,
+  "training_max_decision_time": "2024-06-28 13:25:59+05:30",
+  "training_max_label_end_at": "2024-06-28 15:25:59+05:30",
+  "dataset_sha256": "02850acfebd8442bfb7c518f174abc94402e88181a72975f2db4986d35d8ded0",
+  "splits_sha256": "4409030241bf656af200c811a50a39387c49a8a4e3a4b01700b06fde1c79b48c",
+  "runner_sha256": "8ffdc40ea68d9049b9511672462a4a6f889942e4a745344f59668688cf957722",
+  "run_id": "freeze-20261013T132815503183Z-2f7b5729",
+  "sklearn_version": "1.9.0",
+  "artifact_file": "p0_ridge_120m.joblib",
+  "artifact_sha256": "6210dbebd4739d39b29c7bc4a6b73e140ee292ec2a96a703c364455533beb5cb",
+  "common_manifest_sha256": "3778739fa77c6470fbb788788c3ed93571cc7c1b4f5b90ad230a955d82ca18b6",
+  "provenance_verified": true,
+  "pseudo_holdout_accessed": false,
+  "strategy_pnl_computed": false
+}

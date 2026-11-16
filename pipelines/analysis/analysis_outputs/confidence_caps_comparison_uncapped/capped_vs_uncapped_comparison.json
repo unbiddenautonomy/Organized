@@ -1,0 +1,74 @@
+{
+  "risk_settings": {
+    "profit_target_inr": 1500.0,
+    "stop_loss_inr": -750.0,
+    "lot_size": 30,
+    "maximum_holding_minutes": 120,
+    "square_off_time": "15:14:30"
+  },
+  "comparison": [
+    {
+      "confidence_threshold_strictly_greater_than": 0.80,
+      "capped_at_3": {
+        "trades": 148,
+        "gross_pnl_inr": 57484.5,
+        "win_rate_pct": 75.6757,
+        "profit_factor": 2.6279,
+        "maximum_drawdown_inr": -8838.0,
+        "peak_concurrent_positions": 3,
+        "signals_skipped_at_cap": 269
+      },
+      "uncapped": {
+        "trades": 417,
+        "gross_pnl_inr": 191347.5,
+        "win_rate_pct": 76.2590,
+        "profit_factor": 3.2565,
+        "maximum_drawdown_inr": -26965.5,
+        "peak_concurrent_positions": 36,
+        "signals_skipped_at_cap": 0
+      }
+    },
+    {
+      "confidence_threshold_strictly_greater_than": 0.85,
+      "capped_at_3": {
+        "trades": 68,
+        "gross_pnl_inr": 25440.0,
+        "win_rate_pct": 79.4118,
+        "profit_factor": 2.5501,
+        "maximum_drawdown_inr": -5937.0,
+        "peak_concurrent_positions": 3,
+        "signals_skipped_at_cap": 75
+      },
+      "uncapped": {
+        "trades": 143,
+        "gross_pnl_inr": 88371.0,
+        "win_rate_pct": 83.2168,
+        "profit_factor": 5.0012,
+        "maximum_drawdown_inr": -6634.5,
+        "peak_concurrent_positions": 19,
+        "signals_skipped_at_cap": 0
+      }
+    },
+    {
+      "confidence_threshold_strictly_greater_than": 0.90,
+      "capped_at_3": {
+        "trades": 14,
+        "gross_pnl_inr": 13324.5,
+        "win_rate_pct": 100.0,
+        "profit_factor": null,
+        "maximum_drawdown_inr": 0.0,
+        "peak_concurrent_positions": 3,
+        "signals_skipped_at_cap": 4
+      },
+      "uncapped": {
+        "trades": 18,
+        "gross_pnl_inr": 15093.0,
+        "win_rate_pct": 88.8889,
+        "profit_factor": 10.0812,
+        "maximum_drawdown_inr": -1662.0,
+        "peak_concurrent_positions": 5,
+        "signals_skipped_at_cap": 0
+      }
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+check,violations,passed
+cross_day_window,0,True
+outside_0915_1530,0,True
+expiry_before_entry,0,True
+overlapping_positions,0,True
+pnl_identity_error_over_1e-8,0,True
+training_label_not_strictly_prior,0,True
+duplicate_sleeve_timestamp,0,True

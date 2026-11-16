@@ -1,0 +1,22 @@
+{
+  "status": "REJECT_CAUSAL_RULE_FAILED_VALIDATION",
+  "live_deployment": false,
+  "deployable_pnl_rupees": 0.0,
+  "selection_rule": "first timestamp at or above frozen probability threshold",
+  "entry_probability_threshold": 0.5069686488117613,
+  "high_confidence_probability_threshold": 0.6382219825441634,
+  "ordinary_lots": 1,
+  "high_confidence_lots": 3,
+  "same_monthly_expiry": true,
+  "structure": "short_atm_straddle",
+  "horizon_minutes": 180,
+  "stop_fraction": 0.5,
+  "take_fraction": 1.0,
+  "slippage_bps": 25.0,
+  "model_train_period": "2019-2022",
+  "validation_period": "2023",
+  "test_period": "2024",
+  "partially_observed_period": "2025 through 2025-05-09",
+  "warning": "2025 has been repeatedly inspected and is not pristine for future optimization",
+  "parameter_selection_warning": "entry and sizing thresholds are frozen from the superseded search; reported P&L is diagnostic and the causal validation gate rejects it"
+}

@@ -1,0 +1,62 @@
+{
+  "date": "2026-10-27",
+  "status": "counterfactual reconstruction; live paper threshold remained 0.90 and no actual paper events were recorded",
+  "rule": {
+    "confidence_probability_operator": ">",
+    "confidence_threshold": 0.8005355169472045,
+    "maximum_open_positions": 3,
+    "profit_target_inr": 1500.0,
+    "stop_loss_inr": -750.0,
+    "lot_size": 30
+  },
+  "costing": {
+    "brokerage_inr": 0.0,
+    "stt_sell_premium_rate": 0.0015,
+    "nse_options_transaction_rate": 0.0003553,
+    "sebi_turnover_rate": 0.000001,
+    "stamp_buy_premium_rate": 0.00003,
+    "gst_rate": 0.18,
+    "slippage_included": false
+  },
+  "literal_current_paper_engine_gate": {
+    "trades": [
+      {
+        "signal_datetime": "2026-10-27 10:19:00",
+        "strike": 54500,
+        "confidence": 0.8181241515522191,
+        "quality_entry_ok": true,
+        "entry_straddle": 353.9,
+        "exit_datetime": "2026-10-27 10:59:00",
+        "exit_straddle": 303.2,
+        "exit_reason": "profit_target",
+        "gross_pnl_inr": 1521.0,
+        "explicit_costs_inr": 24.486395442,
+        "net_pnl_inr": 1496.513604558
+      },
+      {
+        "signal_datetime": "2026-10-27 10:20:00",
+        "strike": 54400,
+        "confidence": 0.8212192306437087,
+        "quality_entry_ok": false,
+        "entry_straddle": 362.45,
+        "exit_datetime": "2026-10-27 10:59:00",
+        "exit_straddle": 309.65,
+        "exit_reason": "profit_target",
+        "gross_pnl_inr": 1584.0,
+        "explicit_costs_inr": 25.066145742,
+        "net_pnl_inr": 1558.933854258
+      }
+    ],
+    "gross_pnl_inr": 3105.0,
+    "explicit_costs_inr": 49.552541184,
+    "net_pnl_inr": 3055.447458816,
+    "net_pnl_with_0.5_point_slippage_per_leg_per_fill_inr": 2935.447458816,
+    "net_pnl_with_1_point_slippage_per_leg_per_fill_inr": 2815.447458816
+  },
+  "if_quality_entry_ok_is_also_required": {
+    "trades": 1,
+    "gross_pnl_inr": 1521.0,
+    "explicit_costs_inr": 24.486395442,
+    "net_pnl_inr": 1496.513604558
+  }
+}

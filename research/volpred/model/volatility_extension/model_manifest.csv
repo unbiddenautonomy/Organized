@@ -1,0 +1,5 @@
+horizon_min,best_extension,model_file,alpha,training_rows,train_start,train_end,qlike_improvement_vs_har_pct,promote_over_har
+15,Realized_GARCH_style,volatility_extension_15m_model.joblib,100.0,9945,2025-01-29,2025-05-22,4.202722929740524,True
+30,Realized_GARCH_style,volatility_extension_30m_model.joblib,100.0,9538,2025-01-29,2025-05-22,5.7842407195791035,True
+60,Realized_GARCH_style,volatility_extension_60m_model.joblib,100.0,8758,2025-01-29,2025-05-22,9.362341529987733,True
+120,Realized_GARCH_style,volatility_extension_120m_model.joblib,100.0,7080,2025-01-29,2025-05-22,13.65237489343838,True

@@ -1,0 +1,60 @@
+{
+  "status": "RESEARCH_ONLY_NOT_LIVE_DEPLOYED",
+  "hypothesis_is_mandatory": true,
+  "entry_cost_gate": "forecast Greek PnL >= selected multiple times complete cost",
+  "risk_checks_minutes": [
+    15,
+    30,
+    60,
+    120
+  ],
+  "take_profit_and_stop_loss_units": "gross option PnL divided by absolute entry premium",
+  "selection_uses": "2024 H1 and H2 only",
+  "holdout": "partial 2025, never used for selection",
+  "selected_rules": [
+    {
+      "side": "long_vol",
+      "signal_variant": "near_only",
+      "structure": "long_2_strangle",
+      "cost_multiple": 1.0,
+      "take_profit": 0.5,
+      "stop_loss": 0.25,
+      "days_2024_H1": 9,
+      "days_2024_H2": 8,
+      "hit_rate_2024_H1": 0.6666666666666666,
+      "hit_rate_2024_H2": 0.375,
+      "max_drawdown_2024_H1": 729.2931237927805,
+      "max_drawdown_2024_H2": 2358.0474821414496,
+      "net_pnl_2024_H1": 850.9661742994285,
+      "net_pnl_2024_H2": 5752.521912070297,
+      "profit_factor_2024_H1": 1.978640972019244,
+      "profit_factor_2024_H2": 3.247791311378426,
+      "development_net": 6603.488086369725,
+      "worst_half_net": 850.9661742994285,
+      "development_days": 17,
+      "stable_profitable": true
+    },
+    {
+      "side": "short_vol",
+      "signal_variant": "combined_or",
+      "structure": "short_2_strangle",
+      "cost_multiple": 3.0,
+      "take_profit": 0.3,
+      "stop_loss": 0.5,
+      "days_2024_H1": 11,
+      "days_2024_H2": 9,
+      "hit_rate_2024_H1": 0.8181818181818182,
+      "hit_rate_2024_H2": 0.5555555555555556,
+      "max_drawdown_2024_H1": 261.67170287813497,
+      "max_drawdown_2024_H2": 1688.3053005676554,
+      "net_pnl_2024_H1": 8263.369601579681,
+      "net_pnl_2024_H2": 99.21943534204655,
+      "profit_factor_2024_H1": 24.80374816298418,
+      "profit_factor_2024_H2": 1.0533279759921623,
+      "development_net": 8362.589036921729,
+      "worst_half_net": 99.21943534204655,
+      "development_days": 20,
+      "stable_profitable": true
+    }
+  ]
+}

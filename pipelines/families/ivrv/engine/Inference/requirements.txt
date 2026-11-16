@@ -1,0 +1,10 @@
+joblib
+lightgbm
+ngboost
+numpy
+pandas
+pyyaml
+scikit-learn
+xgboost
+psycopg[binary]
+

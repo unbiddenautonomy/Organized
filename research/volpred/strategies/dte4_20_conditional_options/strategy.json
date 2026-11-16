@@ -1,0 +1,20 @@
+{
+  "name": "dte4_20_conditional_options",
+  "underlying": "BANKNIFTY",
+  "expiry": "nearest_monthly",
+  "entry_window": ["09:45", "09:59"],
+  "exit_rule": "same session at or after 15:15, same fixed strikes",
+  "status": "PAPER_ONLY",
+  "bands": {
+    "4-7": {"model": "model/dte4_20_paper/dte4_7_pnl_gate.joblib", "choices": ["short_atm_straddle", "no_trade"]},
+    "8-14": {"model": "model/dte4_20_paper/dte8_20_huber_gate.joblib", "choices": ["short_atm_straddle", "no_trade"]},
+    "15-20": {
+      "model": "model/dte4_20_paper/multi_structure_selector.joblib",
+      "current_eligible_choices": ["short_1_strangle", "short_2_strangle", "no_trade"],
+      "research_universe": ["short_atm_straddle", "short_1_strangle", "short_2_strangle", "long_atm_straddle", "long_1_strangle", "iron_fly_0_1", "iron_condor_1_2", "no_trade"]
+    }
+  },
+  "intent_output": "runtime/trade_intents.jsonl",
+  "broker_submission": false
+}
+

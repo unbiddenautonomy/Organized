@@ -1,0 +1,60 @@
+{
+  "spec_version": "research_v2_p2_frozen_1",
+  "status": "FROZEN_PSEUDO_NOT_OPENED",
+  "model_family": "P2_HistGradientBoostingRegressor",
+  "model_artifact": "model/research_v2_p2/p2_hist_gradient_boosting_120m.joblib",
+  "model_artifact_sha256": "16811de9020ea9703e63b5c058bd60ffbc673c68051a79cd6b5a8af7ba27e658",
+  "artifact_metadata": "model/research_v2_p2/artifact_metadata.json",
+  "feature_order": [
+    "p0_log_rv_5",
+    "p0_log_rv_15",
+    "p0_log_rv_60",
+    "p1_log_rq_15",
+    "p1_log_rq_60",
+    "p1_downside_rv_15",
+    "p1_upside_rv_15",
+    "p1_downside_rv_60",
+    "p1_upside_rv_60",
+    "p1_jump_rv_60",
+    "p1_abs_return",
+    "p1_tod_sin",
+    "p1_tod_cos"
+  ],
+  "target": "log(max(rv_fwd_120, 1e-12))",
+  "variance_forecast": "exp(model_log_forecast + training_only_smearing_log_adjustment)",
+  "params": {
+    "max_depth": 3,
+    "learning_rate": 0.05,
+    "l2_regularization": 1.0
+  },
+  "max_iter": 200,
+  "early_stopping": false,
+  "seed": 7319,
+  "training_splits": [
+    "development",
+    "walk_forward_validation"
+  ],
+  "training_rows": 44679,
+  "training_max_label_end_at": "2024-06-28 15:25:59+05:30",
+  "dataset": "outputs/research_v2/common/predictive_dataset_120m.parquet",
+  "dataset_sha256": "02850acfebd8442bfb7c518f174abc94402e88181a72975f2db4986d35d8ded0",
+  "common_manifest_sha256": "3778739fa77c6470fbb788788c3ed93571cc7c1b4f5b90ad230a955d82ca18b6",
+  "splits_sha256": "4409030241bf656af200c811a50a39387c49a8a4e3a4b01700b06fde1c79b48c",
+  "runner_sha256": "c65044c2b680bd20783cc97fb9ec9fabd2f0af662ff4bab0db7a91a7ba05d3ed",
+  "pseudo_holdout": {
+    "label": "pseudo-holdout, previously exposed",
+    "split": "pseudo_holdout_previously_exposed",
+    "status": "NOT_OPENED",
+    "one_shot_command": "py -3.13 research/research_v2_p2.py --score-pseudo-once",
+    "marker": "model/research_v2_p2/PSEUDO_HOLDOUT_OPENED.json",
+    "predictions_output": "outputs/research_v2/p2/pseudo_holdout_once_predictions.parquet",
+    "result_output": "outputs/research_v2/p2/pseudo_holdout_once_result.json",
+    "rerun_policy": "refuse if marker or either output exists; a failed opening remains consumed",
+    "permitted_metrics": [
+      "QLIKE",
+      "log_MSE",
+      "raw_calibration_failures"
+    ],
+    "strategy_pnl_permitted": false
+  }
+}

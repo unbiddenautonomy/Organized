@@ -1,0 +1,5 @@
+split,date_rule,role
+train,year <= 2022,fit all probability models
+validation,year = 2023,"select thresholds, structure, and coverage/profit knee"
+development evaluation,year = 2024,frozen out-of-sample evaluation
+holdout evaluation,year = 2025 (available through 2025-05-09),frozen partial holdout evaluation

@@ -1,0 +1,2 @@
+rule,median_ratio,trades,effective_lots,net_pnl_inr,average_pnl_per_trade_inr,sharpe_daily,max_drawdown_inr,minimum_weight,median_weight,in_sample,execution_note
+"fractional_lot_weight=min(1, median_ratio/trade_ratio)",9.986619711259233e-06,304,277.6026048643698,93831.30778883994,308.6556177264472,4.696817660851307,8956.554317226002,0.5382419008494576,0.9992008778433713,True,Fractional-lot research sizing; not directly executable with integer lots.

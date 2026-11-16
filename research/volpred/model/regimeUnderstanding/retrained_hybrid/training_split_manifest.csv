@@ -1,0 +1,5 @@
+split,date_rule,rows,days
+train,year <= 2022,21315,587
+validation,year = 2023,14100,238
+development evaluation,year = 2024,11783,223
+holdout evaluation,year = 2025,4656,74

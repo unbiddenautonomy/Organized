@@ -1,0 +1,11 @@
+{
+  "thresholds": {
+    "3_week": 0.0,
+    "4_week": 0.5
+  },
+  "max_open_positions": 3,
+  "comparison": ">=",
+  "revision": "119cd24e79d74bbab974b8544a9b2fb2",
+  "source": "operator_override",
+  "updated_at": "2026-10-29T12:24:26+05:30"
+}

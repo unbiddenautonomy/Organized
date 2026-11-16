@@ -1,0 +1,19 @@
+{
+  "algorithm": "sha256",
+  "files": {
+    "feature_schema.json": "c8ccac49bb54a04c23c158aa4cf0bd7444db3efc93029cfefd5091e1a900c549",
+    "imputer_120m.joblib": "ed82ad3f8b0afd0d915a9f7ef054670866fcbc974b49ea64ba3e2c8a7163dd59",
+    "imputer_60m.joblib": "ed82ad3f8b0afd0d915a9f7ef054670866fcbc974b49ea64ba3e2c8a7163dd59",
+    "inference.py": "f1c1264ae3d11659ef654a985dc4dcff803137e75f1a90fa95a7d5bff5151b0d",
+    "metrics.json": "5b787364966805ca2ad61c82a45f1c33a53f83edbb0f02444fed07e687d67707",
+    "model_bundle.joblib": "4d3f545e2f2f12a780b780a4568480cbc7c7cc1bc0cdceb4b32021bc33d0240e",
+    "MODEL_CARD.md": "1331a176683ebd60ad309889634252a54ff6bb97b09a983e44de11a5b062dcc7",
+    "model_pipeline.joblib": "d67f0be5c503aa89c5d9fdcead32e8b30930cb3ae8a7af09168f0de65222f706",
+    "PACKAGE_README.md": "5e77840dd32fc6c1206f7143e7242754356886214af3a4e86d5af94e83c1321a",
+    "requirements.txt": "265f6ab094824839ba6b1eccbf7273b758ab962dc1cf42d0992c6805b66f77f8",
+    "scaler_120m.joblib": "90b1aed9994122eebfbc251f0dcfc501586758fe89ea5c3d01c018a74d253f25",
+    "scaler_60m.joblib": "90b1aed9994122eebfbc251f0dcfc501586758fe89ea5c3d01c018a74d253f25",
+    "thresholds.json": "ec01635457e075cc381f54413aac6cda1b228bff6db3fb82c6bc4b10989160fd",
+    "training_code.py": "a8f02be6a79b58c9953265548c5ba81b0ce8f732372608c87d94c1ddab4c828b"
+  }
+}

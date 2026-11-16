@@ -1,0 +1,57 @@
+{
+  "authorization_version": "research_v2_development_validation_evaluation_3",
+  "authorized": true,
+  "scope": "development_validation_strategy_evaluation",
+  "allowed_segments": [
+    "development",
+    "validation"
+  ],
+  "pseudo_authorized": false,
+  "signed_by": "independent_leakage_and_risk_auditor",
+  "signed_at": "2026-10-13T19:42:54.6778477+05:30",
+  "decision": "PASS_HASH_BOUND_PRIMARY_AND_EVENT_DIAGNOSTIC_EVALUATION",
+  "conditions": [
+    "Load only the fourteen absolute ledger paths bound below.",
+    "The event-counterfactual ledgers are diagnostic_only and promotion_eligible=false.",
+    "Pseudo-holdout strategy ledgers and pseudo evaluation are forbidden.",
+    "Diagnostic identity must derive exactly from the eventdiag trial identifier.",
+    "A missing diagnostic_only column may default false only when no eventdiag trial identifier is present.",
+    "Historical and bootstrap CVaR must use exactly the worst ceil(5% * N) sessions.",
+    "Any ledger hash, path, segment, registry, evaluator, or test change revokes this authorization."
+  ],
+  "integrity_inventory": {
+    "TRIALS.csv": "54be43fa8dabadc2461ae671f39035b1453733abbf61815d5d721a167660adb6",
+    "research/research_v2_evaluation.py": "b7985eeac31261c4d5875ea995bda0e53847349593a8566738171f467d6d375d",
+    "research/run_research_v2_evaluation.py": "f370cc6dbcc0d91291dc6c2430a16039b536dc6cbbab97be5a29ae525495d513",
+    "tests/test_research_v2_evaluation.py": "a5e36ac7c862bce3c259b368be24d48868a2289b2247bfa6bf5dc9c3ad1be0b4",
+    "STRATEGY_PNL_AUTHORIZATION_V2.json": "580f6b94fbe6f071ca86c34aa9cc9918d2fc470aa7ec49769ec3428e5e4bf3a0"
+  },
+  "coverage": {
+    "development": {
+      "eligible_decisions_per_trial": 2355,
+      "trial_count": 7,
+      "decision_universe_sha256": "5ad637dcf4be93be3f5d01db001db42572a2bbc3242247077d8f01b7c8255cee"
+    },
+    "validation": {
+      "eligible_decisions_per_trial": 1078,
+      "trial_count": 7,
+      "decision_universe_sha256": "1a6de14642e4168354f3c14cd51fab1397cef7cdc424e7fbe6184b7e64e59838"
+    }
+  },
+  "ledger_sha256": {
+    "E:/volpred/outputs/research_v2/strategy/development_t1.15_constant15_ledger.parquet": "2c4147cf888a6099a3f1a255461acb0b8382f5f5077a0be7bb8823f51ef55362",
+    "E:/volpred/outputs/research_v2/strategy/development_t1.15_historical_ledger.parquet": "679d08cb273a4b06b82a1649b2b0ce7f9d7d9bd271ebe7e5d84d0c5dfe3e9c5a",
+    "E:/volpred/outputs/research_v2/strategy/development_t1.25_constant15_ledger.parquet": "f2b07498274309b39e818903274f7fcb96494fbcee87528f1e2d2d61429ab4f2",
+    "E:/volpred/outputs/research_v2/strategy/development_t1.25_historical_event_counterfactual_ledger.parquet": "91481680926d7e3c5b23049bb753f42aa27885be1c17d756bc65b9f29fe93cf0",
+    "E:/volpred/outputs/research_v2/strategy/development_t1.25_historical_ledger.parquet": "ec7adeb76fd3a18b1424b2ea92df17d6b1ebfb78245ddbc47d587d13018cf1d8",
+    "E:/volpred/outputs/research_v2/strategy/development_t1.35_constant15_ledger.parquet": "89f63992429beb85b749c1cc5b63e528b5060c1b9e76e850e27309503adc1851",
+    "E:/volpred/outputs/research_v2/strategy/development_t1.35_historical_ledger.parquet": "7a3259ee6de61c0481b93c3ee5e15c07c5fc51edb8cfa21344227dae36517782",
+    "E:/volpred/outputs/research_v2/strategy/validation_t1.15_constant15_ledger.parquet": "867c5bf21a0d61ce2207d04d6e7c833bae074bc155f385dfa165a5e8db7e9105",
+    "E:/volpred/outputs/research_v2/strategy/validation_t1.15_historical_ledger.parquet": "84b2bd99cb7414cff5fd6bbe4a32e8b8af62b593eb89be68dc6f1cd51762e04f",
+    "E:/volpred/outputs/research_v2/strategy/validation_t1.25_constant15_ledger.parquet": "57a252f43e615383b206bcc93090952e0fe3246be3d92eaac62c2efe7f49b5e2",
+    "E:/volpred/outputs/research_v2/strategy/validation_t1.25_historical_event_counterfactual_ledger.parquet": "4a135ad72fa3c505cdf4a87cfebdd295cc92d0312892dae4ba892ceed8738b5f",
+    "E:/volpred/outputs/research_v2/strategy/validation_t1.25_historical_ledger.parquet": "a6e606dfc98054a48b14c27207cefa4f2e223a460598b40c2d9ccb490da7d8c8",
+    "E:/volpred/outputs/research_v2/strategy/validation_t1.35_constant15_ledger.parquet": "3f30594be5d0dcb863f4de9c0e2d86b88132c6643bc1953004405e3e20ce45ce",
+    "E:/volpred/outputs/research_v2/strategy/validation_t1.35_historical_ledger.parquet": "1a21a473b32ced52c3dd70f2c70f9874addf570b1692b8fc637cae9289d79d47"
+  }
+}

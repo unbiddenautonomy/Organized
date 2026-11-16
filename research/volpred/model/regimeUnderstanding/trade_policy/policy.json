@@ -1,0 +1,23 @@
+{
+  "status": "SUPERSEDED_BY_FIVE_STRIKE_TRADE_RESEARCH",
+  "same_expiry": true,
+  "fixed_strike": true,
+  "intraday_session": "09:15-15:30",
+  "iv_rv_equal_band_vol_points": 0.5,
+  "cost_stress_bps_of_premium_turnover": 25.0,
+  "scenes": {
+    "IV < predicted RV": {
+      "action": "NO_TRADE",
+      "reason": "long straddle failed walk-forward audit"
+    },
+    "IV = predicted RV": {
+      "action": "NO_TRADE",
+      "reason": "no edge after costs"
+    },
+    "IV > predicted RV": {
+      "action": "PAPER_TEST_SHORT_ATM_STRADDLE",
+      "horizon_minutes": 120,
+      "reason": "shortest horizon with non-negative mean in 2024 development and 2025 holdout"
+    }
+  }
+}

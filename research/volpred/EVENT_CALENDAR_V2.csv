@@ -1,0 +1,56 @@
+date,event_type,event_name,source_url,announced_at,primary_no_entry
+2019-10-27,nse_special_session,NSE Diwali Muhurat special trading session,https://www.nseindia.com/resources/exchange-communication-holidays/,unknown,true
+2019-12-05,rbi_mpc_scheduled,RBI MPC scheduled policy decision,https://www.rbi.org.in/Scripts/Annualpolicy.aspx,unknown,true
+2020-02-01,union_budget,Union Budget 2020-21 presentation,https://www.indiabudget.gov.in/budget2024-25%28I%29/doc/bspeech/bs202021.pdf,unknown,true
+2020-02-01,nse_special_session,NSE live Saturday session for Union Budget 2020-21,https://archives.nseindia.com/content/circulars/COM43347.pdf,unknown,true
+2020-02-06,rbi_mpc_scheduled,RBI MPC scheduled policy decision,https://www.rbi.org.in/Scripts/Annualpolicy.aspx,unknown,true
+2020-03-27,rbi_mpc_offcycle,RBI MPC extraordinary policy decision,https://www.rbi.org.in/Scripts/Annualpolicy.aspx,unknown,true
+2020-05-22,rbi_mpc_rescheduled,RBI MPC policy decision advanced from June schedule,https://www.rbi.org.in/commonman/English/Scripts/PressReleases.aspx?Id=3220,unknown,true
+2020-08-06,rbi_mpc_scheduled,RBI MPC scheduled policy decision,https://www.rbi.org.in/Scripts/Annualpolicy.aspx,unknown,true
+2020-10-09,rbi_mpc_scheduled,RBI MPC scheduled policy decision,https://www.rbi.org.in/Scripts/Annualpolicy.aspx,unknown,true
+2020-11-14,nse_special_session,NSE Diwali Muhurat special trading session,https://nsearchives.nseindia.com/content/circulars/CMTR46230.pdf,unknown,true
+2020-12-04,rbi_mpc_scheduled,RBI MPC scheduled policy decision,https://www.rbi.org.in/scripts/BS_PressReleaseDisplay.aspx?prid=50747,unknown,true
+2021-02-01,union_budget,Union Budget 2021-22 presentation,https://www.indiabudget.gov.in/doc/bspeech/bs202122.pdf,unknown,true
+2021-02-05,rbi_mpc_scheduled,RBI MPC scheduled policy decision,https://www.rbi.org.in/scripts/BS_pressReleaseDisplay.aspx?prid=51077,unknown,true
+2021-02-24,nse_exchange_halt,NSE trading-system halt and extended-session incident,https://nsearchives.nseindia.com/web/sites/default/files/inline-files/NSE_Annual_Report_FY24.pdf,unknown,true
+2021-04-07,rbi_mpc_scheduled,RBI MPC scheduled policy decision,https://www.rbi.org.in/Scripts/Annualpolicy.aspx,unknown,true
+2021-06-04,rbi_mpc_scheduled,RBI MPC scheduled policy decision,https://www.rbi.org.in/commonman/Upload/English/PressRelease/PDFs/PR318MPC04062021.pdf,unknown,true
+2021-08-06,rbi_mpc_scheduled,RBI MPC scheduled policy decision,https://www.rbi.org.in/commonman/Upload/English/PressRelease/PDFs/PR644ML06082021.pdf,unknown,true
+2021-10-08,rbi_mpc_scheduled,RBI MPC scheduled policy decision,https://www.rbi.org.in/Scripts/Annualpolicy.aspx,unknown,true
+2021-11-04,nse_special_session,NSE Diwali Muhurat special trading session,https://archives.nseindia.com/content/circulars/FAOP50049.pdf,unknown,true
+2021-12-08,rbi_mpc_scheduled,RBI MPC scheduled policy decision,https://www.rbi.org.in/commonman/Upload/English/PressRelease/PDFs/PR132208122021.pdf,unknown,true
+2022-02-01,union_budget,Union Budget 2022-23 presentation,https://www.indiabudget.gov.in/doc/bspeech/bs202223.pdf,unknown,true
+2022-02-10,rbi_mpc_scheduled,RBI MPC scheduled policy decision,https://www.rbi.org.in/Scripts/Annualpolicy.aspx,unknown,true
+2022-04-08,rbi_mpc_scheduled,RBI MPC scheduled policy decision,https://www.rbi.org.in/Scripts/Annualpolicy.aspx,unknown,true
+2022-05-04,rbi_mpc_offcycle,RBI MPC off-cycle policy decision,https://www.rbi.org.in/commonman/Upload/English/PressRelease/PDFs/PR154MPC04052022.pdf,unknown,true
+2022-06-08,rbi_mpc_scheduled,RBI MPC scheduled policy decision,https://www.rbi.org.in/commonman/Upload/English/PressRelease/PDFs/PR333ML08062022.pdf,unknown,true
+2022-08-05,rbi_mpc_scheduled,RBI MPC scheduled policy decision,https://systemhealth.rbi.org.in/Scripts/BS_PressReleaseDisplay.aspx_prid%3D54148%281%29.html,unknown,true
+2022-09-30,rbi_mpc_scheduled,RBI MPC scheduled policy decision,https://www.rbi.org.in/Scripts/Annualpolicy.aspx,unknown,true
+2022-10-24,nse_special_session,NSE Diwali Muhurat special trading session,https://archives.nseindia.com/content/circulars/FAOP54024.pdf,unknown,true
+2022-12-07,rbi_mpc_scheduled,RBI MPC scheduled policy decision,https://systemhealth.rbi.org.in/Scripts/FS_Notification.aspx_Id%3D12419%26fn%3D2752%26Mode%3D0.html,unknown,true
+2023-02-01,union_budget,Union Budget 2023-24 presentation,https://www.indiabudget.gov.in/budget2023-24/doc/Budget_Speech.pdf,unknown,true
+2023-02-08,rbi_mpc_scheduled,RBI MPC scheduled policy decision,https://rbi.org.in/scripts/BS_PressReleaseDisplay.aspx?prid=55178,unknown,true
+2023-04-06,rbi_mpc_scheduled,RBI MPC scheduled policy decision,https://systemhealth.rbi.org.in/Scripts/BS_PressReleaseDisplay.aspx_prid%3D55472.html,unknown,true
+2023-06-08,rbi_mpc_scheduled,RBI MPC scheduled policy decision,https://www.rbi.org.in/Scripts/Annualpolicy.aspx,unknown,true
+2023-08-10,rbi_mpc_scheduled,RBI MPC scheduled policy decision,https://www.rbi.org.in/Scripts/Annualpolicy.aspx,unknown,true
+2023-10-06,rbi_mpc_scheduled,RBI MPC scheduled policy decision,https://www.rbi.org.in/Scripts/Annualpolicy.aspx,unknown,true
+2023-11-12,nse_special_session,NSE Diwali Muhurat special trading session,https://nsearchives.nseindia.com/content/circulars/ISC59313.pdf,unknown,true
+2023-12-08,rbi_mpc_scheduled,RBI MPC scheduled policy decision,https://www.rbi.org.in/Scripts/Annualpolicy.aspx,unknown,true
+2024-01-20,nse_special_session,NSE special live Saturday trading session,https://nsearchives.nseindia.com/content/circulars/CMPT60122.pdf,unknown,true
+2024-01-22,nse_exchange_closure,NSE revised trading holiday after Maharashtra public-holiday declaration,https://nsearchives.nseindia.com/content/circulars/SURV60342.pdf,unknown,true
+2024-02-01,union_budget,Interim Union Budget 2024-25 presentation,https://www.indiabudget.gov.in/budget2024-25/doc/bspeech/bs2024_25%28I%29.pdf,unknown,true
+2024-02-08,rbi_mpc_scheduled,RBI MPC scheduled policy decision,https://www.rbi.org.in/Scripts/Annualpolicy.aspx,unknown,true
+2024-03-02,nse_special_session,NSE special live session with intraday switch to disaster-recovery site,https://nsearchives.nseindia.com/content/circulars/MSD60677.pdf,unknown,true
+2024-04-05,rbi_mpc_scheduled,RBI MPC scheduled policy decision,https://www.rbi.org.in/Scripts/Annualpolicy.aspx,unknown,true
+2024-05-18,nse_special_session,NSE special live session with intraday disaster-recovery invocation,https://nsearchives.nseindia.com/content/circulars/MSD61893.pdf,unknown,true
+2024-06-04,national_election_counting,General Election to Lok Sabha 2024 counting and results day,https://elections24.eci.gov.in/docs/press-note-no-23.pdf,unknown,true
+2024-06-07,rbi_mpc_scheduled,RBI MPC scheduled policy decision,https://www.rbi.org.in/Scripts/Annualpolicy.aspx,unknown,true
+2024-07-23,union_budget,Union Budget 2024-25 presentation,https://www.indiabudget.gov.in/budget2024-25/doc/Budget_Speech.pdf,unknown,true
+2024-08-08,rbi_mpc_scheduled,RBI MPC scheduled policy decision,https://www.rbi.org.in/Scripts/Annualpolicy.aspx,unknown,true
+2024-10-09,rbi_mpc_scheduled,RBI MPC scheduled policy decision,https://www.rbi.org.in/Scripts/Annualpolicy.aspx,unknown,true
+2024-11-01,nse_special_session,NSE Diwali Muhurat special trading session,https://nsearchives.nseindia.com/content/circulars/CMPT64641.pdf,unknown,true
+2024-12-06,rbi_mpc_scheduled,RBI MPC scheduled policy decision,https://www.rbi.org.in/Scripts/Annualpolicy.aspx,unknown,true
+2025-02-01,union_budget,Union Budget 2025-26 presentation,https://www.indiabudget.gov.in/budget2025-26/doc/Budget_Speech.pdf,unknown,true
+2025-02-01,nse_special_session,NSE live Saturday session for Union Budget 2025-26,https://nsearchives.nseindia.com/content/circulars/FAOP65730.pdf,unknown,true
+2025-02-07,rbi_mpc_scheduled,RBI MPC scheduled policy decision,https://www.rbi.org.in/Scripts/Annualpolicy.aspx,unknown,true
+2025-04-09,rbi_mpc_scheduled,RBI MPC scheduled policy decision,https://www.rbi.org.in/scripts/PublicationsView.aspx?id=23139,unknown,true

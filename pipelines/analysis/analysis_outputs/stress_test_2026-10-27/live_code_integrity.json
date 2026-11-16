@@ -1,0 +1,28 @@
+{
+  "unchanged": true,
+  "files_checked": 10,
+  "hashes_before": {
+    "E:\\inference Pipeline\\Inference_full_2026-10-24\\Inference\\live\\__init__.py": "825A9209137FC6AF88B8A22C0D1B7BD2FA6FC20ED2D48EB40FCFBE50C938287F",
+    "E:\\inference Pipeline\\Inference_full_2026-10-24\\Inference\\live\\contract_bootstrap.py": "4FBB9E822EC4693D83BE4E091C80933E6CA33F1746F003DDD95B76E4EAFA10DF",
+    "E:\\inference Pipeline\\Inference_full_2026-10-24\\Inference\\live\\contracts\\banknifty_latest_expiry_tokens.json": "AE662595F755046823041DCB62889579C7FE8D39AC88C0D05F0767BE3DAC3FF7",
+    "E:\\inference Pipeline\\Inference_full_2026-10-24\\Inference\\live\\contracts\\NSE_FO_contract_21102026.csv.gz": "12E83239EFD578282833667F98099714EBB2DC655A1D316289D4BC6E3CBC8515",
+    "E:\\inference Pipeline\\Inference_full_2026-10-24\\Inference\\live\\live_config.json": "DE58512F6B371DF6F11C09EFE32C94FC538F6862CF60876B1710ED6D5384D05D",
+    "E:\\inference Pipeline\\Inference_full_2026-10-24\\Inference\\live\\live_dashboard.html": "3882C5DA1100ED5F289D76FE7C153B962D908B41D73ACCDE4FB4172445FA77E4",
+    "E:\\inference Pipeline\\Inference_full_2026-10-24\\Inference\\live\\live_inference.py": "6277E07BD2EB60E1C1BEFBE87EEB13224A1133E8170F3213D2003B6B0911447D",
+    "E:\\inference Pipeline\\Inference_full_2026-10-24\\Inference\\live\\lzo_codec.py": "AFBC21598EA3CDE3EDA73CD3E63C14C470CE20853F4C1679F460A15E16E8C598",
+    "E:\\inference Pipeline\\Inference_full_2026-10-24\\Inference\\live\\native\\lzo2.dll": "E343D9CF7301ADB308169BA4861738C1606F4A1A82B898BC2987EEC7F33584C2",
+    "E:\\inference Pipeline\\Inference_full_2026-10-24\\Inference\\live\\udp_receiver.py": "D831CF748D9468EA25AFFD6E4BA6AF6BA0337C183A494356C755A7F0EDAA9C95"
+  },
+  "hashes_after": {
+    "E:\\inference Pipeline\\Inference_full_2026-10-24\\Inference\\live\\__init__.py": "825A9209137FC6AF88B8A22C0D1B7BD2FA6FC20ED2D48EB40FCFBE50C938287F",
+    "E:\\inference Pipeline\\Inference_full_2026-10-24\\Inference\\live\\contract_bootstrap.py": "4FBB9E822EC4693D83BE4E091C80933E6CA33F1746F003DDD95B76E4EAFA10DF",
+    "E:\\inference Pipeline\\Inference_full_2026-10-24\\Inference\\live\\contracts\\banknifty_latest_expiry_tokens.json": "AE662595F755046823041DCB62889579C7FE8D39AC88C0D05F0767BE3DAC3FF7",
+    "E:\\inference Pipeline\\Inference_full_2026-10-24\\Inference\\live\\contracts\\NSE_FO_contract_21102026.csv.gz": "12E83239EFD578282833667F98099714EBB2DC655A1D316289D4BC6E3CBC8515",
+    "E:\\inference Pipeline\\Inference_full_2026-10-24\\Inference\\live\\live_config.json": "DE58512F6B371DF6F11C09EFE32C94FC538F6862CF60876B1710ED6D5384D05D",
+    "E:\\inference Pipeline\\Inference_full_2026-10-24\\Inference\\live\\live_dashboard.html": "3882C5DA1100ED5F289D76FE7C153B962D908B41D73ACCDE4FB4172445FA77E4",
+    "E:\\inference Pipeline\\Inference_full_2026-10-24\\Inference\\live\\live_inference.py": "6277E07BD2EB60E1C1BEFBE87EEB13224A1133E8170F3213D2003B6B0911447D",
+    "E:\\inference Pipeline\\Inference_full_2026-10-24\\Inference\\live\\lzo_codec.py": "AFBC21598EA3CDE3EDA73CD3E63C14C470CE20853F4C1679F460A15E16E8C598",
+    "E:\\inference Pipeline\\Inference_full_2026-10-24\\Inference\\live\\native\\lzo2.dll": "E343D9CF7301ADB308169BA4861738C1606F4A1A82B898BC2987EEC7F33584C2",
+    "E:\\inference Pipeline\\Inference_full_2026-10-24\\Inference\\live\\udp_receiver.py": "D831CF748D9468EA25AFFD6E4BA6AF6BA0337C183A494356C755A7F0EDAA9C95"
+  }
+}

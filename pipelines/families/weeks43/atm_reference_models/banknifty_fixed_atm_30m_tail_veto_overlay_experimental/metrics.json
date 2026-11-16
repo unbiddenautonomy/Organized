@@ -1,0 +1,33 @@
+{
+  "entry_model": "frozen 30-minute Extra Trees classifier",
+  "tail_veto": "soft_vote_linear_tree",
+  "entry_threshold": 0.55,
+  "rolling_veto_window": 1000,
+  "rolling_veto_percentile": 0.8,
+  "rolling_history_update_universe": "all chronological signals, before exact-exit label filtering",
+  "candidate_signals": 3289,
+  "vetoed_candidate_signals": 764,
+  "before_veto": {
+    "prediction_threshold_net_points": 0.55,
+    "trades": 163,
+    "signal_days": 32,
+    "win_rate_after_slippage": 0.5276073619631901,
+    "gross_points_before_cost": 542.9000000000015,
+    "net_points_after_2pt_slippage": 216.90000000000146,
+    "average_net_points": 1.3306748466257758,
+    "profit_factor": 1.1559478017039952,
+    "maximum_drawdown_points": -196.0999999999999
+  },
+  "after_veto": {
+    "prediction_threshold_net_points": 0.55,
+    "trades": 152,
+    "signal_days": 32,
+    "win_rate_after_slippage": 0.5592105263157895,
+    "gross_points_before_cost": 591.850000000001,
+    "net_points_after_2pt_slippage": 287.85000000000105,
+    "average_net_points": 1.893750000000007,
+    "profit_factor": 1.2403657467329143,
+    "maximum_drawdown_points": -176.4500000000005
+  },
+  "research_status": "diagnostic on already-consumed 2026 labels; not a new holdout"
+}

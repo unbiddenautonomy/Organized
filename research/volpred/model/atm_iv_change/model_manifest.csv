@@ -1,0 +1,5 @@
+horizon_min,model_file,train_start,train_end,training_days,training_rows,validation_mae,parameters
+15,atm_iv_change_15m_lightgbm.joblib,2025-01-24,2025-05-09,60,4992,0.0019431909881404193,"{""n_estimators"": 250, ""num_leaves"": 15, ""min_child_samples"": 150}"
+30,atm_iv_change_30m_lightgbm.joblib,2025-01-24,2025-05-09,60,4810,0.0026959635221389193,"{""n_estimators"": 250, ""num_leaves"": 15, ""min_child_samples"": 150}"
+60,atm_iv_change_60m_lightgbm.joblib,2025-01-23,2025-05-09,60,4489,0.003941419293608956,"{""n_estimators"": 250, ""num_leaves"": 15, ""min_child_samples"": 150}"
+120,atm_iv_change_120m_lightgbm.joblib,2025-01-23,2025-05-09,60,3615,0.0052728182509893485,"{""n_estimators"": 250, ""num_leaves"": 15, ""min_child_samples"": 150}"

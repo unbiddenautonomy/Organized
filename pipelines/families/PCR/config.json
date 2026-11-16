@@ -1,0 +1,35 @@
+{
+  "enabled": true,
+  "strategy_id": "PCR_60_120_MAX3_TP3000_SL1500",
+  "timezone": "Asia/Kolkata",
+  "entry_start": "10:15:00",
+  "entry_end": "13:00:00",
+  "square_off": "15:14:30",
+  "horizons_minutes": [
+    60,
+    120
+  ],
+  "extension_buffer_points": 5.0,
+  "maximum_open_positions": 3,
+  "win_probability_thresholds": {
+    "0": 0.5953519546951542,
+    "1": 0.4899177527467293,
+    "2": 0.5155104479417535,
+    "3_4": 0.4987736581923341
+  },
+  "lots_per_position": 1,
+  "profit_target_net_rupees": 3000.0,
+  "stop_loss_net_rupees": -1500.0,
+  "brokerage_rupees": 0.0,
+  "round_trip_slippage_points": 2.0,
+  "price_max_age_seconds": 60,
+  "max_leg_timestamp_difference_seconds": 10,
+  "oi_max_age_seconds": 900,
+  "max_processing_delay_seconds": 10,
+  "minimum_history_minutes": 61,
+  "max_missing_feature_fraction": 0.25,
+  "live_cost_source": "parent_live_config",
+  "risk_free_rate_default": 0.065,
+  "transport_queue_capacity": 300,
+  "reference_raw_cache": "data/all_m1_rows_features_v2.pkl"
+}

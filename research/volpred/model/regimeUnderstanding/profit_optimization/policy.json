@@ -1,0 +1,19 @@
+{
+  "status": "FORWARD_PAPER_TEST_ONLY",
+  "rule": {
+    "source_rule": "put_and_short_strangle",
+    "sources": [
+      "iv_lt_rv_long_atm_put",
+      "iv_lt_rv_short_2_strangle"
+    ],
+    "dte_floor": 4,
+    "selection_period": "2024",
+    "selection_objective": "maximum net P&L with at least 30 trades and max drawdown no worse than baseline"
+  },
+  "same_monthly_expiry": true,
+  "horizon_minutes": 120,
+  "latest_entry": "13:30",
+  "position_size": "one lot",
+  "iv_gt_predicted_rv": "no trade",
+  "iv_eq_predicted_rv": "no trade"
+}

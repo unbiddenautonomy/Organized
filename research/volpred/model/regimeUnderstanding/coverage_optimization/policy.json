@@ -1,0 +1,17 @@
+{
+  "status": "FORWARD_PAPER_TEST_ONLY",
+  "rule": {
+    "call_mode": "near_expiry_only",
+    "put_dte_floor": 4,
+    "short_dte_floor": 0,
+    "selection_period": "2024",
+    "minimum_development_trading_days": 50,
+    "objective": "maximum net P&L among rules meeting the coverage and drawdown constraints"
+  },
+  "scene": "IV < predicted RV",
+  "same_monthly_expiry": true,
+  "position_size": "one lot",
+  "horizon_minutes": 120,
+  "latest_entry": "13:30",
+  "iv_eq_or_gt_predicted_rv": "no trade"
+}

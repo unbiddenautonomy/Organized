@@ -1,0 +1,12 @@
+{
+  "target_rupees_net": 3000.0,
+  "stop_rupees_net": -1500.0,
+  "maximum_open_positions": 3,
+  "capacity_rule": "accept only when fewer than three earlier positions remain open",
+  "monitoring": "every available source-data minute",
+  "hard_cutoff": "15:14:30",
+  "brokerage_rupees": 0.0,
+  "statutory_charges_included": true,
+  "slippage_points_per_straddle": 2.0,
+  "same_entry_expiry_and_strike": true
+}

@@ -1,0 +1,189 @@
+{
+  "verdict": "no evidence",
+  "pass_criteria": {
+    "bootstrap_ci_excludes_zero": false,
+    "leave_one_month_out_filter_improves_heldout_sharpe": false,
+    "placebo_p_value_below_0_05": false,
+    "all_three_required": true
+  },
+  "coverage": {
+    "input_trades": 304,
+    "analyzable_trades": 304,
+    "failed_trades": 0
+  },
+  "assumptions": {
+    "pricing_model": "Black-76 on synthetic forward derived from call-put parity F=K+exp(rT)*(C-P)",
+    "risk_free_rate_continuously_compounded": 0.065,
+    "expiry_time_local": "15:30:00",
+    "calendar_basis_days": 365.0,
+    "lot_size": 30,
+    "option_style": "European approximation",
+    "dividend_or_carry_handling": "Embedded in the synthetic forward; no separate dividend yield assumed",
+    "gamma_unit": "rupees per one index-point squared per lot; standard gamma coefficient, before the 0.5 Taylor factor",
+    "theta_unit": "rupees per calendar day per lot",
+    "position": "short one call plus short one put at the fixed strike",
+    "entry_iv": "simple mean of independently solved call and put Black-76 IVs",
+    "book_snapshot": "At every executed entry timestamp, all positions still open are repriced from that minute's call/put prices and spot; exposures are summed after including the new entry",
+    "sanity_check": "Because theta is reported daily, |theta/gamma| is multiplied by 365 before comparison with 0.5*IV^2*F^2; rate terms cause expected residual error",
+    "rule_b": "Fractional research weights min(1, median ratio / trade ratio); this is not integer-lot executable"
+  },
+  "sanity": {
+    "pearson_correlation": 0.9999714041510268,
+    "pearson_p_value": 0.0,
+    "spearman_correlation": 0.9998248746358673,
+    "outliers_over_10pct": 0
+  },
+  "continuous_correlations": [
+    {
+      "variable": "calendar_days_to_expiry",
+      "pearson_correlation": 0.32147355243200465,
+      "pearson_p_value": 9.7549653490923e-09,
+      "spearman_correlation": 0.4326210015919827,
+      "spearman_p_value": 2.6925330530980507e-15,
+      "sample_size": 304
+    },
+    {
+      "variable": "entry_iv_mean",
+      "pearson_correlation": -0.8951513420016586,
+      "pearson_p_value": 5.477089709465613e-108,
+      "spearman_correlation": -0.9681669072860695,
+      "spearman_p_value": 1.0317775699435247e-183,
+      "sample_size": 304
+    },
+    {
+      "variable": "entry_minutes_after_0915",
+      "pearson_correlation": 0.003487903576463114,
+      "pearson_p_value": 0.9517069780815494,
+      "spearman_correlation": -0.00861079652350237,
+      "spearman_p_value": 0.8811444025632559,
+      "sample_size": 304
+    }
+  ],
+  "route_eta_squared": 0.010240902177523487,
+  "bootstrap_top_minus_bottom_tercile": {
+    "definition": "top tercile minus bottom tercile mean net P&L per trade; cluster bootstrap resamples complete trade days",
+    "observed_difference_inr_per_trade": -154.47286439670324,
+    "ci_95_low": -525.4152328707039,
+    "ci_95_high": 222.96666659826633,
+    "draws": 10000,
+    "days_resampled": 89,
+    "ci_excludes_zero": false
+  },
+  "baseline": {
+    "trades": 304,
+    "effective_lots": 304.0,
+    "net_pnl_inr": 103892.47498273505,
+    "average_pnl_per_trade_inr": 341.7515624432074,
+    "sharpe_daily": 4.905363274955042,
+    "max_drawdown_inr": 8956.554317226
+  },
+  "rule_a": [
+    {
+      "percentile_cutoff": 0.8,
+      "ratio_cutoff": 1.2434721707846663e-05,
+      "trades_kept": 243,
+      "trades_skipped": 61,
+      "net_pnl_inr": 82943.12653343705,
+      "sharpe_daily": 4.102431260054435,
+      "skipped_trades_net_pnl_inr": 20949.348449298,
+      "in_sample": true
+    },
+    {
+      "percentile_cutoff": 0.9,
+      "ratio_cutoff": 1.3730160759052277e-05,
+      "trades_kept": 273,
+      "trades_skipped": 31,
+      "net_pnl_inr": 93439.22560478705,
+      "sharpe_daily": 4.482758369176148,
+      "skipped_trades_net_pnl_inr": 10453.249377948001,
+      "in_sample": true
+    },
+    {
+      "percentile_cutoff": 0.95,
+      "ratio_cutoff": 1.4734607325198856e-05,
+      "trades_kept": 288,
+      "trades_skipped": 16,
+      "net_pnl_inr": 98236.79871330304,
+      "sharpe_daily": 4.662573099839526,
+      "skipped_trades_net_pnl_inr": 5655.676269432006,
+      "in_sample": true
+    }
+  ],
+  "rule_b": {
+    "rule": "fractional_lot_weight=min(1, median_ratio/trade_ratio)",
+    "median_ratio": 9.986619711259233e-06,
+    "trades": 304,
+    "effective_lots": 277.6026048643698,
+    "net_pnl_inr": 93831.30778883994,
+    "average_pnl_per_trade_inr": 308.6556177264472,
+    "sharpe_daily": 4.696817660851307,
+    "max_drawdown_inr": 8956.554317226002,
+    "minimum_weight": 0.5382419008494576,
+    "median_weight": 0.9992008778433713,
+    "in_sample": true,
+    "execution_note": "Fractional-lot research sizing; not directly executable with integer lots."
+  },
+  "lomo": {
+    "baseline": {
+      "trades": 304,
+      "effective_lots": 304.0,
+      "net_pnl_inr": 103892.47498273505,
+      "average_pnl_per_trade_inr": 341.7515624432074,
+      "sharpe_daily": 4.905363274955042,
+      "max_drawdown_inr": 8956.554317226
+    },
+    "filtered": {
+      "trades": 280,
+      "effective_lots": 280.0,
+      "net_pnl_inr": 92926.62379080907,
+      "average_pnl_per_trade_inr": 331.8807992528895,
+      "sharpe_daily": 4.418535074547687,
+      "max_drawdown_inr": 8956.554317226
+    },
+    "improves_sharpe": false
+  },
+  "placebo": {
+    "method": "Permute gamma/theta ratio within each trade day; for each draw take the best Sharpe across 80th/90th/95th percentile Rule A filters.",
+    "real_best_percentile": 0.95,
+    "real_best_sharpe": 4.662573099839526,
+    "real_improvement_over_baseline": -0.24279017511551615,
+    "real_net_pnl_inr": 98236.79871330304,
+    "placebo_improvement_p05_p50_p95": [
+      -0.3705512385648504,
+      -0.3705512385648504,
+      -0.24279017511551615
+    ],
+    "real_result_percentile": 100.0,
+    "one_sided_p_value_multiple_cutoff_adjusted": 0.4905094905094905,
+    "draws": 1000
+  },
+  "book_tail": {
+    "days_with_2_or_3_positions": 74,
+    "worst_10_mean_max_book_ratio": 9.698312489165084e-06,
+    "rest_mean_max_book_ratio": 1.059715726212718e-05,
+    "worst_10_median_max_book_ratio": 9.740525228409943e-06,
+    "rest_median_max_book_ratio": 1.0244047176690316e-05,
+    "mann_whitney_p_value": 0.48167768827488766
+  },
+  "book_snapshot_coverage": {
+    "entry_timestamps": 304,
+    "complete_entry_timestamps": 299,
+    "incomplete_entry_timestamps": 5,
+    "missing_position_minute_prices": 6
+  },
+  "deflated_sharpe": {
+    "configurations_tried": 29,
+    "observed_annualized_sharpe": 4.905363274955042,
+    "expected_max_annualized_sharpe": 1.04783277582214,
+    "deflated_sharpe_probability": 0.9978983201793072
+  },
+  "limitations": [
+    "Option and spot observations are one-minute values, not ticks.",
+    "No historical bid/ask quotes are available, so IV and Greeks use recorded option prices without spread modelling.",
+    "Black-76 uses a synthetic forward derived from same-strike call-put parity because a matched futures series was not supplied.",
+    "Some tercile/quintile, route, month and tail-day subsets are small; their Sharpe and stop rates are unstable.",
+    "Rule A and Rule B full-sample results are in-sample. The leave-one-month-out filter is the less-biased filter estimate.",
+    "Greeks are model estimates and do not include discrete strike-surface interpolation or intraminute movement.",
+    "Book-level analysis stops rather than imputes at 5 entry timestamps (6 position-minute prices missing); those book ratios are blank and excluded."
+  ]
+}

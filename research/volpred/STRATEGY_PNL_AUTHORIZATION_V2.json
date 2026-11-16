@@ -1,0 +1,34 @@
+{
+  "authorization_version": "research_v2_dev_validation_1",
+  "approved": true,
+  "scope": "research_v2_strategy_pnl",
+  "authorized_segments": [
+    "development",
+    "validation"
+  ],
+  "pseudo_authorized": false,
+  "signed_by": "independent_leakage_and_risk_auditor",
+  "signed_at": "2026-10-13T19:30:00+05:30",
+  "decision": "PASS_HASH_SCOPED_DEVELOPMENT_AND_VALIDATION_ONLY",
+  "conditions": [
+    "Use EVENT_CALENDAR_V2.csv only.",
+    "Register all seven segment trials before semantic prediction or option-row access.",
+    "Treat historical margin only as unverified_margin_proxy with verified_margin_pass=false.",
+    "Treat historical lot size as an unverified assumption and retain constant-15 sensitivity.",
+    "Do not open or score pseudo-holdout option PnL under this authorization.",
+    "Any inventory hash change revokes this authorization."
+  ],
+  "inventory": {
+    "STRATEGY_SPEC_V2.md": "83b1d87e4fbbd8a6ccfec16dd9783a0b876fa881ed96606d5f12ac6979d6ae42",
+    "RISK_POLICY_V2_ADDENDUM.md": "abf5349f04e239749ff87336a57eeb05b7de79b98d41a0c10afff493e0b75418",
+    "EVENT_CALENDAR_V2.csv": "35d705b8a16ef3c8f94b4acb2cceae1832a84d4842f586ce47aca4832605fa25",
+    "research/research_v2_strategy.py": "8c491e2048c85ed4d961f60879ed95e14bec7184c186197d7fee23ab2602d75f",
+    "research/execution_costs.py": "e16041e798fcf8153c21192604efab749bf525cc0a79337c7ca6210551897a7e",
+    "tests/test_research_v2_strategy.py": "b1e3409a6bc12ae2e01574f645327353d50cca1f05254118fd57b7a057af59c0",
+    "outputs/research_v2/p2/development_cpcv_oof_predictions.parquet": "b87f2b504623829e06500cf0e90c103c03ae62c591f1c7be3cc15e91af5ffa01",
+    "outputs/research_v2/p2/development_cpcv_oof_manifest.json": "84eef0499f54e29aaf083a51df5da2436a2d267727e626fe92b766a70f03e286",
+    "outputs/research_v2/p2/walk_forward_predictions.parquet": "0100d1e8a628705ca7087435c73a0ee211ed32b3ee84f144bf89b3a53fdc183c",
+    "outputs/research_v2/p2/gate.json": "ba161ead1e2dc9bc9306423cc5b2a0e5f39af8ef56c33fee48b9e94ce165350e",
+    "data/raw/icharts_option_banknifty_monthly_atm_up_to_5strikes.csv": "8d6e25662c7e1a3a117a95af8c8ab81ceb70377cca2540ac53d01231ef6949d3"
+  }
+}

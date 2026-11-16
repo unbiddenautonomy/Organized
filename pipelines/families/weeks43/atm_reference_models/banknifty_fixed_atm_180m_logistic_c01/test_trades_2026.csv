@@ -1,0 +1,2 @@
+datetime,trade_date,expiry,strike,actual_net_points_after_2pt_cost,prediction
+2026-03-09 09:17:00,2026-03-09,2026-03-30,55700.0,14.800000000000182,0.9672713486771706

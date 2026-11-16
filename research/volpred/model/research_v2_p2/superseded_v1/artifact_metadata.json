@@ -1,0 +1,46 @@
+{
+  "model_family": "P2_HistGradientBoostingRegressor",
+  "horizon_minutes": 120,
+  "features": [
+    "p0_log_rv_5",
+    "p0_log_rv_15",
+    "p0_log_rv_60",
+    "p1_log_rq_15",
+    "p1_log_rq_60",
+    "p1_downside_rv_15",
+    "p1_upside_rv_15",
+    "p1_downside_rv_60",
+    "p1_upside_rv_60",
+    "p1_jump_rv_60",
+    "p1_abs_return",
+    "p1_tod_sin",
+    "p1_tod_cos"
+  ],
+  "params": {
+    "max_depth": 3,
+    "learning_rate": 0.05,
+    "l2_regularization": 1.0
+  },
+  "max_iter": 200,
+  "early_stopping": false,
+  "seed": 7319,
+  "smearing_log_adjustment": 0.11463692910900952,
+  "trained_splits": [
+    "development",
+    "walk_forward_validation"
+  ],
+  "training_rows": 44679,
+  "training_max_decision_time": "2024-06-28 13:25:59+05:30",
+  "training_max_label_end_at": "2024-06-28 15:25:59+05:30",
+  "dataset_sha256": "02850acfebd8442bfb7c518f174abc94402e88181a72975f2db4986d35d8ded0",
+  "splits_sha256": "4409030241bf656af200c811a50a39387c49a8a4e3a4b01700b06fde1c79b48c",
+  "runner_sha256": "c65044c2b680bd20783cc97fb9ec9fabd2f0af662ff4bab0db7a91a7ba05d3ed",
+  "run_id": "freeze-20261013T132238790000Z-4da0a65b",
+  "sklearn_version": "1.9.0",
+  "artifact_file": "p2_hist_gradient_boosting_120m.joblib",
+  "artifact_sha256": "16811de9020ea9703e63b5c058bd60ffbc673c68051a79cd6b5a8af7ba27e658",
+  "common_manifest_sha256": "3778739fa77c6470fbb788788c3ed93571cc7c1b4f5b90ad230a955d82ca18b6",
+  "provenance_verified": true,
+  "pseudo_holdout_accessed": false,
+  "strategy_pnl_computed": false
+}

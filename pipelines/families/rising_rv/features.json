@@ -1,0 +1,21 @@
+[
+  "current_iv",
+  "rv_30",
+  "rv_60",
+  "iv_skew",
+  "spot_price",
+  "strike",
+  "moneyness",
+  "days_to_expiry",
+  "minute_of_day",
+  "weekday",
+  "delta_call",
+  "delta_put",
+  "gamma_call",
+  "gamma_put",
+  "vega_call",
+  "vega_put",
+  "call_oi",
+  "put_oi",
+  "future_open"
+]

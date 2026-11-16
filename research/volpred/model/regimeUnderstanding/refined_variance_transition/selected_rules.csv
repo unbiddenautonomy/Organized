@@ -1,0 +1,2 @@
+side,signal_variant,structure,horizon_min,cost_multiple,days_2024_H1,days_2024_H2,hit_rate_2024_H1,hit_rate_2024_H2,net_pnl_2024_H1,net_pnl_2024_H2,profit_factor_2024_H1,profit_factor_2024_H2,development_days,development_net,worst_half_net,stable_profitable
+short_vol,combined_or,short_2_strangle,120,3.0,10,9,0.8,0.6666666666666666,7083.0848919515865,511.8206773940547,3.8279377439679836,1.3364995078707198,19,7594.905569345641,511.8206773940547,True

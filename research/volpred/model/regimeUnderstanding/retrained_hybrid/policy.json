@@ -1,0 +1,11 @@
+{
+  "status": "FORWARD_PAPER_TEST_ONLY",
+  "current_component": "coverage_optimized_hybrid",
+  "new_component": "120-minute short ATM+/-2 strangle probability model",
+  "new_component_model": "logit_c0.01",
+  "probability_threshold": 0.7259901690160587,
+  "fallback_only_on_current_no-signal_dates": true,
+  "same_monthly_expiry": true,
+  "latest_entry": "13:30",
+  "position_size": "one lot"
+}

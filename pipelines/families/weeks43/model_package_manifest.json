@@ -1,0 +1,1112 @@
+[
+  {
+    "path": "otm_models\\complete_path_test_trades.csv",
+    "bytes": 2247,
+    "sha256": "979feded86902183d3ce8ecb223ab4c3bdb52a1a2ed521aab3784ea40d6c28ed"
+  },
+  {
+    "path": "otm_models\\extra_trees\\calibrator.joblib",
+    "bytes": 558,
+    "sha256": "c8c0d71236fb68d19db13526448f31ae1558de1148c15d31e252642ad2fd0f45"
+  },
+  {
+    "path": "otm_models\\extra_trees\\estimator.joblib",
+    "bytes": 31743,
+    "sha256": "c36119b4715ea3ba3c48ec00c909783a5db99fe7477ecac7f690aeacef314247"
+  },
+  {
+    "path": "otm_models\\extra_trees\\feature_manifest.json",
+    "bytes": 1070,
+    "sha256": "bc80a54aaeeb89227ac6a3f73b4a68896cefd355cfc510debc12e820a0caf7bb"
+  },
+  {
+    "path": "otm_models\\extra_trees\\model.joblib",
+    "bytes": 33508,
+    "sha256": "d32b911048e87529b134e87c9d8b573d205dea192027c268ba082d13c7807078"
+  },
+  {
+    "path": "otm_models\\extra_trees\\pipeline.joblib",
+    "bytes": 32689,
+    "sha256": "02d463d4970ec572f0f496c52d1cff7bacbf488ea28bea9a00e59831e1647dd2"
+  },
+  {
+    "path": "otm_models\\extra_trees\\preprocessor.joblib",
+    "bytes": 1193,
+    "sha256": "afb40c72bcc2de510ce668e37cc9539f90f4d4dd84e639b80add59ae59ffd976"
+  },
+  {
+    "path": "otm_models\\extra_trees\\scaler.joblib",
+    "bytes": 12,
+    "sha256": "2a3176cc1fbc10f1071e300e2acf5c77b7959f9a49202f0c2c657f84635f31a2"
+  },
+  {
+    "path": "otm_models\\lightgbm\\calibrator.joblib",
+    "bytes": 555,
+    "sha256": "c78206645cdb1e905b2fc0e73c77ff3eacf5a1c659b33bf891082eb2771a54de"
+  },
+  {
+    "path": "otm_models\\lightgbm\\estimator.joblib",
+    "bytes": 19714,
+    "sha256": "30955144a010cbe0150bd0ee1538c59357a3aa7d7195f95955353857e1c8fbbe"
+  },
+  {
+    "path": "otm_models\\lightgbm\\feature_manifest.json",
+    "bytes": 1070,
+    "sha256": "14f18e68b270c5220fa4520548b5c5aa8dee47c2c012cb1045bb4b8d00d2dbc0"
+  },
+  {
+    "path": "otm_models\\lightgbm\\model.joblib",
+    "bytes": 21498,
+    "sha256": "1b29ca2dec600c02d99c41803b7015c7ea96694772e6708e77a217b59356c2ae"
+  },
+  {
+    "path": "otm_models\\lightgbm\\pipeline.joblib",
+    "bytes": 20888,
+    "sha256": "2d181aff67ad753a651ffd504d211d7db35a53d20e6b79d10c280f3549145125"
+  },
+  {
+    "path": "otm_models\\lightgbm\\preprocessor.joblib",
+    "bytes": 1193,
+    "sha256": "afb40c72bcc2de510ce668e37cc9539f90f4d4dd84e639b80add59ae59ffd976"
+  },
+  {
+    "path": "otm_models\\lightgbm\\scaler.joblib",
+    "bytes": 12,
+    "sha256": "2a3176cc1fbc10f1071e300e2acf5c77b7959f9a49202f0c2c657f84635f31a2"
+  },
+  {
+    "path": "otm_models\\lightgbm_huber\\estimator.joblib",
+    "bytes": 5180,
+    "sha256": "b9aeb109ed584d46b28d404fe6401e860dcadfdec1b545e99dc6691fc3805bd3"
+  },
+  {
+    "path": "otm_models\\lightgbm_huber\\feature_manifest.json",
+    "bytes": 1077,
+    "sha256": "0304cb604fa12a5a444acc6eb888dfdd483596e58a97aaf7cbb9cb7f2a3efc3b"
+  },
+  {
+    "path": "otm_models\\lightgbm_huber\\model.joblib",
+    "bytes": 6718,
+    "sha256": "bba28eb9d0f36709d80f1a7a73a6ffac53027e8c0f81f957adef10185962b71f"
+  },
+  {
+    "path": "otm_models\\lightgbm_huber\\pipeline.joblib",
+    "bytes": 6389,
+    "sha256": "08b07d1684b9feebfc40e9cc7dfcb75ef05a5d264d5aa43f5a13353f05ca59fd"
+  },
+  {
+    "path": "otm_models\\lightgbm_huber\\preprocessor.joblib",
+    "bytes": 1193,
+    "sha256": "afb40c72bcc2de510ce668e37cc9539f90f4d4dd84e639b80add59ae59ffd976"
+  },
+  {
+    "path": "otm_models\\lightgbm_huber\\scaler.joblib",
+    "bytes": 12,
+    "sha256": "2a3176cc1fbc10f1071e300e2acf5c77b7959f9a49202f0c2c657f84635f31a2"
+  },
+  {
+    "path": "otm_models\\logistic\\calibrator.joblib",
+    "bytes": 553,
+    "sha256": "64e407a2f314a22e96bc9c67e19d1293c7d04708e6a5e1cf01449ae99bf8d7d4"
+  },
+  {
+    "path": "otm_models\\logistic\\estimator.joblib",
+    "bytes": 939,
+    "sha256": "03cb47359c25c8b65afecada77fac116aae6e32fb3b759eaa0893d03cd3067b5"
+  },
+  {
+    "path": "otm_models\\logistic\\feature_manifest.json",
+    "bytes": 1060,
+    "sha256": "749781c5cf6ae97425aecc872efcf6cabdca764cde42db2e606fbf5a24567ff7"
+  },
+  {
+    "path": "otm_models\\logistic\\model.joblib",
+    "bytes": 3257,
+    "sha256": "de25fa7035bad84ef2d89e7b0f8582ec762195d339903689211522adbb4473e8"
+  },
+  {
+    "path": "otm_models\\logistic\\pipeline.joblib",
+    "bytes": 3015,
+    "sha256": "571491cb72d1c2373a6170df5aa6f92106fc2866e4f022b5d51c6a7403bf03d8"
+  },
+  {
+    "path": "otm_models\\logistic\\preprocessor.joblib",
+    "bytes": 2368,
+    "sha256": "6301f70c93477fdefebb511c6df1a7c1ddcc778225f08c0206660a8fd1caa760"
+  },
+  {
+    "path": "otm_models\\logistic\\scaler.joblib",
+    "bytes": 1462,
+    "sha256": "ef972dbc8c8fcddd5c7e1b1062448f3ccf3f6e03832ad8d5ea4a3e902ff088af"
+  },
+  {
+    "path": "otm_models\\otm_loss_q90\\estimator.joblib",
+    "bytes": 12295,
+    "sha256": "1c34ddde39e84542d2da1faec9b0ad14b114c3187990c12c80818053e0ba4cf9"
+  },
+  {
+    "path": "otm_models\\otm_loss_q90\\feature_manifest.json",
+    "bytes": 1136,
+    "sha256": "3d77e9c06a87a9acbcafae5fd686ba7895c9aa8bd8b0b11b96fa0a862a195d69"
+  },
+  {
+    "path": "otm_models\\otm_loss_q90\\model.joblib",
+    "bytes": 13889,
+    "sha256": "07d211491e6f6608ac823fb176398c36e08f3231a0c915398b44dcfdd8496468"
+  },
+  {
+    "path": "otm_models\\otm_loss_q90\\pipeline.joblib",
+    "bytes": 13552,
+    "sha256": "aef3fddaa2bef89322ebad507ebecd7195f39426178428f85bd39bc6bfbcda72"
+  },
+  {
+    "path": "otm_models\\otm_loss_q90\\preprocessor.joblib",
+    "bytes": 1193,
+    "sha256": "afb40c72bcc2de510ce668e37cc9539f90f4d4dd84e639b80add59ae59ffd976"
+  },
+  {
+    "path": "otm_models\\otm_loss_q90\\scaler.joblib",
+    "bytes": 12,
+    "sha256": "2a3176cc1fbc10f1071e300e2acf5c77b7959f9a49202f0c2c657f84635f31a2"
+  },
+  {
+    "path": "otm_models\\ridge\\estimator.joblib",
+    "bytes": 802,
+    "sha256": "5250f29efdc7687f659819d9cabe97a63af44c308acb658dd372e0ab2f2c647e"
+  },
+  {
+    "path": "otm_models\\ridge\\feature_manifest.json",
+    "bytes": 1066,
+    "sha256": "02e3b86619247fb41bd405ee5c4f4f46ec09689274032be809214ead900b7bb8"
+  },
+  {
+    "path": "otm_models\\ridge\\model.joblib",
+    "bytes": 2988,
+    "sha256": "e02450bf3aeac4db1e6cec0b5e9c9419e5b43c3e25d65c43ff98d502797d6b55"
+  },
+  {
+    "path": "otm_models\\ridge\\pipeline.joblib",
+    "bytes": 2889,
+    "sha256": "a5fdc5cfc48b070b8536de483e820e31208754c1bfafefbd9bda5742ad9bcc76"
+  },
+  {
+    "path": "otm_models\\ridge\\preprocessor.joblib",
+    "bytes": 2368,
+    "sha256": "6301f70c93477fdefebb511c6df1a7c1ddcc778225f08c0206660a8fd1caa760"
+  },
+  {
+    "path": "otm_models\\ridge\\scaler.joblib",
+    "bytes": 1462,
+    "sha256": "ef972dbc8c8fcddd5c7e1b1062448f3ccf3f6e03832ad8d5ea4a3e902ff088af"
+  },
+  {
+    "path": "otm_models\\selection.json",
+    "bytes": 547,
+    "sha256": "820472ffd1807898e23f8e5a80ade900ae92a5564c5cd51979c53ccfd26459bc"
+  },
+  {
+    "path": "otm_models\\test_all_model_outputs.csv",
+    "bytes": 135204,
+    "sha256": "119a29dac05dc76c279c73fb3fdce9fce57a70e8ddfbc421727af15c8facb5e8"
+  },
+  {
+    "path": "otm_models\\training_report.json",
+    "bytes": 5236,
+    "sha256": "9216a4cbad88f84c0f97c77f25093b43260718220d39442a9264f2235d66c83d"
+  },
+  {
+    "path": "otm_models\\validation_all_model_outputs.csv",
+    "bytes": 57387,
+    "sha256": "2942d12b3e800aa40c86e9ae74849f220905679d8233444b8d9f9bdbe931aea6"
+  },
+  {
+    "path": "otm_models\\validation_candidates.json",
+    "bytes": 51920,
+    "sha256": "886ea351807fa42236d2d5d85d64bef2beb7b7e7329f0c3188197fa377839277"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_120m_lightgbm_classifier\\__pycache__\\predict.cpython-313.pyc",
+    "bytes": 1909,
+    "sha256": "bd5c3c32b99aadf05f0d6975f5e527c28544bbc92c617768ad2f7e4f17ee48df"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_120m_lightgbm_classifier\\estimator.joblib",
+    "bytes": 629044,
+    "sha256": "7d9780445c106e02ad6477965e379abeb0d7615bca5927309dc4d90b0d47c03c"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_120m_lightgbm_classifier\\EVALUATION_REPORT.md",
+    "bytes": 1215,
+    "sha256": "c9db63cdddc04549743b9b5c5019809a9af5c08a485f459f7f9e1ace28e3a002"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_120m_lightgbm_classifier\\feature_manifest.json",
+    "bytes": 1680,
+    "sha256": "5b04516fb58f2060ca73671ed8f0be9b35061f1544075028726d9b553df29354"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_120m_lightgbm_classifier\\metrics.json",
+    "bytes": 672,
+    "sha256": "3e9c30ca312949a78f005fbab3e89bd6308591e0407bff5cbe73041f54f84552"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_120m_lightgbm_classifier\\model.joblib",
+    "bytes": 632398,
+    "sha256": "617e2949781829cb8058ed83983820f45841b2c2171be18693e8e30c83adb698"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_120m_lightgbm_classifier\\MODEL_CARD.md",
+    "bytes": 1475,
+    "sha256": "6e0286afcc65ebf7af7e500e166a5ccfc79b49ef5717b0e9ba7103603cec6d85"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_120m_lightgbm_classifier\\pipeline.joblib",
+    "bytes": 631358,
+    "sha256": "7f9779077920fab495894ecd42ddc8bca62ac9febe14935a0e5086cd2b9cb158"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_120m_lightgbm_classifier\\predict.py",
+    "bytes": 1068,
+    "sha256": "9840187af2b4c86c87dfa679184f10c644ff21e01445f6888b65b90413016657"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_120m_lightgbm_classifier\\preprocessor.joblib",
+    "bytes": 2488,
+    "sha256": "5a20d77200090385fa6d82b32d3790346cc471d99d9d6170cbd382a04585cb59"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_120m_lightgbm_classifier\\requirements.txt",
+    "bytes": 118,
+    "sha256": "fc9eb8c5c991b0beb9ee3355c8f5a12e364c3e061fc93ee0ac25e50a323ca740"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_120m_lightgbm_classifier\\scaler.joblib",
+    "bytes": 110,
+    "sha256": "a299ca325cedabc26be174648623e06a15d7fda32238c3addd30fceaf321ea65"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_120m_lightgbm_classifier\\SHA256SUMS.txt",
+    "bytes": 1552,
+    "sha256": "c9d897c9ccac20c694b3bccd9cdcf10f5bf5d37e212fa07c958a2ca4836a9872"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_120m_lightgbm_classifier\\test_trades_2026.csv",
+    "bytes": 3261,
+    "sha256": "46107d186518e3825f7f266b4651cd339dbbc3374bc86fcb797c73856b543c41"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_120m_lightgbm_classifier\\training_code\\__pycache__\\package_model_releases.cpython-313.pyc",
+    "bytes": 17563,
+    "sha256": "33d319ae13aecccf4fcac9c0a1869512f3c9d1ab33e2b3964f3dc16f5147255a"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_120m_lightgbm_classifier\\training_code\\__pycache__\\retrain_frozen_models_2026.cpython-313.pyc",
+    "bytes": 17948,
+    "sha256": "37d1be33d281db2633ae1e19167f024f0df22c9535e61a710cceec54f1b21ece"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_120m_lightgbm_classifier\\training_code\\__pycache__\\train_fixed_atm_horizons.cpython-313.pyc",
+    "bytes": 48271,
+    "sha256": "4c1729b7167640966a965314a750f9ace2d6fd7f44b34be265bc3d1cff447128"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_120m_lightgbm_classifier\\training_code\\__pycache__\\train_high_win_rate_hybrid.cpython-313.pyc",
+    "bytes": 8420,
+    "sha256": "a95dba1130b47f6a48c1de1fbfd35864f5a1a2872154f4f23e4be73ab6f54178"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_120m_lightgbm_classifier\\training_code\\__pycache__\\train_high_win_rate_models.cpython-313.pyc",
+    "bytes": 19235,
+    "sha256": "b93bfc4f15c96a3d35db5f101b4625e2a9f301bd7fd2de81f92f1710e1dd5b60"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_120m_lightgbm_classifier\\training_code\\package_model_releases.py",
+    "bytes": 14073,
+    "sha256": "3ce081067ed3df45f954001375d2f1fb82e61af3b1a05c15a3ea9abe58e2ec9d"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_120m_lightgbm_classifier\\training_code\\retrain_frozen_models_2026.py",
+    "bytes": 14951,
+    "sha256": "edc9a651a566da258d728b5df43ba45f32bcbd0abff85f10358666a0cbfd6953"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_120m_lightgbm_classifier\\training_code\\train_fixed_atm_horizons.py",
+    "bytes": 40828,
+    "sha256": "b10cb34e4cf8df92e334232d3430a0132f66d7261546bfd8e1d6e086a53640e0"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_120m_lightgbm_classifier\\training_code\\train_high_win_rate_hybrid.py",
+    "bytes": 6592,
+    "sha256": "b2eceab979a4a9aaeadbfe091ac15151f4ffa98d5c188805a8d846993bd56d5d"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_120m_lightgbm_classifier\\training_code\\train_high_win_rate_models.py",
+    "bytes": 14942,
+    "sha256": "c08ed56a778da487c5ef4cdef44685b2a5b06699de8c1ad0aa1720752f25071f"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_180m_logistic_c01\\__pycache__\\predict.cpython-313.pyc",
+    "bytes": 1902,
+    "sha256": "e08d5971907e8a8a3d917ed88143e07ca2ff061118842b09e7716771a238085c"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_180m_logistic_c01\\estimator.joblib",
+    "bytes": 1391,
+    "sha256": "1f601fcebc2ae9cc734ec3996f18157d84d1a7a52e690c6f3eed1922dfd13e31"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_180m_logistic_c01\\EVALUATION_REPORT.md",
+    "bytes": 1215,
+    "sha256": "c9db63cdddc04549743b9b5c5019809a9af5c08a485f459f7f9e1ace28e3a002"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_180m_logistic_c01\\feature_manifest.json",
+    "bytes": 1681,
+    "sha256": "1b86e443ba9d77c9917e80ece8deba0a92fa52856da20b97e2ba687d091b283f"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_180m_logistic_c01\\metrics.json",
+    "bytes": 627,
+    "sha256": "350c5349c41a8fbd1394f7c9147bd560763d3f5213a28d089526fb8859c0e531"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_180m_logistic_c01\\model.joblib",
+    "bytes": 6858,
+    "sha256": "2e8d708c188c41f6dda255290d50d2cefc15c29bc12e5e94ac2b7c2a07dd666f"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_180m_logistic_c01\\MODEL_CARD.md",
+    "bytes": 1429,
+    "sha256": "5899914af4e632e4b168419c5489fb5e27e542432cbfd265415b1e022bc21249"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_180m_logistic_c01\\pipeline.joblib",
+    "bytes": 5673,
+    "sha256": "ccc2a99e9d59364656da3455632268500936efb7d0755bf17e0058114f39810c"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_180m_logistic_c01\\predict.py",
+    "bytes": 1068,
+    "sha256": "9840187af2b4c86c87dfa679184f10c644ff21e01445f6888b65b90413016657"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_180m_logistic_c01\\preprocessor.joblib",
+    "bytes": 4497,
+    "sha256": "5e37afe383896fda1c3c4ddbaab1901056eda9333db10a34903e7f42584df5c0"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_180m_logistic_c01\\requirements.txt",
+    "bytes": 118,
+    "sha256": "fc9eb8c5c991b0beb9ee3355c8f5a12e364c3e061fc93ee0ac25e50a323ca740"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_180m_logistic_c01\\scaler.joblib",
+    "bytes": 2199,
+    "sha256": "ea2d4a2e538321e6e68b26ca439f2b8cf1bce1765a09eefdf5897a85a277d360"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_180m_logistic_c01\\SHA256SUMS.txt",
+    "bytes": 1552,
+    "sha256": "acf195ab073d811c0b3820321542c336fd683822bf5429cf4eb9b0e6a4f09988"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_180m_logistic_c01\\test_trades_2026.csv",
+    "bytes": 168,
+    "sha256": "ef8f580e082b8927d10b8b127f08a5577f9e59d66d8351ac98d9755f8065071d"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_180m_logistic_c01\\training_code\\__pycache__\\package_model_releases.cpython-313.pyc",
+    "bytes": 17556,
+    "sha256": "5b22768c67dd16a73e0b8ef14716839d5b2cbe9c9a6455d95f91a3fe681b51d5"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_180m_logistic_c01\\training_code\\__pycache__\\retrain_frozen_models_2026.cpython-313.pyc",
+    "bytes": 17941,
+    "sha256": "0385880c60e06f9a124afea40b0dcacf05e8893bf96896ec56bd7dfb864732a9"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_180m_logistic_c01\\training_code\\__pycache__\\train_fixed_atm_horizons.cpython-313.pyc",
+    "bytes": 48264,
+    "sha256": "4c1b966691acab7976a11b1674273da7fd58746cecedbb801895ea9d3aedad98"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_180m_logistic_c01\\training_code\\__pycache__\\train_high_win_rate_hybrid.cpython-313.pyc",
+    "bytes": 8413,
+    "sha256": "e5098a79b8002c360dd8cdf6be2fff698ce9411ff83ab3926a7f3b92cd6a3c02"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_180m_logistic_c01\\training_code\\__pycache__\\train_high_win_rate_models.cpython-313.pyc",
+    "bytes": 19228,
+    "sha256": "a1750f90d0933865688048bef6bc583ba1a11e27c79035dfd2957d1cd4a6993c"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_180m_logistic_c01\\training_code\\package_model_releases.py",
+    "bytes": 14073,
+    "sha256": "3ce081067ed3df45f954001375d2f1fb82e61af3b1a05c15a3ea9abe58e2ec9d"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_180m_logistic_c01\\training_code\\retrain_frozen_models_2026.py",
+    "bytes": 14951,
+    "sha256": "edc9a651a566da258d728b5df43ba45f32bcbd0abff85f10358666a0cbfd6953"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_180m_logistic_c01\\training_code\\train_fixed_atm_horizons.py",
+    "bytes": 40828,
+    "sha256": "b10cb34e4cf8df92e334232d3430a0132f66d7261546bfd8e1d6e086a53640e0"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_180m_logistic_c01\\training_code\\train_high_win_rate_hybrid.py",
+    "bytes": 6592,
+    "sha256": "b2eceab979a4a9aaeadbfe091ac15151f4ffa98d5c188805a8d846993bd56d5d"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_180m_logistic_c01\\training_code\\train_high_win_rate_models.py",
+    "bytes": 14942,
+    "sha256": "c08ed56a778da487c5ef4cdef44685b2a5b06699de8c1ad0aa1720752f25071f"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_30m_extra_trees_classifier\\__pycache__\\predict.cpython-313.pyc",
+    "bytes": 1911,
+    "sha256": "7150ae267e06c7872c6f2bd255587f636da470234649f790cb68093ffe9def4e"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_30m_extra_trees_classifier\\estimator.joblib",
+    "bytes": 54976873,
+    "sha256": "3928bceddbe4db2c423ea02403afaf88f14667f34ab0d87ad78bb8915d567e40"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_30m_extra_trees_classifier\\EVALUATION_REPORT.md",
+    "bytes": 1215,
+    "sha256": "c9db63cdddc04549743b9b5c5019809a9af5c08a485f459f7f9e1ace28e3a002"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_30m_extra_trees_classifier\\feature_manifest.json",
+    "bytes": 1680,
+    "sha256": "6ce21d077aa8c66189f73d524962ff1a69a2f55cd27b444a5c7ea24a78bff820"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_30m_extra_trees_classifier\\metrics.json",
+    "bytes": 673,
+    "sha256": "d4de8adda36e121ef9318f0544c8788e8b15d3b68d230a054ed74b0589ceb80f"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_30m_extra_trees_classifier\\model.joblib",
+    "bytes": 54980309,
+    "sha256": "5c47f648778508f9b56b7acee4723ab7323cbebbc7a81ec66db6542f0843783b"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_30m_extra_trees_classifier\\MODEL_CARD.md",
+    "bytes": 1478,
+    "sha256": "6f0760ffb164a6f96befd340a959f8ad9f414e83dd8e383aeb84e074f81a5ee5"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_30m_extra_trees_classifier\\pipeline.joblib",
+    "bytes": 54979122,
+    "sha256": "6c953ab77d886d27b7a81a740001463a04f65ee772429a92a32911ec9b05e994"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_30m_extra_trees_classifier\\predict.py",
+    "bytes": 1068,
+    "sha256": "9840187af2b4c86c87dfa679184f10c644ff21e01445f6888b65b90413016657"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_30m_extra_trees_classifier\\preprocessor.joblib",
+    "bytes": 2488,
+    "sha256": "4e9231e9cbba63851bf0cf381a299f24c9c0bb33361cdf8a542098906bc925e9"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_30m_extra_trees_classifier\\requirements.txt",
+    "bytes": 118,
+    "sha256": "fc9eb8c5c991b0beb9ee3355c8f5a12e364c3e061fc93ee0ac25e50a323ca740"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_30m_extra_trees_classifier\\scaler.joblib",
+    "bytes": 110,
+    "sha256": "a299ca325cedabc26be174648623e06a15d7fda32238c3addd30fceaf321ea65"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_30m_extra_trees_classifier\\SHA256SUMS.txt",
+    "bytes": 1552,
+    "sha256": "d24a3e586547655b8c6c8c6a655dd66a1f9379663396c20993a4ad3800e10ef6"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_30m_extra_trees_classifier\\test_trades_2026.csv",
+    "bytes": 14205,
+    "sha256": "3874cdcca48c79c3ea32c084e5e18ed79c8bf623b34f8992d0276229b7f691b0"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_30m_extra_trees_classifier\\training_code\\__pycache__\\package_model_releases.cpython-313.pyc",
+    "bytes": 17565,
+    "sha256": "b3c0ba65f138afb46989f63860152f5ccd2486ec16fd4bee597a06db385ea17a"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_30m_extra_trees_classifier\\training_code\\__pycache__\\retrain_frozen_models_2026.cpython-313.pyc",
+    "bytes": 17950,
+    "sha256": "3f584398e3595c335e3a26389fd98dcefa90a87eef2b355f52b72ce749128aa4"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_30m_extra_trees_classifier\\training_code\\__pycache__\\train_fixed_atm_horizons.cpython-313.pyc",
+    "bytes": 48273,
+    "sha256": "be0bc9b5d9f0b116b5298c481ccc9b05d0aa28417fb5db24a53ea058b8cf11ac"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_30m_extra_trees_classifier\\training_code\\__pycache__\\train_high_win_rate_hybrid.cpython-313.pyc",
+    "bytes": 8422,
+    "sha256": "9f38e5eb7fa9e1076d62b5638b9ff05c5569956f7fa82793e54d7c01cebe7afe"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_30m_extra_trees_classifier\\training_code\\__pycache__\\train_high_win_rate_models.cpython-313.pyc",
+    "bytes": 19237,
+    "sha256": "e31282ea3df85bb148f31b62d127656d201c1e4707e9664b3575175e0b4b6d9e"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_30m_extra_trees_classifier\\training_code\\package_model_releases.py",
+    "bytes": 14073,
+    "sha256": "3ce081067ed3df45f954001375d2f1fb82e61af3b1a05c15a3ea9abe58e2ec9d"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_30m_extra_trees_classifier\\training_code\\retrain_frozen_models_2026.py",
+    "bytes": 14951,
+    "sha256": "edc9a651a566da258d728b5df43ba45f32bcbd0abff85f10358666a0cbfd6953"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_30m_extra_trees_classifier\\training_code\\train_fixed_atm_horizons.py",
+    "bytes": 40828,
+    "sha256": "b10cb34e4cf8df92e334232d3430a0132f66d7261546bfd8e1d6e086a53640e0"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_30m_extra_trees_classifier\\training_code\\train_high_win_rate_hybrid.py",
+    "bytes": 6592,
+    "sha256": "b2eceab979a4a9aaeadbfe091ac15151f4ffa98d5c188805a8d846993bd56d5d"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_30m_extra_trees_classifier\\training_code\\train_high_win_rate_models.py",
+    "bytes": 14942,
+    "sha256": "c08ed56a778da487c5ef4cdef44685b2a5b06699de8c1ad0aa1720752f25071f"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_30m_tail_veto_overlay_experimental\\__pycache__\\predict.cpython-313.pyc",
+    "bytes": 3168,
+    "sha256": "d19810a0d9d0d686c9356c3f7d336428e8e9ee2eea84c10d3754b8725eeaa84a"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_30m_tail_veto_overlay_experimental\\entry_pipeline.joblib",
+    "bytes": 54979122,
+    "sha256": "fe246a632c26ad87423cb9f7a956fe9d99c7c4ea0481143044c7fd74b3aca794"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_30m_tail_veto_overlay_experimental\\estimators.joblib",
+    "bytes": 80771346,
+    "sha256": "6190ddaf56224321f39484934e749888a1f7bbfce21abc9217abd69ace2f7e77"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_30m_tail_veto_overlay_experimental\\EVALUATION_REPORT.md",
+    "bytes": 408,
+    "sha256": "166d6cf87852dd453528aca156600e10688712d92a10047b1553e0bf8f330915"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_30m_tail_veto_overlay_experimental\\feature_manifest.json",
+    "bytes": 3543,
+    "sha256": "7a7f5c6a9f41457e4e123c252216db1e3a3819963c688c86100340a3a97a4ea7"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_30m_tail_veto_overlay_experimental\\metrics.json",
+    "bytes": 1288,
+    "sha256": "4703e0020ebf18894f5aba03e276a300dc680d31c47e5ec02cb0eb3da30eb263"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_30m_tail_veto_overlay_experimental\\model.joblib",
+    "bytes": 99585290,
+    "sha256": "a61ee789337152cf2ad3865d9e535205921c09ad1cd8f3519028d8ab6ad2cef4"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_30m_tail_veto_overlay_experimental\\MODEL_CARD.md",
+    "bytes": 1936,
+    "sha256": "5b9e327992e73e8a5e502cae27fd1cc3b5b4bf8c3601a0ab4bbe4c4109a43c43"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_30m_tail_veto_overlay_experimental\\predict.py",
+    "bytes": 1975,
+    "sha256": "c4f7ec88f977900a8d8d869753d6c5e0e00fb7da9469405a7fb2674d506af987"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_30m_tail_veto_overlay_experimental\\preprocessor.joblib",
+    "bytes": 10162,
+    "sha256": "3f5c5d43548da9f6e0bf89ec0c357251a015a303e24881e4a59f3c0c80a4829b"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_30m_tail_veto_overlay_experimental\\requirements.txt",
+    "bytes": 37,
+    "sha256": "0e46bb9a45684d32a8d9c15ea443834953e17c9b489dad84b34b95349569e010"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_30m_tail_veto_overlay_experimental\\scaler.joblib",
+    "bytes": 2695,
+    "sha256": "b9827dce32aaf5dadf1e46f1e75785c81fd3f0f27eb821b9ac33ed03fca4e8b6"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_30m_tail_veto_overlay_experimental\\scaler_metadata.json",
+    "bytes": 159,
+    "sha256": "f91fabe801e445bf335697ae88a840bd779b37861b3ef4104f5fa5d956489aea"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_30m_tail_veto_overlay_experimental\\SHA256SUMS.txt",
+    "bytes": 2050,
+    "sha256": "9d1325199a8c9e24eb7df86e81dce10f2f1eaab67b37a016684d74b4d3a0d45f"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_30m_tail_veto_overlay_experimental\\tail_veto_pipeline.joblib",
+    "bytes": 44595232,
+    "sha256": "e987af1d8e0c97362aef9fbe4888ccad72e1f5b779e7363a663e86c4dbf20b20"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_30m_tail_veto_overlay_experimental\\trades_after_veto.csv",
+    "bytes": 13205,
+    "sha256": "2a079eb022d7fd05ece11b6fc0528f91ee98a5c8dcc2c9825d71c7ae06d38cff"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_30m_tail_veto_overlay_experimental\\trades_before_veto.csv",
+    "bytes": 14202,
+    "sha256": "3ffb72d36f3496c1d3d636ee628dd89c2e38bbe85d48dac48de24d66a5b92314"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_30m_tail_veto_overlay_experimental\\training_code\\evaluate_2026_tail_veto_overlay.py",
+    "bytes": 4726,
+    "sha256": "eceb55c012f2bfa830ac4db288e243cda1bca329b89611a89288fa0f9320607b"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_30m_tail_veto_overlay_experimental\\training_code\\package_improved_30m_overlay.py",
+    "bytes": 7881,
+    "sha256": "cb18a5e545f6c60c0a29d19fa883d49767fecdfd52940a347316aa630590d48a"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_30m_tail_veto_overlay_experimental\\training_code\\retrain_frozen_models_2026.py",
+    "bytes": 14951,
+    "sha256": "edc9a651a566da258d728b5df43ba45f32bcbd0abff85f10358666a0cbfd6953"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_30m_tail_veto_overlay_experimental\\training_code\\train_fixed_atm_horizons.py",
+    "bytes": 40828,
+    "sha256": "b10cb34e4cf8df92e334232d3430a0132f66d7261546bfd8e1d6e086a53640e0"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_30m_tail_veto_overlay_experimental\\training_code\\train_high_win_rate_models.py",
+    "bytes": 14942,
+    "sha256": "c08ed56a778da487c5ef4cdef44685b2a5b06699de8c1ad0aa1720752f25071f"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_30m_tail_veto_overlay_experimental\\training_code\\train_tail_risk_veto.py",
+    "bytes": 34655,
+    "sha256": "c663f0cd6c09789d8f543ba8a40d43a8aa0056717744f5a7f488b1005502e91d"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_60m_lightgbm_classifier\\__pycache__\\predict.cpython-313.pyc",
+    "bytes": 1908,
+    "sha256": "d2117a24bee214bf630a14161ce85e0e7f9d6a44d00862c26aae7b4e6d6ee418"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_60m_lightgbm_classifier\\estimator.joblib",
+    "bytes": 630516,
+    "sha256": "0795d996eb1a99492e99570899e8e201690dcb8dde97dcc089048a0553f4aee9"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_60m_lightgbm_classifier\\EVALUATION_REPORT.md",
+    "bytes": 1215,
+    "sha256": "c9db63cdddc04549743b9b5c5019809a9af5c08a485f459f7f9e1ace28e3a002"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_60m_lightgbm_classifier\\feature_manifest.json",
+    "bytes": 1680,
+    "sha256": "b5d4c4e08c2856872f49efcd3cceda2e9280cd9c3e8487b38c71e572deca36ed"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_60m_lightgbm_classifier\\metrics.json",
+    "bytes": 670,
+    "sha256": "f0e4ece8aa00ea55ceceea0070e78290e0f234ea06936a27afe87e106d697bc1"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_60m_lightgbm_classifier\\model.joblib",
+    "bytes": 634078,
+    "sha256": "33d319dd3680a62848e96470be5379eeac4d534311ce5a3bfbb48ebb265e05e9"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_60m_lightgbm_classifier\\MODEL_CARD.md",
+    "bytes": 1470,
+    "sha256": "580f0260ee56a1235622edaafc93e81c54acd0a21acf99de527c0dc174e8fc6f"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_60m_lightgbm_classifier\\pipeline.joblib",
+    "bytes": 632846,
+    "sha256": "fb97afb835fabc6fab63cb9bdd9083d8abba47346e25ad680c1278aecfde8dc3"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_60m_lightgbm_classifier\\predict.py",
+    "bytes": 1068,
+    "sha256": "9840187af2b4c86c87dfa679184f10c644ff21e01445f6888b65b90413016657"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_60m_lightgbm_classifier\\preprocessor.joblib",
+    "bytes": 2488,
+    "sha256": "d0290c1bf6398bf7aa93d14c290a85cfd3233799f4efe0a31246064e588ba081"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_60m_lightgbm_classifier\\requirements.txt",
+    "bytes": 118,
+    "sha256": "fc9eb8c5c991b0beb9ee3355c8f5a12e364c3e061fc93ee0ac25e50a323ca740"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_60m_lightgbm_classifier\\scaler.joblib",
+    "bytes": 110,
+    "sha256": "a299ca325cedabc26be174648623e06a15d7fda32238c3addd30fceaf321ea65"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_60m_lightgbm_classifier\\SHA256SUMS.txt",
+    "bytes": 1552,
+    "sha256": "b626ea59a0b26745916d76cb70f5b748cc3d14120f836467c26b79c519f35861"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_60m_lightgbm_classifier\\test_trades_2026.csv",
+    "bytes": 4237,
+    "sha256": "c45661919d42607329069a836d46dbf6a0b9f417d56980361152da5c5a5a9f80"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_60m_lightgbm_classifier\\training_code\\__pycache__\\package_model_releases.cpython-313.pyc",
+    "bytes": 17562,
+    "sha256": "7ebc11d50aa46ca76ffd448e0688552f79b1542b810b6e1f9609d57dcdb9082c"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_60m_lightgbm_classifier\\training_code\\__pycache__\\retrain_frozen_models_2026.cpython-313.pyc",
+    "bytes": 17947,
+    "sha256": "4689e6e31307cd9c16a7f798f980fdaf787dbbc7c4251e459c252d2112c33100"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_60m_lightgbm_classifier\\training_code\\__pycache__\\train_fixed_atm_horizons.cpython-313.pyc",
+    "bytes": 48270,
+    "sha256": "8752be0dfb7637bca80f5a6a253300ebc2c82ff86280865fae61e736c3f368cf"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_60m_lightgbm_classifier\\training_code\\__pycache__\\train_high_win_rate_hybrid.cpython-313.pyc",
+    "bytes": 8419,
+    "sha256": "7664c292bab02fc021c179c5330d11054099a45c200934c7fed191eb3d6c5953"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_60m_lightgbm_classifier\\training_code\\__pycache__\\train_high_win_rate_models.cpython-313.pyc",
+    "bytes": 19234,
+    "sha256": "087cd11b1a6bed3553318588a71037d4bdd2c60e50b2b0cc4d0e7dffd8a3c490"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_60m_lightgbm_classifier\\training_code\\package_model_releases.py",
+    "bytes": 14073,
+    "sha256": "3ce081067ed3df45f954001375d2f1fb82e61af3b1a05c15a3ea9abe58e2ec9d"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_60m_lightgbm_classifier\\training_code\\retrain_frozen_models_2026.py",
+    "bytes": 14951,
+    "sha256": "edc9a651a566da258d728b5df43ba45f32bcbd0abff85f10358666a0cbfd6953"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_60m_lightgbm_classifier\\training_code\\train_fixed_atm_horizons.py",
+    "bytes": 40828,
+    "sha256": "b10cb34e4cf8df92e334232d3430a0132f66d7261546bfd8e1d6e086a53640e0"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_60m_lightgbm_classifier\\training_code\\train_high_win_rate_hybrid.py",
+    "bytes": 6592,
+    "sha256": "b2eceab979a4a9aaeadbfe091ac15151f4ffa98d5c188805a8d846993bd56d5d"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_60m_lightgbm_classifier\\training_code\\train_high_win_rate_models.py",
+    "bytes": 14942,
+    "sha256": "c08ed56a778da487c5ef4cdef44685b2a5b06699de8c1ad0aa1720752f25071f"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_90m_extra_trees_classifier\\__pycache__\\predict.cpython-313.pyc",
+    "bytes": 1911,
+    "sha256": "d07bf2b2f657661ca0e2641c8932298bcab6023aae3a351a594ca978f8d847e1"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_90m_extra_trees_classifier\\estimator.joblib",
+    "bytes": 4677417,
+    "sha256": "1423fa5091c5a4f97cf9c1acd495acee9f33dd9f95f9673d9c935db9231ba51d"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_90m_extra_trees_classifier\\EVALUATION_REPORT.md",
+    "bytes": 1215,
+    "sha256": "c9db63cdddc04549743b9b5c5019809a9af5c08a485f459f7f9e1ace28e3a002"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_90m_extra_trees_classifier\\feature_manifest.json",
+    "bytes": 1679,
+    "sha256": "53d855903173ecd9350f7c52a579073b21dcd1e1861068ad5d23c9742d96279a"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_90m_extra_trees_classifier\\metrics.json",
+    "bytes": 669,
+    "sha256": "bb4c734d9964ba360da1b3713dd7c5baaf8905ea1ae32a1bac346f6acc3c3728"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_90m_extra_trees_classifier\\model.joblib",
+    "bytes": 4680693,
+    "sha256": "65941727bfad44cf1371150099886b9d8e8a29567683cab67aa5057ded44979c"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_90m_extra_trees_classifier\\MODEL_CARD.md",
+    "bytes": 1475,
+    "sha256": "b145d3b810b10b3ff70cfdb4a5999986815decc47637595deceeaa5cb481dd71"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_90m_extra_trees_classifier\\pipeline.joblib",
+    "bytes": 4679682,
+    "sha256": "79c1017597cfe5bf6ba5bf1c4cd47ef6d7e3264825bb28c047922650ac93fe31"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_90m_extra_trees_classifier\\predict.py",
+    "bytes": 1068,
+    "sha256": "9840187af2b4c86c87dfa679184f10c644ff21e01445f6888b65b90413016657"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_90m_extra_trees_classifier\\preprocessor.joblib",
+    "bytes": 2488,
+    "sha256": "543d2693844500c79b5ed6bdc1ed9124871e70b0d007c0fa89005fa7199adfb3"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_90m_extra_trees_classifier\\requirements.txt",
+    "bytes": 118,
+    "sha256": "fc9eb8c5c991b0beb9ee3355c8f5a12e364c3e061fc93ee0ac25e50a323ca740"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_90m_extra_trees_classifier\\scaler.joblib",
+    "bytes": 110,
+    "sha256": "a299ca325cedabc26be174648623e06a15d7fda32238c3addd30fceaf321ea65"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_90m_extra_trees_classifier\\SHA256SUMS.txt",
+    "bytes": 1552,
+    "sha256": "377c8e3ea7007fbc7d492ab278f20f25a62a276c0be63160a5c3a7b4df1b3c5f"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_90m_extra_trees_classifier\\test_trades_2026.csv",
+    "bytes": 688,
+    "sha256": "31065db47974bf91861afe761e5b624c34a06469140c8c834b201d7835806dd9"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_90m_extra_trees_classifier\\training_code\\__pycache__\\package_model_releases.cpython-313.pyc",
+    "bytes": 17565,
+    "sha256": "39b1c9c53b1dc406d6960424955d9c87f0873e924e42b28eb80ec00950374cbb"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_90m_extra_trees_classifier\\training_code\\__pycache__\\retrain_frozen_models_2026.cpython-313.pyc",
+    "bytes": 17950,
+    "sha256": "eefa4ad6f2562e28a08d7f2cac30c0f7053ab12a78ea418404fab49de19d1a7b"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_90m_extra_trees_classifier\\training_code\\__pycache__\\train_fixed_atm_horizons.cpython-313.pyc",
+    "bytes": 48273,
+    "sha256": "1a876ea9f395dc56ad748a1e8c27a32131f5c05674440c98a5d5e6e8823dc984"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_90m_extra_trees_classifier\\training_code\\__pycache__\\train_high_win_rate_hybrid.cpython-313.pyc",
+    "bytes": 8422,
+    "sha256": "cab0be837633694e27c7e6af0828e393dd7053f00b0f57d47e65bca0404b6c39"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_90m_extra_trees_classifier\\training_code\\__pycache__\\train_high_win_rate_models.cpython-313.pyc",
+    "bytes": 19237,
+    "sha256": "30343df602bb6e0ed7db3d9d152d4c9ee0a2ab97fcc5e2f5eba6b8e5c84bf5a8"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_90m_extra_trees_classifier\\training_code\\package_model_releases.py",
+    "bytes": 14073,
+    "sha256": "3ce081067ed3df45f954001375d2f1fb82e61af3b1a05c15a3ea9abe58e2ec9d"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_90m_extra_trees_classifier\\training_code\\retrain_frozen_models_2026.py",
+    "bytes": 14951,
+    "sha256": "edc9a651a566da258d728b5df43ba45f32bcbd0abff85f10358666a0cbfd6953"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_90m_extra_trees_classifier\\training_code\\train_fixed_atm_horizons.py",
+    "bytes": 40828,
+    "sha256": "b10cb34e4cf8df92e334232d3430a0132f66d7261546bfd8e1d6e086a53640e0"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_90m_extra_trees_classifier\\training_code\\train_high_win_rate_hybrid.py",
+    "bytes": 6592,
+    "sha256": "b2eceab979a4a9aaeadbfe091ac15151f4ffa98d5c188805a8d846993bd56d5d"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_90m_extra_trees_classifier\\training_code\\train_high_win_rate_models.py",
+    "bytes": 14942,
+    "sha256": "c08ed56a778da487c5ef4cdef44685b2a5b06699de8c1ad0aa1720752f25071f"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_90m_high_win_rate_hybrid\\__pycache__\\predict.cpython-313.pyc",
+    "bytes": 2155,
+    "sha256": "f32649865aef93fa4e4442eb1ddb92f372886843ebeaabe523b3d658c582e302"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_90m_high_win_rate_hybrid\\classifier_estimator.joblib",
+    "bytes": 4677417,
+    "sha256": "7bfd83e121be8ff0748d3bad509886a084fec4e8b02724ac9b0691fedac9a695"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_90m_high_win_rate_hybrid\\classifier_pipeline.joblib",
+    "bytes": 4679682,
+    "sha256": "cc3953aa905541cf463e79e7129e58671f786b59a1e634885f8ee56f72e8a44d"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_90m_high_win_rate_hybrid\\classifier_preprocessor.joblib",
+    "bytes": 2488,
+    "sha256": "543d2693844500c79b5ed6bdc1ed9124871e70b0d007c0fa89005fa7199adfb3"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_90m_high_win_rate_hybrid\\classifier_scaler.joblib",
+    "bytes": 110,
+    "sha256": "a299ca325cedabc26be174648623e06a15d7fda32238c3addd30fceaf321ea65"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_90m_high_win_rate_hybrid\\EVALUATION_REPORT.md",
+    "bytes": 1215,
+    "sha256": "c9db63cdddc04549743b9b5c5019809a9af5c08a485f459f7f9e1ace28e3a002"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_90m_high_win_rate_hybrid\\feature_manifest.json",
+    "bytes": 1722,
+    "sha256": "5480caaf2760edccce94b1084a7bd11137350b0122e7a7dbe1841b36df65310d"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_90m_high_win_rate_hybrid\\metrics.json",
+    "bytes": 489,
+    "sha256": "616e0a43181499e511fcd1a7445b2ec4b551c42260568cdb9975b9f05d3004d4"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_90m_high_win_rate_hybrid\\model.joblib",
+    "bytes": 5210556,
+    "sha256": "578e053b680c9b96f73f0c96c690bfed7427580664600b2dfe6b68da0d4f9462"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_90m_high_win_rate_hybrid\\MODEL_CARD.md",
+    "bytes": 1448,
+    "sha256": "5cc04a0dbfac16bf5a5c9bce160ca6fcd16ec8b9cc2c0272e5b953cfdfa6f28e"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_90m_high_win_rate_hybrid\\predict.py",
+    "bytes": 1299,
+    "sha256": "f28a71ca6bec5fcbc07f0c4c54458cc12c89ce64aee205dd651777125b206e11"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_90m_high_win_rate_hybrid\\regressor_estimator.joblib",
+    "bytes": 527875,
+    "sha256": "8cf173922690ac59b60b5f25861f9b5fa3cb4eb93d6a0a638d807932c01a3454"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_90m_high_win_rate_hybrid\\regressor_pipeline.joblib",
+    "bytes": 530361,
+    "sha256": "e2c1a5164b7a9b404877e46eca6a7e6cc94798cfad6a6605b1e5566b4aabf911"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_90m_high_win_rate_hybrid\\regressor_preprocessor.joblib",
+    "bytes": 2488,
+    "sha256": "543d2693844500c79b5ed6bdc1ed9124871e70b0d007c0fa89005fa7199adfb3"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_90m_high_win_rate_hybrid\\regressor_scaler.joblib",
+    "bytes": 110,
+    "sha256": "a299ca325cedabc26be174648623e06a15d7fda32238c3addd30fceaf321ea65"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_90m_high_win_rate_hybrid\\requirements.txt",
+    "bytes": 118,
+    "sha256": "fc9eb8c5c991b0beb9ee3355c8f5a12e364c3e061fc93ee0ac25e50a323ca740"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_90m_high_win_rate_hybrid\\SHA256SUMS.txt",
+    "bytes": 1971,
+    "sha256": "b7479e55e0f7a8ac4e27a0079e8a8f9acc1513559c1e8f129fac21907c5cef64"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_90m_high_win_rate_hybrid\\test_trades_2026.csv",
+    "bytes": 79,
+    "sha256": "20291e9ac95046c29bb3fdfb88c0398baec9f657ef3fe9b327337454d7b7d905"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_90m_high_win_rate_hybrid\\training_code\\__pycache__\\package_model_releases.cpython-313.pyc",
+    "bytes": 17563,
+    "sha256": "f5d98a70eccea9dfb9f06b9eb981a64adb30b719a81c9676f5911f833875e358"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_90m_high_win_rate_hybrid\\training_code\\__pycache__\\retrain_frozen_models_2026.cpython-313.pyc",
+    "bytes": 17948,
+    "sha256": "b94e9f0b23b547982025453d8f9901f95e9c22ef4ac82856dcf4abd92d17e207"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_90m_high_win_rate_hybrid\\training_code\\__pycache__\\train_fixed_atm_horizons.cpython-313.pyc",
+    "bytes": 48271,
+    "sha256": "a6e3547fd1a71280de267bb12b11459ee6c9cc330ecdb5e79b834b666c198b03"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_90m_high_win_rate_hybrid\\training_code\\__pycache__\\train_high_win_rate_hybrid.cpython-313.pyc",
+    "bytes": 8420,
+    "sha256": "d5f26f7ad340613fb680e932418eb724eee130b2e67a3c7c674dd2e958bb4e38"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_90m_high_win_rate_hybrid\\training_code\\__pycache__\\train_high_win_rate_models.cpython-313.pyc",
+    "bytes": 19235,
+    "sha256": "dc59370c65735c11ee3edccee5b7a158ac548112a648913766f54dd9bae8b79c"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_90m_high_win_rate_hybrid\\training_code\\package_model_releases.py",
+    "bytes": 14073,
+    "sha256": "3ce081067ed3df45f954001375d2f1fb82e61af3b1a05c15a3ea9abe58e2ec9d"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_90m_high_win_rate_hybrid\\training_code\\retrain_frozen_models_2026.py",
+    "bytes": 14951,
+    "sha256": "edc9a651a566da258d728b5df43ba45f32bcbd0abff85f10358666a0cbfd6953"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_90m_high_win_rate_hybrid\\training_code\\train_fixed_atm_horizons.py",
+    "bytes": 40828,
+    "sha256": "b10cb34e4cf8df92e334232d3430a0132f66d7261546bfd8e1d6e086a53640e0"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_90m_high_win_rate_hybrid\\training_code\\train_high_win_rate_hybrid.py",
+    "bytes": 6592,
+    "sha256": "b2eceab979a4a9aaeadbfe091ac15151f4ffa98d5c188805a8d846993bd56d5d"
+  },
+  {
+    "path": "atm_reference_models\\banknifty_fixed_atm_90m_high_win_rate_hybrid\\training_code\\train_high_win_rate_models.py",
+    "bytes": 14942,
+    "sha256": "c08ed56a778da487c5ef4cdef44685b2a5b06699de8c1ad0aa1720752f25071f"
+  },
+  {
+    "path": "atm_reference_models\\README.md",
+    "bytes": 771,
+    "sha256": "d1d4e0bd13370b0ed0f4c39ab21a1f9bbb58489793303f9cf830312446f1a527"
+  },
+  {
+    "path": "atm_reference_models\\release_index.json",
+    "bytes": 3242,
+    "sha256": "1dcda1b5f318618565d2902204d9c3fe4b5acf5a538c49ce0858e11eec09191c"
+  },
+  {
+    "path": "atm_reference_models\\tail_veto\\tail_veto_120m.joblib",
+    "bytes": 292903,
+    "sha256": "fff35b933d95696c49ccd12191b0492984fecf71b51168101afd4d5d69c9bd64"
+  },
+  {
+    "path": "atm_reference_models\\tail_veto\\tail_veto_180m.joblib",
+    "bytes": 18991831,
+    "sha256": "cd4bdc65e2f2501dfcb261ef65caaa1684669739f384cc5cc6f3da2591cdd67f"
+  },
+  {
+    "path": "atm_reference_models\\tail_veto\\tail_veto_30m.joblib",
+    "bytes": 44618023,
+    "sha256": "43de4e92220ab1b2fe856e35c4e0a66861481a56282b97b875f6311b75b95f5d"
+  },
+  {
+    "path": "atm_reference_models\\tail_veto\\tail_veto_60m.joblib",
+    "bytes": 35763863,
+    "sha256": "80dfab60cba5bddf40bcaac3937f5831a963ccf0aa4f70923f5cad71561300bd"
+  }
+]

@@ -1,0 +1,27 @@
+{
+  "0": {
+    "entry_quantile": 0.6,
+    "win_quantile": 0.5,
+    "minimum_expected_points": 1.5914294141330623,
+    "minimum_win_probability": 0.5953519546951542,
+    "maximum_large_loss_probability": 0.125
+  },
+  "1": {
+    "entry_quantile": 0.8,
+    "minimum_expected_points": 0.0,
+    "minimum_win_probability": 0.4899177527467292,
+    "maximum_large_loss_probability": 0.15
+  },
+  "2": {
+    "entry_quantile": 0.85,
+    "minimum_expected_points": 0.0,
+    "minimum_win_probability": 0.5155104479417535,
+    "maximum_large_loss_probability": 0.1
+  },
+  "3_4": {
+    "entry_quantile": 0.85,
+    "minimum_expected_points": 0.0,
+    "minimum_win_probability": 0.4987736581923341,
+    "maximum_large_loss_probability": 0.125
+  }
+}

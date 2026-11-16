@@ -1,0 +1,95 @@
+{
+  "architecture": "shared models; 2023-optimized week 0; fixed conservative weeks 1-4",
+  "brokerage_rupees": 0.0,
+  "statutory_charges_included": true,
+  "slippage_points_per_straddle": 2.0,
+  "selected_models": {
+    "decay": "ridge",
+    "holding": "ridge",
+    "win": "logistic_regression",
+    "tail": "logistic_regression"
+  },
+  "features": [
+    "future_log_return_5m",
+    "future_log_return_15m",
+    "future_log_return_30m",
+    "future_log_return_60m",
+    "basis",
+    "pcr_log_change_5m",
+    "pcr_log_change_15m",
+    "pcr_log_change_30m",
+    "straddle_log_change_5m",
+    "straddle_log_change_15m",
+    "straddle_log_change_30m",
+    "straddle_premium",
+    "premium_balance",
+    "moneyness",
+    "tod_sin",
+    "tod_cos",
+    "days_to_expiry_clipped",
+    "pcr_level",
+    "log_total_oi",
+    "total_oi_log_change_5m",
+    "total_oi_log_change_15m",
+    "total_oi_log_change_30m",
+    "future_realized_vol_15m",
+    "future_realized_vol_30m",
+    "future_realized_vol_60m",
+    "future_momentum_acceleration",
+    "straddle_momentum_acceleration",
+    "straddle_to_future",
+    "iv_mean",
+    "iv_skew",
+    "iv_dispersion",
+    "theta_yield",
+    "gamma_scaled",
+    "vega_scaled",
+    "abs_premium_balance",
+    "abs_moneyness",
+    "sqrt_dte",
+    "inverse_sqrt_dte",
+    "minutes_to_1500",
+    "weekday_sin",
+    "weekday_cos",
+    "expiry_week_0",
+    "expiry_week_1",
+    "expiry_week_2",
+    "expiry_week_3",
+    "expiry_week_4"
+  ],
+  "horizons": [
+    60,
+    120
+  ],
+  "extension_buffer_points": 5.0,
+  "large_loss_points": 40.0,
+  "week_zero_optimization_period": "2023",
+  "test_start": "2024-01-01",
+  "thresholds": {
+    "0": {
+      "entry_quantile": 0.6,
+      "win_quantile": 0.5,
+      "minimum_expected_points": 1.5914294141330623,
+      "minimum_win_probability": 0.5953519546951542,
+      "maximum_large_loss_probability": 0.125
+    },
+    "1": {
+      "entry_quantile": 0.8,
+      "minimum_expected_points": 0.0,
+      "minimum_win_probability": 0.4899177527467292,
+      "maximum_large_loss_probability": 0.15
+    },
+    "2": {
+      "entry_quantile": 0.85,
+      "minimum_expected_points": 0.0,
+      "minimum_win_probability": 0.5155104479417535,
+      "maximum_large_loss_probability": 0.1
+    },
+    "3_4": {
+      "entry_quantile": 0.85,
+      "minimum_expected_points": 0.0,
+      "minimum_win_probability": 0.4987736581923341,
+      "maximum_large_loss_probability": 0.125
+    }
+  }
+}

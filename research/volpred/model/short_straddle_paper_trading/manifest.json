@@ -1,0 +1,132 @@
+{
+  "bundle": "BANKNIFTY short-straddle paper trading",
+  "model_count": 6,
+  "models": [
+    {
+      "name": "enhanced_rv_15m_model",
+      "source": "model/enhanced_rv/artifacts/enhanced_rv_15m_model.joblib",
+      "feature_module": "feature_engineering/enhanced_rv_15m_model.py",
+      "role": "live 15-minute realized-variance forecast",
+      "bundled_model": "models/enhanced_rv_15m_model.joblib",
+      "sha256": "09a9262c32e1bff94d123c376dee19b218efe1ff24c74b6c33a7ad529eb456a6",
+      "source_sha256": "09a9262c32e1bff94d123c376dee19b218efe1ff24c74b6c33a7ad529eb456a6",
+      "features": [
+        "log_rv_past_5",
+        "log_rv_past_15",
+        "log_rv_past_60"
+      ],
+      "scalers": [
+        "scalers/enhanced_rv_15m_model.scaler.joblib"
+      ],
+      "paper_only": true
+    },
+    {
+      "name": "enhanced_rv_30m_model",
+      "source": "model/enhanced_rv/artifacts/enhanced_rv_30m_model.joblib",
+      "feature_module": "feature_engineering/enhanced_rv_30m_model.py",
+      "role": "live 30-minute realized-variance forecast",
+      "bundled_model": "models/enhanced_rv_30m_model.joblib",
+      "sha256": "1fe9548335a67451e136d236aa14e95c08b91d033a8fdb119df7bf94661105da",
+      "source_sha256": "1fe9548335a67451e136d236aa14e95c08b91d033a8fdb119df7bf94661105da",
+      "features": [
+        "log_rv_past_5",
+        "log_rv_past_15",
+        "log_rv_past_60"
+      ],
+      "scalers": [
+        "scalers/enhanced_rv_30m_model.scaler.joblib"
+      ],
+      "paper_only": true
+    },
+    {
+      "name": "enhanced_rv_60m_model",
+      "source": "model/enhanced_rv/artifacts/enhanced_rv_60m_model.joblib",
+      "feature_module": "feature_engineering/enhanced_rv_60m_model.py",
+      "role": "live 60-minute realized-variance forecast",
+      "bundled_model": "models/enhanced_rv_60m_model.joblib",
+      "sha256": "469f4f1623315df3aa35497069ae9f5e166acbc7ebc153284d414538ea85b154",
+      "source_sha256": "469f4f1623315df3aa35497069ae9f5e166acbc7ebc153284d414538ea85b154",
+      "features": [
+        "log_rv_past_5",
+        "log_rv_past_15",
+        "log_rv_past_60"
+      ],
+      "scalers": [
+        "scalers/enhanced_rv_60m_model.scaler.joblib"
+      ],
+      "paper_only": true
+    },
+    {
+      "name": "enhanced_rv_120m_model",
+      "source": "model/enhanced_rv/artifacts/enhanced_rv_120m_model.joblib",
+      "feature_module": "feature_engineering/enhanced_rv_120m_model.py",
+      "role": "live 120-minute realized-variance forecast",
+      "bundled_model": "models/enhanced_rv_120m_model.joblib",
+      "sha256": "b516e331412adf67d5a751a877331a3cd3b80bf18ddadf182f205a9a397f909f",
+      "source_sha256": "b516e331412adf67d5a751a877331a3cd3b80bf18ddadf182f205a9a397f909f",
+      "features": [
+        "log_rv_past_5",
+        "log_rv_past_15",
+        "log_rv_past_60"
+      ],
+      "scalers": [
+        "scalers/enhanced_rv_120m_model.scaler.joblib"
+      ],
+      "paper_only": true
+    },
+    {
+      "name": "dte4_7_pnl_gate",
+      "source": "model/dte4_20_paper/dte4_7_pnl_gate.joblib",
+      "feature_module": "feature_engineering/dte4_7_pnl_gate.py",
+      "role": "active 4-7 DTE ATM short-straddle decision gate",
+      "bundled_model": "models/dte4_7_pnl_gate.joblib",
+      "sha256": "1ec2a12ed3209758129c939b187793fd534479c061b1e7e8e712df4b73d096b6",
+      "source_sha256": "1ec2a12ed3209758129c939b187793fd534479c061b1e7e8e712df4b73d096b6",
+      "features": [
+        "dte",
+        "log_premium_ratio",
+        "atm_iv",
+        "iv_skew",
+        "log_rv_past_5",
+        "log_rv_past_15",
+        "log_rv_past_60",
+        "overnight_return",
+        "vol_of_vol_30",
+        "oi_imbalance"
+      ],
+      "scalers": [
+        "scalers/dte4_7_pnl_gate.scaler.joblib"
+      ],
+      "paper_only": true
+    },
+    {
+      "name": "dte8_20_huber_gate",
+      "source": "model/dte4_20_paper/dte8_20_huber_gate.joblib",
+      "feature_module": "feature_engineering/dte8_20_huber_gate.py",
+      "role": "active 8-14 DTE ATM short-straddle decision gate",
+      "bundled_model": "models/dte8_20_huber_gate.joblib",
+      "sha256": "b65898db8f6cc6bc52affcbab905cba34b9a238c2c61133c199102b4a8ebbc5a",
+      "source_sha256": "b65898db8f6cc6bc52affcbab905cba34b9a238c2c61133c199102b4a8ebbc5a",
+      "features": [
+        "dte",
+        "log_premium_ratio",
+        "atm_iv",
+        "iv_skew",
+        "log_rv_past_5",
+        "log_rv_past_15",
+        "log_rv_past_60",
+        "overnight_return",
+        "vol_of_vol_30",
+        "oi_imbalance"
+      ],
+      "scalers": [
+        "scalers/dte8_20_huber_gate_8_14.scaler.joblib",
+        "scalers/dte8_20_huber_gate_15_20.scaler.joblib"
+      ],
+      "paper_only": true
+    }
+  ],
+  "excluded": {
+    "model/dte4_20_paper/multi_structure_selector.joblib": "Active at DTE 15-20 for short strangles; outside short-straddle scope."
+  }
+}

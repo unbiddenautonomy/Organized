@@ -1,0 +1,87 @@
+{
+  "source_report": "artifacts\\frozen_models_2026_holdout\\REPORT.md",
+  "development_end": "2025-05-08 15:27:59",
+  "holdout_start": "2026-01-01 09:16:00",
+  "holdout_end": "2026-07-02 15:30:00",
+  "releases": [
+    {
+      "release": "banknifty_fixed_atm_30m_extra_trees_classifier",
+      "folder": "model_releases\\banknifty_fixed_atm_30m_extra_trees_classifier",
+      "parts": {
+        "pipeline": "pipeline.joblib",
+        "preprocessor": "preprocessor.joblib",
+        "estimator": "estimator.joblib",
+        "scaler": "scaler.joblib"
+      }
+    },
+    {
+      "release": "banknifty_fixed_atm_60m_lightgbm_classifier",
+      "folder": "model_releases\\banknifty_fixed_atm_60m_lightgbm_classifier",
+      "parts": {
+        "pipeline": "pipeline.joblib",
+        "preprocessor": "preprocessor.joblib",
+        "estimator": "estimator.joblib",
+        "scaler": "scaler.joblib"
+      }
+    },
+    {
+      "release": "banknifty_fixed_atm_90m_extra_trees_classifier",
+      "folder": "model_releases\\banknifty_fixed_atm_90m_extra_trees_classifier",
+      "parts": {
+        "pipeline": "pipeline.joblib",
+        "preprocessor": "preprocessor.joblib",
+        "estimator": "estimator.joblib",
+        "scaler": "scaler.joblib"
+      }
+    },
+    {
+      "release": "banknifty_fixed_atm_120m_lightgbm_classifier",
+      "folder": "model_releases\\banknifty_fixed_atm_120m_lightgbm_classifier",
+      "parts": {
+        "pipeline": "pipeline.joblib",
+        "preprocessor": "preprocessor.joblib",
+        "estimator": "estimator.joblib",
+        "scaler": "scaler.joblib"
+      }
+    },
+    {
+      "release": "banknifty_fixed_atm_180m_logistic_c01",
+      "folder": "model_releases\\banknifty_fixed_atm_180m_logistic_c01",
+      "parts": {
+        "pipeline": "pipeline.joblib",
+        "preprocessor": "preprocessor.joblib",
+        "estimator": "estimator.joblib",
+        "scaler": "scaler.joblib"
+      }
+    },
+    {
+      "release": "banknifty_fixed_atm_90m_high_win_rate_hybrid",
+      "folder": "model_releases\\banknifty_fixed_atm_90m_high_win_rate_hybrid",
+      "classifier_parts": {
+        "pipeline": "classifier_pipeline.joblib",
+        "preprocessor": "classifier_preprocessor.joblib",
+        "estimator": "classifier_estimator.joblib",
+        "scaler": "classifier_scaler.joblib"
+      },
+      "regressor_parts": {
+        "pipeline": "regressor_pipeline.joblib",
+        "preprocessor": "regressor_preprocessor.joblib",
+        "estimator": "regressor_estimator.joblib",
+        "scaler": "regressor_scaler.joblib"
+      }
+    },
+    {
+      "release": "banknifty_fixed_atm_30m_tail_veto_overlay_experimental",
+      "folder": "model_releases\\banknifty_fixed_atm_30m_tail_veto_overlay_experimental",
+      "validation_status": "diagnostic on already-consumed 2026 data; requires a later untouched holdout",
+      "parts": {
+        "composite_model": "model.joblib",
+        "entry_pipeline": "entry_pipeline.joblib",
+        "tail_veto_pipeline": "tail_veto_pipeline.joblib",
+        "preprocessor": "preprocessor.joblib",
+        "estimators": "estimators.joblib",
+        "scaler": "scaler.joblib"
+      }
+    }
+  ]
+}

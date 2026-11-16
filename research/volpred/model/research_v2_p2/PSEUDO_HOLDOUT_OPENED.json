@@ -1,0 +1,10 @@
+{
+  "opening_id": "pseudo-open-20261013T133037819349Z",
+  "status": "COMPLETED_AND_CONSUMED",
+  "consumed": true,
+  "spec_sha256": "b9c0be6cd0eb0ab2c434a8671a7fb2df1acfc633850a7b01e942696db5236cde",
+  "started_at_utc": "2026-10-13T13:30:37.820005+00:00",
+  "verdict": "research_stable",
+  "result_sha256": "8b09a566398cbe6830f0cb615c7e64518f90abe4eec21ceb46614166e8cc760f",
+  "predictions_sha256": "c7a10347d1a98dc8977309deb94d56faa48fb124679b74f187abc0dbe4360e53"
+}

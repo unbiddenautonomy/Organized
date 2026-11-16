@@ -1,0 +1,9 @@
+year,hybrid_component,trades,signal_days,net_pnl
+2024,120m_short_2_strangle_q75,31,31,878.8910600634501
+2024,120m_short_atm_straddle_secondary,7,7,509.2050558331057
+2024,current_coverage_hybrid,59,48,15090.558368758246
+2024,refined_variance_transition_primary,19,19,7594.905569345641
+2025,120m_short_2_strangle_q75,3,3,606.751214696359
+2025,120m_short_atm_straddle_secondary,1,1,1069.7625747218485
+2025,current_coverage_hybrid,10,10,8803.791238607244
+2025,refined_variance_transition_primary,18,18,7882.776729698322

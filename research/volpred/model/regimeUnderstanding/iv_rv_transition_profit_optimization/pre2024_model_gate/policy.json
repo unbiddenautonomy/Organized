@@ -1,0 +1,16 @@
+{
+  "status": "RESEARCH_ONLY_NOT_LIVE_DEPLOYED",
+  "mandatory_transition": "IVcurrent > RVcurrent and (IVpred approximately RVpred or IVpred falls toward RVpred)",
+  "mandatory_cost_gate": "forecast Greek PnL >= complete estimated cost",
+  "primary": {
+    "structure": "short_2_strangle",
+    "threshold": 0.6931277592709387
+  },
+  "secondary": {
+    "structure": "short_atm_straddle",
+    "threshold": 0.7016246301834123
+  },
+  "model_training": "through 2022",
+  "threshold_selection": "2023",
+  "evaluation": "2024 and partial 2025"
+}

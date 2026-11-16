@@ -1,0 +1,19 @@
+data:
+  options_csv: ../../data/icharts_option_banknifty_monthly_atm_5strikes.csv
+  spot_csv: ../../data/icharts_banknifty_spot_1min.csv
+  output_csv: artifacts/combined_atm_iv_convergence_v2_features.csv
+  chunksize: 250000
+
+construction:
+  goal_name: combined_atm_iv_rv_convergence_v2
+  horizon_minutes: 120
+  combination_method: arithmetic_mean
+  lag_minutes: [5, 15, 30, 60, 120]
+  annual_trading_days: 252
+  minutes_per_trading_day: 375
+  minimum_surface_points: 4
+  minimum_option_price: 1.0
+  minimum_open_interest: 100
+  maximum_surface_rmse: 0.01
+  maximum_call_put_iv_difference: 0.05
+  material_iv_rv_gap: 0.01

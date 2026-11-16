@@ -1,0 +1,13 @@
+{
+  "status": "RESEARCH_ONLY_NOT_LIVE_DEPLOYED",
+  "equality_band_absolute_vol": 0.005,
+  "current_rv": "sqrt(trailing_60m_variance * 252 * 375 / 60)",
+  "long_condition": "IVcurrent < RVcurrent and (abs(IVpred-RVpred)<=0.005 or IVpred rises toward RVpred)",
+  "short_condition": "IVcurrent > RVcurrent and (abs(IVpred-RVpred)<=0.005 or IVpred falls toward RVpred)",
+  "selection": "a rule must have >=20 development days and positive 2024 net PnL; no long or short rule passed",
+  "holdout": "2025-01-01 through 2025-05-09, untouched by selection",
+  "costs": "current encoded 2026 charges plus 25 bps premium-turnover slippage",
+  "same_monthly_expiry": true,
+  "one_trade_per_day": true,
+  "decision": "DO_NOT_ADD_THIS_CONVERGENCE_RULE_TO_LIVE_STRATEGY"
+}

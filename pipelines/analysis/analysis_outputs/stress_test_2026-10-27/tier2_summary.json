@@ -1,0 +1,311 @@
+{
+  "tier": 2,
+  "replay_validation": {
+    "expected_trades": 304,
+    "replayed_trades": 304,
+    "expected_gross_pnl_inr": 129517.5,
+    "replayed_gross_pnl_inr": 129517.50000000006,
+    "matched": true
+  },
+  "baseline": {
+    "trades": 304,
+    "net_pnl_inr": 103892.47498273506,
+    "sharpe": 4.905363274955042,
+    "max_drawdown_inr": 8956.554317226,
+    "win_rate_pct": 70.06578947368422
+  },
+  "one_minute_entry_delay_proxy": {
+    "trades": 278,
+    "net_pnl_inr": 87881.21700389104,
+    "sharpe": 4.760657352297151,
+    "max_drawdown_inr": 8442.180083991014,
+    "win_rate_pct": 69.42446043165468
+  },
+  "lag_tests": [
+    {
+      "lag_minutes": 1,
+      "qualified_entries": 611,
+      "trades": 242,
+      "net_pnl_inr": 78363.15021141301,
+      "sharpe": 4.655255018148282,
+      "max_drawdown_inr": 8226.376408242017,
+      "win_rate_pct": 69.00826446280992
+    },
+    {
+      "lag_minutes": 5,
+      "qualified_entries": 349,
+      "trades": 173,
+      "net_pnl_inr": 79960.41393030893,
+      "sharpe": 5.7208960007046255,
+      "max_drawdown_inr": 7054.803529896002,
+      "win_rate_pct": 73.98843930635837
+    },
+    {
+      "lag_minutes": 15,
+      "qualified_entries": 214,
+      "trades": 135,
+      "net_pnl_inr": 46763.933111084916,
+      "sharpe": 4.50822248533326,
+      "max_drawdown_inr": 4868.279548499988,
+      "win_rate_pct": 71.85185185185186
+    }
+  ],
+  "placebo_tests": {
+    "random_entry_same_time_of_day": {
+      "net_pnl_p05_p50_p95_inr": [
+        71173.3821649144,
+        90298.00802306252,
+        107193.93985272867
+      ],
+      "sharpe_p05_p50_p95": [
+        3.1545714035918864,
+        4.078940937754516,
+        4.953791543189136
+      ],
+      "strategy_net_percentile": 89.8,
+      "strategy_beats_95th_percentile": false
+    },
+    "within_day_label_permutation": {
+      "net_pnl_p05_p50_p95_inr": [
+        86681.80301859767,
+        96843.622985115,
+        107536.50160340441
+      ],
+      "strategy_net_percentile": 85.8
+    }
+  },
+  "cap_selection": {
+    "method_note": "Ex-ante daily opportunity selection under interval-overlap cap; random/high/low rankings use future opportunity availability and are diagnostic, not directly executable live rules.",
+    "first_come": {
+      "trades": 304,
+      "net_pnl_inr": 103892.47498273506,
+      "sharpe": 4.905363274955042,
+      "max_drawdown_inr": 8956.554317226,
+      "win_rate_pct": 70.06578947368422
+    },
+    "highest_probability": {
+      "trades": 294,
+      "net_pnl_inr": 84904.36413802204,
+      "sharpe": 4.246642094986349,
+      "max_drawdown_inr": 9724.192580259012,
+      "win_rate_pct": 66.3265306122449
+    },
+    "lowest_probability": {
+      "trades": 293,
+      "net_pnl_inr": 79800.68019102595,
+      "sharpe": 3.898977771731384,
+      "max_drawdown_inr": 10668.384612759022,
+      "win_rate_pct": 64.84641638225256
+    },
+    "random_200_net_pnl_p10_p50_p90_inr": [
+      76873.31224573504,
+      83246.18460685054,
+      89708.84772261394
+    ],
+    "first_come_percentile_within_random": 100.0,
+    "first_come_within_central_80pct": false
+  },
+  "stop_removed": {
+    "trades": 274,
+    "net_pnl_inr": 127149.01501180202,
+    "sharpe": 6.087066462844983,
+    "max_drawdown_inr": 6999.117844268985,
+    "win_rate_pct": 74.81751824817519
+  },
+  "target_removed": {
+    "trades": 286,
+    "net_pnl_inr": 107823.62371705509,
+    "sharpe": 4.896804709795322,
+    "max_drawdown_inr": 8956.554317226,
+    "win_rate_pct": 69.58041958041959
+  },
+  "minimum_sharpe_target_stop_plus_minus_25pct_grid": 4.684569128769614,
+  "route_results": {
+    "iv_above_rv": {
+      "trades": 215,
+      "net_pnl_inr": 66631.57813124704,
+      "sharpe": 4.043173096135262,
+      "max_drawdown_inr": 8956.554317226,
+      "win_rate_pct": 71.16279069767441
+    },
+    "iv_below_rv": {
+      "trades": 74,
+      "net_pnl_inr": 38136.273460998025,
+      "sharpe": 3.1126651642690963,
+      "max_drawdown_inr": 6674.952487694991,
+      "win_rate_pct": 71.62162162162163
+    },
+    "iv_near_rv": {
+      "trades": 15,
+      "net_pnl_inr": -875.3766095099977,
+      "sharpe": -0.2064850731637269,
+      "max_drawdown_inr": 5891.675510718002,
+      "win_rate_pct": 46.666666666666664
+    }
+  },
+  "expiry_split": {
+    "expiry_day": {
+      "trades": 1,
+      "net_pnl_inr": 1516.286476092,
+      "sharpe": 1.3368747295663839,
+      "max_drawdown_inr": 0.0,
+      "win_rate_pct": 100.0
+    },
+    "non_expiry_day": {
+      "trades": 303,
+      "net_pnl_inr": 102376.18850664306,
+      "sharpe": 4.838808201452527,
+      "max_drawdown_inr": 8956.554317226,
+      "win_rate_pct": 69.96699669966998
+    }
+  },
+  "regulatory_splits": {
+    "pre_oct_2024_stt_change": {
+      "trades": 12,
+      "net_pnl_inr": -3030.376453646996,
+      "sharpe": -0.40868005877031627,
+      "max_drawdown_inr": 8956.554317226,
+      "win_rate_pct": 66.66666666666666
+    },
+    "post_oct_2024_stt_change": {
+      "trades": 292,
+      "net_pnl_inr": 106922.85143638204,
+      "sharpe": 5.407370732427957,
+      "max_drawdown_inr": 8108.260077198,
+      "win_rate_pct": 70.2054794520548
+    },
+    "pre_nov_20_2024_structure_change": {
+      "trades": 74,
+      "net_pnl_inr": 32078.914565358013,
+      "sharpe": 2.5541092053925665,
+      "max_drawdown_inr": 8956.554317226,
+      "win_rate_pct": 75.67567567567568
+    },
+    "post_nov_20_2024_structure_change": {
+      "trades": 230,
+      "net_pnl_inr": 71813.56041737706,
+      "sharpe": 4.083793584946075,
+      "max_drawdown_inr": 8108.26007719801,
+      "win_rate_pct": 68.26086956521739
+    }
+  },
+  "historical_shocks": {
+    "june_2024_election_gap": "outside evaluation window",
+    "october_2024": {
+      "trades": 40,
+      "net_pnl_inr": 15385.40592245701,
+      "sharpe": 2.130261208833249,
+      "max_drawdown_inr": 4999.810590275987,
+      "win_rate_pct": 70.0
+    },
+    "april_2025": {
+      "trades": 15,
+      "net_pnl_inr": -6885.826887294002,
+      "sharpe": -1.948541599187313,
+      "max_drawdown_inr": 7211.240313296999,
+      "win_rate_pct": 26.666666666666668
+    },
+    "gap_days_over_1_5pct": [
+      {
+        "trade_date": "2024-11-25",
+        "overnight_gap_pct": 1.8257345074882192,
+        "strategy_net_pnl_inr": -10.932091949989854
+      },
+      {
+        "trade_date": "2025-04-07",
+        "overnight_gap_pct": -2.7545530765289428,
+        "strategy_net_pnl_inr": 0.0
+      },
+      {
+        "trade_date": "2025-04-15",
+        "overnight_gap_pct": 1.7199479468807288,
+        "strategy_net_pnl_inr": -516.8796067170001
+      },
+      {
+        "trade_date": "2025-05-07",
+        "overnight_gap_pct": 2.2074502858078215,
+        "strategy_net_pnl_inr": 0.0
+      }
+    ],
+    "worst_day": {
+      "date": "2024-09-23",
+      "net_pnl_inr": -8956.554317226
+    },
+    "worst_three_trading_day_window": {
+      "end_date": "2024-09-23",
+      "net_pnl_inr": -8027.0048739509975
+    },
+    "maximum_positions_stopped_same_minute": 3
+  },
+  "synthetic_gap_shocks": [
+    {
+      "gap_pct": 2,
+      "assumed_open_positions": 3,
+      "gross_loss_inr": -4500.0,
+      "estimated_net_loss_inr": -4752.8785363545885,
+      "multiple_of_historical_max_drawdown": 0.530659265607696,
+      "pass_under_2x_drawdown_rule": true
+    },
+    {
+      "gap_pct": 3,
+      "assumed_open_positions": 3,
+      "gross_loss_inr": -4500.0,
+      "estimated_net_loss_inr": -4752.8785363545885,
+      "multiple_of_historical_max_drawdown": 0.530659265607696,
+      "pass_under_2x_drawdown_rule": true
+    },
+    {
+      "gap_pct": 5,
+      "assumed_open_positions": 3,
+      "gross_loss_inr": -4500.0,
+      "estimated_net_loss_inr": -4752.8785363545885,
+      "multiple_of_historical_max_drawdown": 0.530659265607696,
+      "pass_under_2x_drawdown_rule": true
+    },
+    {
+      "gap_pct": -2,
+      "assumed_open_positions": 3,
+      "gross_loss_inr": -4500.0,
+      "estimated_net_loss_inr": -4752.8785363545885,
+      "multiple_of_historical_max_drawdown": 0.530659265607696,
+      "pass_under_2x_drawdown_rule": true
+    },
+    {
+      "gap_pct": -3,
+      "assumed_open_positions": 3,
+      "gross_loss_inr": -4500.0,
+      "estimated_net_loss_inr": -4752.8785363545885,
+      "multiple_of_historical_max_drawdown": 0.530659265607696,
+      "pass_under_2x_drawdown_rule": true
+    },
+    {
+      "gap_pct": -5,
+      "assumed_open_positions": 3,
+      "gross_loss_inr": -4500.0,
+      "estimated_net_loss_inr": -4752.8785363545885,
+      "multiple_of_historical_max_drawdown": 0.530659265607696,
+      "pass_under_2x_drawdown_rule": true
+    }
+  ],
+  "deflated_sharpe": {
+    "configuration_count_lower_bound": 233,
+    "observed_annualized_sharpe": 4.905363274955042,
+    "expected_max_annualized_sharpe_under_multiple_testing": 1.6298665176508482,
+    "deflated_sharpe_probability": 0.9924627523772549,
+    "pass_probability_above_0_95": true,
+    "warning": "N counts configurations in this stress run only; prior informal experiments are not fully enumerable, so this probability is optimistic."
+  },
+  "unavailable_tests": {
+    "entry_delay_1_2_5_10_30_seconds": "Source option paths are one-minute observations with no bid/ask quotes. A 60-second delayed-entry proxy was run, but it cannot grade the 5-second criterion.",
+    "tick_level_exit_and_intrabar_touch": "No tick or one-second option path data is present.",
+    "stop_slippage_k_times_spread": "No historical bid/ask spread field is present.",
+    "vix_terciles": "No India VIX series was found in the supplied local datasets.",
+    "event_calendar_split": "No dated event calendar was supplied; gap days are reported separately and were not relabeled as event days.",
+    "vol_shift_iv_plus_5_10_and_crush": "A full option repricing surface/Greeks path for synthetic IV shocks was not supplied; no substitute metric was invented.",
+    "liquidity_spreads_x3_x5": "Historical spreads are unavailable; Tier 1 contains flat-slippage and 70%-fill proxies instead."
+  },
+  "live_code_integrity": {
+    "unchanged": true,
+    "files_checked": 10
+  }
+}

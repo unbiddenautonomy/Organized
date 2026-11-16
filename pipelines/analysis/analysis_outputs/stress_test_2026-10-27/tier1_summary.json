@@ -1,0 +1,202 @@
+{
+  "tier": 1,
+  "source_files": [
+    "E:\\inference Pipeline\\analysis_outputs\\test_period_final_routing_above75_event0\\executed_trades.csv",
+    "E:\\inference Pipeline\\analysis_outputs\\test_period_final_routing_above75_event0\\daily_pnl.csv"
+  ],
+  "random_seed": 20261027,
+  "simulations_per_test": 10000,
+  "baseline": {
+    "trades": 304,
+    "days": 141,
+    "net_pnl_inr": 103892.47498273506,
+    "sharpe": 4.905363274955042,
+    "max_drawdown_inr": 8956.554317226,
+    "longest_losing_streak_trades": 8
+  },
+  "cost_thresholds": [
+    {
+      "cost_multiplier": 1.0,
+      "breakeven_slippage_per_trade_inr": 341.75156244320743,
+      "slippage_where_sharpe_falls_below_3_inr": 141.9400636820529
+    },
+    {
+      "cost_multiplier": 1.5,
+      "breakeven_slippage_per_trade_inr": 299.6051397174426,
+      "slippage_where_sharpe_falls_below_3_inr": 99.31245347443028
+    },
+    {
+      "cost_multiplier": 2.0,
+      "breakeven_slippage_per_trade_inr": 257.4587169916778,
+      "slippage_where_sharpe_falls_below_3_inr": 56.57087547639156
+    },
+    {
+      "cost_multiplier": 3.0,
+      "breakeven_slippage_per_trade_inr": 173.16587154014823,
+      "slippage_where_sharpe_falls_below_3_inr": 0.0
+    }
+  ],
+  "block_bootstrap": [
+    {
+      "block_days": 5,
+      "sharpe_p05_p50_p95": [
+        2.8539913721583914,
+        5.238616600454808,
+        7.703585742697898
+      ],
+      "max_drawdown_p05_p50_p95_p99_inr": [
+        6403.559233295227,
+        10734.836514014998,
+        19472.863053430494,
+        25525.590723282414
+      ],
+      "net_pnl_p05_p50_p95_inr": [
+        57445.31786718042,
+        108881.30255831555,
+        163481.33725423686
+      ],
+      "probability_net_pnl_below_zero": 0.0001
+    },
+    {
+      "block_days": 7,
+      "sharpe_p05_p50_p95": [
+        2.9341341651589308,
+        5.4238346345100386,
+        7.793980713402392
+      ],
+      "max_drawdown_p05_p50_p95_p99_inr": [
+        6064.163215932029,
+        10450.649423279996,
+        18984.309509461636,
+        24761.43829697714
+      ],
+      "net_pnl_p05_p50_p95_inr": [
+        57726.00745634989,
+        111136.3111287406,
+        167083.21484370047
+      ],
+      "probability_net_pnl_below_zero": 0.0
+    },
+    {
+      "block_days": 10,
+      "sharpe_p05_p50_p95": [
+        3.3501687612117554,
+        5.699530150798925,
+        7.916072227082605
+      ],
+      "max_drawdown_p05_p50_p95_p99_inr": [
+        5242.850531366988,
+        9388.484526195003,
+        16405.752394053725,
+        20824.479096856965
+      ],
+      "net_pnl_p05_p50_p95_inr": [
+        64633.356731320324,
+        116356.89481791308,
+        169088.56233971962
+      ],
+      "probability_net_pnl_below_zero": 0.0001
+    }
+  ],
+  "remove_best": [
+    {
+      "test": "remove_top_1_trades",
+      "removed": 1,
+      "net_pnl_inr": 100820.03426586904,
+      "sharpe": 4.897296348834665
+    },
+    {
+      "test": "remove_top_3_trades",
+      "removed": 3,
+      "net_pnl_inr": 96164.63044227604,
+      "sharpe": 4.7699067582102295
+    },
+    {
+      "test": "remove_top_5_trades",
+      "removed": 5,
+      "net_pnl_inr": 92104.38817616404,
+      "sharpe": 4.66723723340707
+    },
+    {
+      "test": "remove_top_5pct_eligible_days",
+      "removed": 8,
+      "net_pnl_inr": 52356.681998187036,
+      "sharpe": 3.1207889836260643
+    }
+  ],
+  "trade_order_monte_carlo": {
+    "realized_max_drawdown_inr": 8956.554317226,
+    "max_drawdown_p05_p50_p95_p99_inr": [
+      4428.945724179747,
+      6311.144723026497,
+      9794.050247549398,
+      11844.472574792686
+    ],
+    "realized_drawdown_percentile_lower_is_luckier": 90.93,
+    "realized_longest_losing_streak": 8,
+    "losing_streak_p05_p50_p95_p99": [
+      3.0,
+      4.0,
+      6.0,
+      8.0
+    ],
+    "realized_streak_percentile": 99.72999999999999
+  },
+  "adverse_fill_miss": [
+    {
+      "drop_fraction": 0.1,
+      "method": "random",
+      "dropped_trades": 30,
+      "net_pnl_p05_inr": 85205.96571810829,
+      "net_pnl_p50_inr": 93520.59797170355,
+      "net_pnl_p95_inr": 102220.01349499174,
+      "probability_net_below_zero": 0.0
+    },
+    {
+      "drop_fraction": 0.1,
+      "method": "winner_weighted_5_to_1",
+      "dropped_trades": 30,
+      "net_pnl_p05_inr": 75275.62573088572,
+      "net_pnl_p50_inr": 81300.70250819557,
+      "net_pnl_p95_inr": 87926.36050130751,
+      "probability_net_below_zero": 0.0
+    },
+    {
+      "drop_fraction": 0.2,
+      "method": "random",
+      "dropped_trades": 61,
+      "net_pnl_p05_inr": 71472.58157981254,
+      "net_pnl_p50_inr": 82985.36905743156,
+      "net_pnl_p95_inr": 94675.97455514765,
+      "probability_net_below_zero": 0.0
+    },
+    {
+      "drop_fraction": 0.2,
+      "method": "winner_weighted_5_to_1",
+      "dropped_trades": 61,
+      "net_pnl_p05_inr": 50288.79172927671,
+      "net_pnl_p50_inr": 58699.469596195544,
+      "net_pnl_p95_inr": 67823.80381457569,
+      "probability_net_below_zero": 0.0
+    },
+    {
+      "drop_fraction": 0.3,
+      "method": "random",
+      "dropped_trades": 91,
+      "net_pnl_p05_inr": 59572.15048068679,
+      "net_pnl_p50_inr": 72673.09195762957,
+      "net_pnl_p95_inr": 86150.42953176066,
+      "probability_net_below_zero": 0.0
+    },
+    {
+      "drop_fraction": 0.3,
+      "method": "winner_weighted_5_to_1",
+      "dropped_trades": 91,
+      "net_pnl_p05_inr": 27699.711260512668,
+      "net_pnl_p50_inr": 37639.42055581207,
+      "net_pnl_p95_inr": 48459.41209714745,
+      "probability_net_below_zero": 0.0
+    }
+  ],
+  "tier_1_gate_passed": true
+}

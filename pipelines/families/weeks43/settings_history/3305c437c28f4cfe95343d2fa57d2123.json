@@ -1,0 +1,26 @@
+{
+  "time": "2026-10-28T20:32:44+05:30",
+  "event": "ENTRY_SETTINGS_SAVED",
+  "before": {
+    "thresholds": {
+      "3_week": 0.5,
+      "4_week": 0.5
+    },
+    "max_open_positions": 3,
+    "comparison": ">=",
+    "revision": "frozen-selection",
+    "source": "pre_2024_validation",
+    "updated_at": null
+  },
+  "after": {
+    "thresholds": {
+      "3_week": 0.5,
+      "4_week": 0.5
+    },
+    "max_open_positions": 3,
+    "comparison": ">=",
+    "revision": "3305c437c28f4cfe95343d2fa57d2123",
+    "source": "pre_2024_validation",
+    "updated_at": "2026-10-28T20:32:44+05:30"
+  }
+}

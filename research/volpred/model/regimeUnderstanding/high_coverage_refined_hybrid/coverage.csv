@@ -1,0 +1,4 @@
+period,available_days,signal_days,profitable_days,losing_or_flat_days,signal_day_coverage,equivalent_trading_months,profitable_day_rate
+development_2024,235,105,59,46,0.44680851063829785,5.0,0.5619047619047619
+holdout_2025_partial,76,32,23,9,0.42105263157894735,1.5238095238095237,0.71875
+combined,311,137,82,55,0.4405144694533762,6.523809523809524,0.5985401459854015

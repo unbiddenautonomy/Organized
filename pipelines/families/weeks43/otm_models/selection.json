@@ -1,0 +1,20 @@
+{
+  "classifier": "logistic",
+  "regressor": "ridge",
+  "thresholds": {
+    "3_week": 0.5,
+    "4_week": 0.5
+  },
+  "meets_constraints": false,
+  "horizon_minutes": 120,
+  "tail_model": "otm_loss_q90",
+  "tail_correction": 0.0,
+  "expected_net_buffer_inr": 50.0,
+  "tail_loss_limit_inr": 750.0,
+  "max_open_positions": 3,
+  "profit_target_inr": 1500,
+  "stop_loss_inr": -750,
+  "frozen_before_test": "2024-01-01",
+  "selection_period": "2023-07-01 through 2023-12-31",
+  "status": "experimental_validation_constraints_not_met"
+}

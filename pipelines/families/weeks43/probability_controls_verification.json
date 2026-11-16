@@ -1,0 +1,74 @@
+{
+  "verified_at": "2026-10-28T20:46:42.033302",
+  "status": "PASS",
+  "tests": {
+    "extension": 38,
+    "original_app": 24,
+    "total": 62
+  },
+  "replay": "replay_20261028_204043",
+  "baseline": "replay_20261028_200046",
+  "replay_matches_previous_default_policy": true,
+  "entry_settings": {
+    "thresholds": {
+      "3_week": 0.5,
+      "4_week": 0.5
+    },
+    "max_open_positions": 3,
+    "comparison": ">=",
+    "revision": "3305c437c28f4cfe95343d2fa57d2123",
+    "source": "pre_2024_validation",
+    "updated_at": "2026-10-28T20:32:44+05:30"
+  },
+  "trades": 31,
+  "signals": 17861,
+  "all_six_model_output_rows": 1909,
+  "record_counts": {
+    "entries": 31,
+    "events": 67,
+    "positions": 31,
+    "signals": 17861,
+    "snapshots": 17861,
+    "status": 1,
+    "strike_paths": 192592,
+    "tracks": 1909,
+    "trades": 31
+  },
+  "maximum_simultaneous_positions": 3,
+  "fixed_strike_path_mismatches": 0,
+  "original_app_files": [
+    {
+      "path": "E:\\inference Pipeline\\engine\\Inference\\live\\live_inference.py",
+      "unchanged": true,
+      "sha256": "809F9F6319E843F9994E99F2DE2A7BFBCDFEFDDD038673484C3613493C4FBBDB"
+    },
+    {
+      "path": "E:\\inference Pipeline\\engine\\Inference\\live\\live_config.json",
+      "unchanged": true,
+      "sha256": "DE58512F6B371DF6F11C09EFE32C94FC538F6862CF60876B1710ED6D5384D05D"
+    },
+    {
+      "path": "E:\\inference Pipeline\\engine\\Inference\\live\\live_dashboard.html",
+      "unchanged": true,
+      "sha256": "3882C5DA1100ED5F289D76FE7C153B962D908B41D73ACCDE4FB4172445FA77E4"
+    }
+  ],
+  "ui_checks": [
+    "Saved defaults via dashboard",
+    "Unsaved edits survive refresh",
+    "Load saved values restores defaults",
+    "Historical replay launched through dashboard"
+  ],
+  "screenshot": "E:\\inference Pipeline\\weeks43\\runtime\\probability_controls_preview.png",
+  "source_hashes": {
+    "weeks43_settings.py": "40096a4bf701ee58936dddeb279e975d519d36b6c41ea8adeef5b1211d084877",
+    "weeks43_engine.py": "b21f513a5d86d2e47c67de9c23062bc05801cf9639051ec1aa96f935b0a25aed",
+    "weeks43_worker.py": "3a8a4091b06fc1168c754dfea321a0645d2b23fd61c607d1730df024e22a3c77",
+    "weeks43_bridge.py": "6a82eda74b44e06c296f2babb55281b8e6de785bcf814bcfa7b78cd3887ce3d1",
+    "backtest_otm.py": "99e1bf1e25328031f1d3d1438016db2c2af7c50c096842c216fd61956b7c6a8a",
+    "firstTwoWeeks.html": "6b3b0f8ea39089414f7b4d1e4c5ac4fa9af42659fbd9bb3795cb961df34bcb9d",
+    "test_entry_controls.py": "2a9a1895237363da82c58f5f209a9ed5ff7971857d6f377915b8674acbc719c9",
+    "README.md": "55157bab9096eaf77db5ce7da82ef25db145189de6182be95b902ee12a5d4e5d",
+    "entry_settings.json": "d0a731ab5817d2c7ec226df62dadad4a2b8219c5c6b3a1c0c4653f0c849f6b81"
+  }
+}

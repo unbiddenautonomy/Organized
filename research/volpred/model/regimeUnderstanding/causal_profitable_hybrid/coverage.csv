@@ -1,0 +1,4 @@
+period,total_session_days,signal_days,profitable_signal_days,signal_coverage,equivalent_trading_months
+2024,246,31,25,0.12601626016260162,1.4761904761904763
+2025,77,11,7,0.14285714285714285,0.5238095238095238
+combined_2024_2025_partial,323,42,32,0.13003095975232198,2.0

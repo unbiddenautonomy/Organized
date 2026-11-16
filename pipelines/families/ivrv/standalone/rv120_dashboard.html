@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="dark light">
+  <title>BANKNIFTY Expanded Hybrid Live</title>
+  <style>
+    :root {
+      --bg:#08111f; --surface:#0f1b2d; --surface2:#14243a; --line:#263953;
+      --text:#f0f5fb; --muted:#91a4ba; --accent:#50d6b0; --blue:#63a9ff;
+      --amber:#f5bd62; --red:#ff727c; --shadow:0 18px 45px rgba(0,0,0,.24);
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:radial-gradient(circle at 8% -10%,#17375b 0,transparent 32%),var(--bg);color:var(--text);font:14px/1.5 Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;min-height:100vh}
+    main{width:min(1400px,calc(100% - 32px));margin:0 auto;padding:28px 0 48px}
+    header{display:flex;align-items:flex-start;justify-content:space-between;gap:24px;margin-bottom:22px}
+    h1{font-size:clamp(22px,3vw,34px);font-weight:500;letter-spacing:-.04em;margin:0}
+    h2{font-size:14px;font-weight:500;margin:0 0 14px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
+    p{margin:5px 0 0;color:var(--muted)}
+    .live{display:flex;align-items:center;gap:9px;padding:8px 12px;background:rgba(80,214,176,.08);border:1px solid rgba(80,214,176,.25);border-radius:999px;white-space:nowrap;color:var(--accent)}
+    .dot{width:8px;height:8px;border-radius:50%;background:currentColor;box-shadow:0 0 0 5px rgba(80,214,176,.10)}
+    .grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:14px}
+    .card{background:linear-gradient(145deg,rgba(20,36,58,.96),rgba(15,27,45,.96));border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:var(--shadow)}
+    .hero{grid-column:span 8}.warmup{grid-column:span 4}.metrics{grid-column:1/-1;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:1px;padding:0;overflow:hidden}.metric{padding:18px;background:rgba(255,255,255,.015)}
+    .position{grid-column:span 4}.edge{grid-column:span 8}.signals,.trades{grid-column:1/-1}
+    .label{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.07em}.value{font-size:26px;font-weight:500;letter-spacing:-.035em;margin-top:4px;font-variant-numeric:tabular-nums}.sub{color:var(--muted);font-size:12px;margin-top:3px}
+    .hero-row{display:flex;align-items:center;justify-content:space-between;gap:16px}.decision{font-size:34px;font-weight:500;letter-spacing:-.04em}.decision.short{color:var(--red)}.decision.no-trade{color:var(--muted)}.decision.warmup,.decision.waiting{color:var(--amber)}
+    .statusline{display:flex;gap:18px;flex-wrap:wrap;margin-top:16px;color:var(--muted)}.statusline strong{color:var(--text);font-weight:500}
+    .progress-line{margin-top:14px}.progress-head{display:flex;justify-content:space-between;margin-bottom:7px;color:var(--muted);font-size:12px}.track{height:8px;border-radius:99px;background:rgba(255,255,255,.08);overflow:hidden}.bar{height:100%;border-radius:99px;background:var(--accent);transition:width .4s ease}
+    .edge-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.edge-item{padding:13px 14px;background:rgba(255,255,255,.025);border-radius:10px}.edge-item b{display:block;font-size:18px;font-weight:500;margin-top:2px;font-variant-numeric:tabular-nums}
+    table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}th,td{padding:10px 9px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}th{color:var(--muted);font-weight:500;font-size:12px}th:first-child,td:first-child{text-align:left}tbody tr:last-child td{border-bottom:0}.table-wrap{overflow-x:auto}.empty{padding:22px 0;color:var(--muted);text-align:center}.positive{color:var(--accent)}.negative{color:var(--red)}
+    .badge{display:inline-flex;padding:3px 8px;border-radius:999px;background:rgba(99,169,255,.1);color:var(--blue);font-size:12px}.foot{display:flex;justify-content:space-between;gap:16px;margin-top:14px;color:var(--muted);font-size:12px}
+    @media(max-width:1000px){.hero,.warmup,.position,.edge{grid-column:1/-1}.metrics{grid-template-columns:repeat(3,1fr)}}
+    @media(max-width:620px){main{width:min(100% - 20px,1400px);padding-top:18px}header{flex-direction:column}.metrics{grid-template-columns:repeat(2,1fr)}.edge-grid{grid-template-columns:1fr}.card{padding:15px}.decision{font-size:28px}}
+    @media(prefers-reduced-motion:reduce){.bar{transition:none}}
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <div><h1>BANKNIFTY · Expanded Hybrid</h1><p>120-minute monthly-expiry inference · paper only</p></div>
+    <div class="live"><span class="dot"></span><span id="connection">Connecting</span></div>
+  </header>
+
+  <div class="grid" aria-live="polite">
+    <section class="card hero">
+      <div class="hero-row"><div><div class="label">Latest model decision</div><div id="decision" class="decision waiting">WAITING</div></div><span id="paper" class="badge">Paper only</span></div>
+      <div id="reason" class="sub">Waiting for the first completed market minute</div>
+      <div class="statusline"><span>Signal <strong id="signal-time">—</strong></span><span>Model <strong id="model">120m Ridge</strong></span><span>Expiry <strong id="expiry">—</strong></span></div>
+    </section>
+
+    <section class="card warmup">
+      <h2>Readiness</h2>
+      <div class="progress-line"><div class="progress-head"><span>Spot history</span><span id="spot-progress-label">0 / 61</span></div><div class="track"><div id="spot-progress" class="bar" style="width:0"></div></div></div>
+      <div class="progress-line"><div class="progress-head"><span>IV history</span><span id="iv-progress-label">0 / 6</span></div><div class="track"><div id="iv-progress" class="bar" style="width:0"></div></div></div>
+      <div id="next-note" class="sub" style="margin-top:14px">Collecting consecutive one-minute observations.</div>
+    </section>
+
+    <section class="card metrics">
+      <div class="metric"><div class="label">Spot</div><div id="spot" class="value">—</div></div>
+      <div class="metric"><div class="label">ATM strike</div><div id="strike" class="value">—</div></div>
+      <div class="metric"><div class="label">ATM IV</div><div id="iv" class="value">—</div></div>
+      <div class="metric"><div class="label">RV / IV²</div><div id="ratio" class="value">—</div></div>
+      <div class="metric"><div class="label">Trades today</div><div id="trade-count" class="value">0 / 10</div></div>
+      <div class="metric"><div class="label">Size</div><div id="size" class="value">1 × 30</div><div class="sub">lots × quantity</div></div>
+    </section>
+
+    <section class="card position">
+      <h2>Open position</h2>
+      <div id="position-empty" class="empty">No open paper position</div>
+      <div id="position-live" hidden>
+        <div class="value"><span id="pos-count">1</span> open short-vol position<span id="pos-plural"></span></div>
+        <div class="sub">Structure: <strong id="pos-structure">—</strong> · strikes: <strong id="pos-strike">—</strong></div>
+        <div class="statusline"><span>Credit <strong id="pos-credit">—</strong></span><span>Entry <strong id="pos-time">—</strong></span></div>
+        <div class="sub">Fixed strike until the 120-minute exit.</div>
+      </div>
+    </section>
+
+    <section class="card edge">
+      <h2>Forecast edge</h2>
+      <div class="edge-grid">
+        <div class="edge-item"><span class="label">Predicted variance</span><b id="pred-var">—</b></div>
+        <div class="edge-item"><span class="label">IV-implied variance</span><b id="imp-var">—</b></div>
+        <div class="edge-item"><span class="label">Expected long P&amp;L · 1 lot</span><b id="expected">—</b></div>
+        <div class="edge-item"><span class="label">1-lot cost estimate</span><b id="cost">—</b></div>
+        <div class="edge-item"><span class="label">Call market</span><b id="call-market">—</b></div>
+        <div class="edge-item"><span class="label">Put market</span><b id="put-market">—</b></div>
+      </div>
+    </section>
+
+    <section class="card signals"><h2>Recent signals</h2><div class="table-wrap"><table><thead><tr><th>Time</th><th>Decision</th><th>Component</th><th>Spot</th><th>ATM</th><th>IV</th><th>Primary p</th><th>Secondary p</th></tr></thead><tbody id="signals-body"></tbody></table><div id="signals-empty" class="empty">No signal records yet</div></div></section>
+    <section class="card trades"><h2>Paper trades</h2><div class="table-wrap"><table><thead><tr><th>Event</th><th>Time</th><th>Structure</th><th>Put / Call strike</th><th>Lots</th><th>Premium</th><th>Net P&amp;L</th><th>Reason</th></tr></thead><tbody id="trades-body"></tbody></table><div id="trades-empty" class="empty">No paper trades yet</div></div></section>
+  </div>
+  <div class="foot"><span id="updated">Not updated</span><span>Refreshes every 3 seconds · fixed 120-minute horizon</span></div>
+</main>
+<script>
+  const $ = id => document.getElementById(id);
+  const number = (v,d=2) => Number.isFinite(Number(v)) ? Number(v).toLocaleString('en-IN',{minimumFractionDigits:d,maximumFractionDigits:d}) : '—';
+  const money = v => Number.isFinite(Number(v)) ? '₹'+number(v,0) : '—';
+  const pct = v => Number.isFinite(Number(v)) ? number(Number(v)*100,2)+'%' : '—';
+  const clock = value => value ? value.slice(11,19) : '—';
+  const esc = value => String(value ?? '—').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+  function renderStatus(s){
+    const decision=(s.decision||'WAITING').toUpperCase();
+    $('decision').textContent=decision.replace('_',' '); $('decision').className='decision '+decision.toLowerCase().replace('_','-');
+    $('reason').textContent=(s.reason||'').replaceAll('_',' '); $('signal-time').textContent=s.exchange_minute||'—';
+    $('model').textContent=s.model||'120m Ridge'; $('expiry').textContent=s.expiry||s.runtime?.expiry||'—';
+    $('spot').textContent=number(s.spot,1); $('strike').textContent=number(s.strike,0); $('iv').textContent=pct(s.iv_atm);
+    $('ratio').textContent=number(s.predicted_rv_to_iv_variance_ratio,3); $('trade-count').textContent=`${s.runtime?.daily_trade_count||0} / ${s.runtime?.max_trades_per_day||10}`;
+    $('size').textContent=`${s.runtime?.lots||1} × ${s.runtime?.lot_size||30}`;
+    const sb=Math.min(Number(s.spot_bars??61),61), ib=Math.min(Number(s.iv_bars??6),6);
+    $('spot-progress').style.width=(sb/61*100)+'%'; $('iv-progress').style.width=(ib/6*100)+'%';
+    $('spot-progress-label').textContent=`${sb} / 61`; $('iv-progress-label').textContent=`${ib} / 6`;
+    $('next-note').textContent=decision==='WARMUP'?'Collecting consecutive one-minute observations.':'Model input window is ready.';
+    $('pred-var').textContent=number(s.predicted_total_variance,8); $('imp-var').textContent=number(s.implied_total_variance,8);
+    $('expected').textContent=money(s.expected_long_pnl_rupees_one_lot); $('cost').textContent=money(s.estimated_roundtrip_cost_one_lot);
+    $('call-market').textContent=(s.call_bid!=null&&s.call_ask!=null)?`${number(s.call_bid,2)} / ${number(s.call_ask,2)}`:'—';
+    $('put-market').textContent=(s.put_bid!=null&&s.put_ask!=null)?`${number(s.put_bid,2)} / ${number(s.put_ask,2)}`:'—';
+    const p=s.runtime?.position; $('position-empty').hidden=!!p; $('position-live').hidden=!p;
+    if(p){const n=s.runtime?.open_position_count||1;$('pos-count').textContent=n;$('pos-plural').textContent=n===1?'':'s';$('pos-structure').textContent=p.structure||'short';$('pos-strike').textContent=`${number(p.put_strike,0)} / ${number(p.call_strike,0)}`;$('pos-credit').textContent=number(p.entry_credit,2);$('pos-time').textContent=clock(p.entry_time)}
+  }
+  function renderSignals(rows){
+    const recent=[...rows].reverse().slice(0,20); $('signals-empty').hidden=recent.length>0;
+    $('signals-body').innerHTML=recent.map(r=>`<tr><td>${esc(clock(r.exchange_minute))}</td><td>${esc(r.decision)}</td><td>${esc(r.component||'—')}</td><td>${number(r.spot,1)}</td><td>${number(r.strike,0)}</td><td>${pct(r.iv_atm)}</td><td>${number(r.primary_model_probability,3)}</td><td>${number(r.secondary_model_probability,3)}</td></tr>`).join('');
+  }
+  function renderTrades(rows){
+    const recent=[...rows].reverse().slice(0,20); $('trades-empty').hidden=recent.length>0;
+    $('trades-body').innerHTML=recent.map(r=>{const exit=r.event_type==='paper_exit';const pnl=r.net_pnl;return `<tr><td>${exit?'EXIT':'ENTRY'}</td><td>${esc(clock(exit?r.exit_time:r.entry_time))}</td><td>${esc(r.structure||'—')}</td><td>${number(r.put_strike,0)} / ${number(r.call_strike,0)}</td><td>${r.lots??'—'}</td><td>${number(exit?r.exit_debit:r.entry_credit,2)}</td><td class="${pnl>0?'positive':pnl<0?'negative':''}">${exit?money(pnl):'—'}</td><td>${esc(r.exit_reason||r.component||'signal')}</td></tr>`}).join('');
+  }
+  async function refresh(){
+    try{
+      const [status,signals,trades]=await Promise.all(['/api/status','/api/signals?limit=100','/api/trades?limit=100'].map(u=>fetch(u,{cache:'no-store'}).then(r=>{if(!r.ok)throw Error(r.status);return r.json()})));
+      renderStatus(status);renderSignals(signals);renderTrades(trades);$('connection').textContent='Live';$('updated').textContent='Updated '+new Date().toLocaleTimeString('en-IN');
+    }catch(error){$('connection').textContent='Disconnected';$('updated').textContent='Update failed · '+error.message}
+  }
+  refresh();setInterval(refresh,3000);
+</script>
+</body>
+</html>

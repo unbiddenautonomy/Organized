@@ -1,0 +1,89 @@
+{
+  "spec_version": "research_v2_p2_frozen_2",
+  "status": "frozen_pre_pseudo",
+  "model_family": "P2_HistGradientBoostingRegressor",
+  "model_artifact": "model/research_v2_p2/p2_hist_gradient_boosting_120m.joblib",
+  "model_artifact_sha256": "ab863e86bb064cac8624e605ad3ad6f32a4302fb3cd51037ef73e627e9314f61",
+  "artifact_metadata": "model/research_v2_p2/artifact_metadata.json",
+  "p0_model_artifact": "model/research_v2_p2/p0_ridge_120m.joblib",
+  "p0_model_artifact_sha256": "6210dbebd4739d39b29c7bc4a6b73e140ee292ec2a96a703c364455533beb5cb",
+  "p0_artifact_metadata": "model/research_v2_p2/p0_artifact_metadata.json",
+  "p0_feature_order": [
+    "p0_log_rv_5",
+    "p0_log_rv_15",
+    "p0_log_rv_60"
+  ],
+  "p0_params": {
+    "alpha": 0.01
+  },
+  "feature_order": [
+    "p0_log_rv_5",
+    "p0_log_rv_15",
+    "p0_log_rv_60",
+    "p1_log_rq_15",
+    "p1_log_rq_60",
+    "p1_downside_rv_15",
+    "p1_upside_rv_15",
+    "p1_downside_rv_60",
+    "p1_upside_rv_60",
+    "p1_jump_rv_60",
+    "p1_abs_return",
+    "p1_tod_sin",
+    "p1_tod_cos"
+  ],
+  "target": "log(max(rv_fwd_120, 1e-12))",
+  "variance_forecast": "exp(model_log_forecast + training_only_smearing_log_adjustment)",
+  "params": {
+    "max_depth": 3,
+    "learning_rate": 0.05,
+    "l2_regularization": 1.0
+  },
+  "max_iter": 200,
+  "early_stopping": false,
+  "seed": 7319,
+  "training_splits": [
+    "development",
+    "walk_forward_validation"
+  ],
+  "training_rows": 44679,
+  "training_max_label_end_at": "2024-06-28 15:25:59+05:30",
+  "dataset": "outputs/research_v2/common/predictive_dataset_120m.parquet",
+  "dataset_sha256": "02850acfebd8442bfb7c518f174abc94402e88181a72975f2db4986d35d8ded0",
+  "common_manifest_sha256": "3778739fa77c6470fbb788788c3ed93571cc7c1b4f5b90ad230a955d82ca18b6",
+  "splits_sha256": "4409030241bf656af200c811a50a39387c49a8a4e3a4b01700b06fde1c79b48c",
+  "runner_sha256": "8ffdc40ea68d9049b9511672462a4a6f889942e4a745344f59668688cf957722",
+  "pseudo_holdout": {
+    "label": "pseudo-holdout, previously exposed",
+    "split": "pseudo_holdout_previously_exposed",
+    "status": "NOT_OPENED",
+    "one_shot_command": "py -3.13 research/research_v2_p2.py --score-pseudo-once",
+    "marker": "model/research_v2_p2/PSEUDO_HOLDOUT_OPENED.json",
+    "predictions_output": "outputs/research_v2/p2/pseudo_holdout_once_predictions.parquet",
+    "result_output": "outputs/research_v2/p2/pseudo_holdout_once_result.json",
+    "atomic_claim": "O_CREAT|O_EXCL marker before any pseudo-row scan",
+    "rerun_policy": "marker is permanent; concurrent, failed, or completed openings consume the one shot",
+    "permitted_metrics": [
+      "QLIKE",
+      "log_MSE",
+      "raw_calibration_failures"
+    ],
+    "allowed_verdicts": [
+      "research_stable",
+      "research_failed"
+    ],
+    "stability_gate": {
+      "chronological_halves": "stable decision_time order; first floor(n/2) rows versus remaining rows",
+      "p2_lower_qlike_in_each_half": true,
+      "aggregate_qlike_improvement_min_pct": 2.0,
+      "hac_dm": {
+        "alternative": "P2 QLIKE lower than P0",
+        "lag": 120,
+        "one_sided_p_max": 0.05
+      },
+      "p2_log_mse_no_higher_than_p0": true,
+      "p2_raw_calibration_failures_no_more_than_p0": true,
+      "missing_or_data_failure_verdict": "research_failed"
+    },
+    "strategy_pnl_permitted": false
+  }
+}

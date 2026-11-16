@@ -1,0 +1,13 @@
+test,baseline,stressed_value,criterion,result
+Baseline,Current routed ledger,Net ₹103892.47; Sharpe 4.905,Reference,REFERENCE
+2x costs + ₹50 slippage,Net ₹103892.47; Sharpe 4.905,Net ₹63067.45; Sharpe 3.093,Net > 0 and Sharpe > 3,PASS
+Block bootstrap,Sharpe 4.905,Worst block-size 5th percentile Sharpe 2.854,5th percentile Sharpe > 1.5,PASS
+Remove top 5 trades,Net ₹103892.47,Net ₹92104.39,Net > 0,PASS
+Trade-order Monte Carlo,Realized drawdown ₹8956.55,Realized drawdown percentile 90.93%,Not below 1st percentile,PASS
+5-second entry delay,Net ₹103892.47,UNAVAILABLE; nearest 60-second proxy net ₹87881.22,Net > 60% of baseline,NOT TESTABLE
+Random-entry placebo,Net ₹103892.47,95th percentile ₹107193.94,Strategy beats placebo 95th percentile,FAIL
+Parameter ±25% target/stop,Sharpe 4.905,Minimum 3x3-grid Sharpe 4.685,No cell Sharpe < 2,PASS
+Cap randomization,First-come net ₹103892.47,Random P10/P90 ₹76873.31/₹89708.85,First-come within central 80%,FAIL
+"3% gap shock, all three stopped",Historical drawdown ₹8956.55,Estimated net loss ₹4752.88,Loss < 2x historical drawdown,PASS
+Deflated Sharpe,Sharpe 4.905,Probability 0.9925; N lower bound 233,Probability > 0.95,PASS
+Tick-level exits / bid-ask fills,Minute LTP/close data,Tick/1-second bid-ask data unavailable,Required for valid test,NOT TESTABLE

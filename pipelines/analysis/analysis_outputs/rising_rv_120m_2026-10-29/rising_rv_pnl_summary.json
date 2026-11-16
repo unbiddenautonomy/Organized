@@ -1,0 +1,49 @@
+{
+  "prediction_rows": 315,
+  "eligible_rows": 257,
+  "signals": 65,
+  "threshold": 0.5,
+  "quality_signals": 65,
+  "lot_size": 30,
+  "entry": "next minute bid for short, ask for long",
+  "exit": "ask for short, bid for long; 1500 target, -750 stop, 120-minute horizon, 15:14:30 square-off",
+  "book_limit": 3,
+  "brokerage": 0,
+  "sides": {
+    "short": {
+      "closed_trades": 0,
+      "skipped": 62,
+      "still_open": 3,
+      "gross_pnl": 0.0,
+      "charges": 0.0,
+      "net_pnl": 0.0,
+      "wins_net": 0
+    },
+    "long": {
+      "closed_trades": 0,
+      "skipped": 62,
+      "still_open": 3,
+      "gross_pnl": 0.0,
+      "charges": 0.0,
+      "net_pnl": 0.0,
+      "wins_net": 0
+    }
+  },
+  "horizon_only": {
+    "method": "next-minute entry; fixed entry strike; 120-minute saved exit quote; max 3 concurrent positions; no stop or target",
+    "sides": {
+      "short": {
+        "trades": 3,
+        "gross_pnl": -2233.5000000000014,
+        "charges": 357.699578637,
+        "net_pnl": -2591.1995786370017
+      },
+      "long": {
+        "trades": 3,
+        "gross_pnl": 1425.0000000000068,
+        "charges": 360.450811422,
+        "net_pnl": 1064.5491885780068
+      }
+    }
+  }
+}

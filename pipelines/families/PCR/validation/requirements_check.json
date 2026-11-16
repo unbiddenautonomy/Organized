@@ -1,0 +1,85 @@
+{
+  "verified_on": "2026-10-28",
+  "scope": "The two requests to install PCR in the existing inference pipeline and enforce three concurrent positions with configurable win-probability cutoffs.",
+  "implementation_status": "COMPLETE",
+  "prospective_live_market_verification": "PENDING_NEXT_NORMAL_APPLICATION_LAUNCH_AND_MARKET_FEED",
+  "production_url": "http://127.0.0.1:8780/PCR",
+  "items": [
+    {
+      "requirement": "Copy the four selected model packages under E:\\inference Pipeline\\PCR",
+      "status": "VERIFIED",
+      "evidence": "All 56 packaged files match the original selected-model source byte for byte; four model folders contain required metadata and components."
+    },
+    {
+      "requirement": "Save joblibs, scalers, imputers, calibration, training/inference code, requirements, metrics and model cards",
+      "status": "VERIFIED",
+      "evidence": "models/*/, model_files.sha256.json, requirements.lock.txt, training_metadata.json and research/."
+    },
+    {
+      "requirement": "A separate /PCR HTML page and API within the existing application",
+      "status": "VERIFIED",
+      "evidence": "web.py and dashboard.html; existing DashboardServer route-coexistence test passed; saved browser screenshot and earlier successful cutoff-save check are in validation/."
+    },
+    {
+      "requirement": "Display all four models' outputs and all signals",
+      "status": "VERIFIED",
+      "evidence": "The page displays decay, calibrated win probability, both holding predictions and calibrated tail probability; every minute decision is logged and available through paginated signal records and full JSONL download. Unavailable outputs during warmup are explicitly empty."
+    },
+    {
+      "requirement": "Allow three simultaneous PCR positions and admit no fourth position until a slot is free",
+      "status": "VERIFIED",
+      "evidence": "maximum_open_positions=3; concurrency, fourth-entry rejection, close-and-reuse, restart recovery and duplicate-worker lock tests passed. A new qualifying signal is required after a slot opens."
+    },
+    {
+      "requirement": "Persist an editable win-probability cutoff and require it to pass before entering",
+      "status": "VERIFIED",
+      "evidence": "config.json contains four expiry-group cutoffs; /PCR/api/thresholds persists edits; runtime compares win_probability_60m >= cutoff alongside decay/tail/time/data/capacity gates; rejection test passed."
+    },
+    {
+      "requirement": "Use a net target of INR 3000 and net stop of INR -1500 with zero brokerage and other costs included",
+      "status": "VERIFIED",
+      "evidence": "config.json and runtime.Book; itemized statutory charges and round-trip slippage are deducted from gross P&L; tests distinguish gross target from net target and verify stop exits."
+    },
+    {
+      "requirement": "Keep and save the original entry ATM strike through t+h",
+      "status": "VERIFIED",
+      "evidence": "Entry strike, expiry, CE/PE tokens and quantity are stored in each position and used by every mark and exit; fixed-contract tests passed."
+    },
+    {
+      "requirement": "Save every trade and signal under PCR with daily files",
+      "status": "VERIFIED",
+      "evidence": "logs/YYYY-MM-DD/ is created at runtime for inputs, minute rows, signals, intents, actions, entry/exit journal, P&L marks, session context and applied configuration changes. Subprocess/replay tests verified the files in isolated temporary ledgers."
+    },
+    {
+      "requirement": "Provide backtesting from the new page",
+      "status": "VERIFIED",
+      "evidence": "Historical-reference job and recorded-session replay are available. The historical raw cache exists. The installation rerun exactly matches the original 902-trade result; real worker/recorded-replay parity tests passed. Results are written outside the live book."
+    },
+    {
+      "requirement": "Start PCR with the existing daily paper-trading application",
+      "status": "IMPLEMENTED_AND_VERIFIED_OFFLINE",
+      "evidence": "The original daily scheduler calls run_live_session, which constructs and starts PCR.bridge, forwards existing feed observations, pulses the child worker and closes it with the session. The actual child-process path was exercised in an isolated test. Next normal application launch loads the integration."
+    },
+    {
+      "requirement": "Preserve the working existing paper-trading setup",
+      "status": "VERIFIED_OFFLINE",
+      "evidence": "The existing dashboard and both existing configuration files match their before-change hashes. All 24 existing-app regression tests passed. Integration changes in live_inference.py are additive; PCR owns separate models, configuration, worker and ledgers."
+    }
+  ],
+  "verification_results": {
+    "pcr_tests_passed": 13,
+    "existing_application_tests_passed": 24,
+    "test_failures": 0,
+    "test_errors": 0,
+    "model_packages": 4,
+    "source_files_verified_identical": 56,
+    "historical_reference_exact_match": true
+  },
+  "scope_and_limits": [
+    "The three-position cap applies to PCR independently of existing strategies.",
+    "The selected deployment uses 60- and 120-minute holding horizons, entries through 13:00:00 IST and a 15:14:30 cutoff.",
+    "The dashboard's historical-reference job reproduces the frozen study. Editing live cutoffs does not silently rewrite that reference backtest.",
+    "Exact fresh quotes are required for exits; missing quotes produce an explicit pending exit rather than a fabricated cutoff fill.",
+    "No live market session was started, and no production trade or signal logs were populated with test data."
+  ]
+}

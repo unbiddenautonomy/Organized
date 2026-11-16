@@ -1,0 +1,20 @@
+{
+  "horizon_minutes": 60,
+  "model": "lightgbm_classifier",
+  "probability_threshold": 0.75,
+  "historical_rows": 45614,
+  "holdout_rows": 10985,
+  "artifact": "frozen_classifier_60m.joblib",
+  "metrics_2026": {
+    "prediction_threshold_net_points": 0.75,
+    "trades": 48,
+    "signal_days": 18,
+    "win_rate_after_slippage": 0.5416666666666666,
+    "gross_points_before_cost": 106.4500000000005,
+    "net_points_after_2pt_slippage": 10.4500000000005,
+    "average_net_points": 0.21770833333334375,
+    "profit_factor": 1.0154175272941879,
+    "maximum_drawdown_points": -328.2999999999997,
+    "wilson_win_rate_lower_95": 0.4029083309494733
+  }
+}

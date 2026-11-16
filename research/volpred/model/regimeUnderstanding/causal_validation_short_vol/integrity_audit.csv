@@ -1,0 +1,9 @@
+check,violations,passed
+one_trade_per_day,0,True
+not_first_threshold_crossing,0,True
+cross_day_window,0,True
+outside_0915_1530,0,True
+holding_not_exactly_180_minutes,0,True
+expiry_before_entry,0,True
+pnl_identity_error_over_1e-8,0,True
+exit_quality_used_as_entry_gate,0,True

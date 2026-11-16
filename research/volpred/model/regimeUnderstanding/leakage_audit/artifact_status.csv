@@ -1,0 +1,18 @@
+artifact_folder,status,reason
+five_strike_trade_research,STALE_REBUILD_REQUIRED,generated before removal of exit-derived quote filters
+directional_debit_spreads,STALE_REBUILD_REQUIRED,generated before removal of exit-derived quote filters
+hybrid_strategy,STALE_REBUILD_REQUIRED,depends on pre-fix component ledgers
+profit_optimization,STALE_REBUILD_REQUIRED,depends on pre-fix component ledgers
+coverage_optimization,STALE_REBUILD_REQUIRED,depends on pre-fix component ledgers
+retrained_hybrid,STALE_REBUILD_REQUIRED,generated with completed-session daily maximum selection
+expanded_signal_hybrid,STALE_REBUILD_REQUIRED,depends on pre-fix daily selection and exit filters
+high_coverage_refined_hybrid,STALE_REBUILD_REQUIRED,depends on pre-fix component ledgers
+iv_rv_convergence_backtest,STALE_REBUILD_REQUIRED,generated before removal of exit-derived quote filters
+iv_rv_transition_profit_optimization,STALE_REBUILD_REQUIRED,generated before removal of exit-derived quote filters
+iv_rv_transition_risk_overlay,STALE_REBUILD_REQUIRED,generated before removal of exit-derived quote filters
+refined_variance_transition,STALE_REBUILD_REQUIRED,generated before removal of exit-derived quote filters
+near_daily_short_vol_risk_managed,INVALID_DO_NOT_USE,completed-session daily maximum selected with future information
+near_daily_premium_direction,STALE_REBUILD_REQUIRED,completed-session daily maximum selection was removed
+near_daily_short_vol_causal,DIAGNOSTIC_NOT_VALIDATED,old thresholds and sizing were inherited from the superseded search
+causal_validation_short_vol,AUTHORITATIVE_REJECTED,clean untouched validation failed after costs
+causal_profitable_hybrid,POSITIVE_WALK_FORWARD_PAPER_ONLY,causal replay is positive but requires genuinely new forward validation

@@ -1,0 +1,143 @@
+{
+  "evaluation_window": {
+    "start": "2024-09-19",
+    "end": "2025-05-09",
+    "calendar_days_inclusive": 233,
+    "eligible_market_days": 141,
+    "active_trade_days": 89
+  },
+  "routing": {
+    "iv_above_rv": "gap > 0.005, convergence rule true, probability > 0.75",
+    "iv_near_rv": "abs(gap) <= 0.005, RV-decline event score >= 0",
+    "iv_below_rv": "gap < -0.005, RV-decline event score >= 0"
+  },
+  "risk": {
+    "profit_target_inr": 1500.0,
+    "stop_loss_inr": -750.0,
+    "maximum_open_positions": 3,
+    "maximum_holding_minutes": 120,
+    "lot_size": 30
+  },
+  "signals": {
+    "qualified": 1083,
+    "qualified_by_route": {
+      "iv_above_rv_convergence": 847,
+      "iv_below_rv_sharp_rv_decline": 183,
+      "iv_near_rv_sharp_rv_decline": 53
+    },
+    "executed": 304,
+    "executed_by_route": {
+      "iv_above_rv_convergence": 215,
+      "iv_below_rv_sharp_rv_decline": 74,
+      "iv_near_rv_sharp_rv_decline": 15
+    },
+    "skipped_at_three_position_cap": 779
+  },
+  "trade_outcomes_after_costs": {
+    "green_trades": 213,
+    "red_trades": 91,
+    "flat_trades": 0,
+    "win_rate_pct": 70.06578947368422
+  },
+  "day_outcomes_after_costs_all_eligible_days": {
+    "green_days": 61,
+    "red_days": 28,
+    "flat_or_no_trade_days": 52
+  },
+  "pnl": {
+    "gross_pnl_inr": 129517.50000000006,
+    "explicit_costs_inr": 25625.025017264998,
+    "net_pnl_inr": 103892.47498273505
+  },
+  "risk_adjusted_daily_all_eligible_days": {
+    "annualized_sharpe_gross": 5.933284256552158,
+    "annualized_sortino_gross": 13.434387771856404,
+    "annualized_sharpe_after_costs": 4.905363274955042,
+    "annualized_sortino_after_costs": 9.745590697638319,
+    "risk_free_or_target_daily_pnl": 0.0,
+    "sharpe_std_convention": "sample standard deviation",
+    "sortino_downside_convention": "sqrt(mean(min(daily_pnl, 0)^2))",
+    "annualization_days": 252
+  },
+  "maximum_drawdown_after_costs": {
+    "maximum_drawdown_inr": -8956.554317226,
+    "maximum_drawdown_magnitude_inr": 8956.554317226,
+    "peak_equity_inr": 929.5494432750027,
+    "trough_equity_inr": -8027.004873950998,
+    "peak_date": "2024-09-20",
+    "trough_date": "2024-09-23",
+    "trades_peak_to_trough": 3,
+    "active_trade_days_peak_to_trough": 1,
+    "calendar_days_peak_to_trough": 3,
+    "recovered": true,
+    "recovery_date": "2024-10-04",
+    "trades_peak_to_recovery": 13,
+    "calendar_days_peak_to_recovery": 14
+  },
+  "maximum_drawdown_gross": {
+    "maximum_drawdown_inr": -8838.0,
+    "maximum_drawdown_magnitude_inr": 8838.0,
+    "peak_equity_inr": 1024.5000000000027,
+    "trough_equity_inr": -7813.499999999998,
+    "peak_date": "2024-09-20",
+    "trough_date": "2024-09-23",
+    "trades_peak_to_trough": 3,
+    "active_trade_days_peak_to_trough": 1,
+    "calendar_days_peak_to_trough": 3,
+    "recovered": true,
+    "recovery_date": "2024-10-04",
+    "trades_peak_to_recovery": 13,
+    "calendar_days_peak_to_recovery": 14
+  },
+  "exit_reasons": {
+    "counts": {
+      "stop_loss": 72,
+      "profit_target": 53,
+      "time_exit_120m": 161,
+      "session_square_off_151430": 18
+    },
+    "green_red_after_costs": {
+      "profit_target": {
+        "green": 53
+      },
+      "session_square_off_151430": {
+        "green": 18
+      },
+      "stop_loss": {
+        "red": 72
+      },
+      "time_exit_120m": {
+        "green": 142,
+        "red": 19
+      }
+    },
+    "pnl": [
+      {
+        "exit_reason": "profit_target",
+        "trades": 53,
+        "gross_pnl_inr": 89907.00000000001,
+        "net_pnl_inr": 85113.142025784
+      },
+      {
+        "exit_reason": "session_square_off_151430",
+        "trades": 18,
+        "gross_pnl_inr": 15076.50000000003,
+        "net_pnl_inr": 13739.243528133029
+      },
+      {
+        "exit_reason": "stop_loss",
+        "trades": 72,
+        "gross_pnl_inr": -75331.49999999997,
+        "net_pnl_inr": -82272.30024186897
+      },
+      {
+        "exit_reason": "time_exit_120m",
+        "trades": 161,
+        "gross_pnl_inr": 99865.49999999999,
+        "net_pnl_inr": 87312.38967068699
+      }
+    ]
+  },
+  "accounting": "Explicit statutory/exchange costs, zero brokerage, no slippage",
+  "evaluation_status": "Reused historical evaluation period; thresholds were selected using related historical results, so this is not an untouched holdout."
+}

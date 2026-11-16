@@ -1,0 +1,27 @@
+{
+  "status": "FORWARD_PAPER_TEST_ONLY",
+  "same_monthly_expiry": true,
+  "fixed_entry_strikes": true,
+  "intraday_session": "09:15-15:30",
+  "cost_model": "current encoded charges plus 25 bps premium-turnover slippage",
+  "scenes": {
+    "IV < predicted RV": {
+      "action": "SELL_TWO_STRIKE_OTM_STRANGLE",
+      "legs": [
+        "SELL put at ATM-2 strikes",
+        "SELL call at ATM+2 strikes"
+      ],
+      "horizon_minutes": 120,
+      "latest_entry": "13:30",
+      "extra_gate": "expected gamma + theta + vega PnL exceeds complete estimated costs"
+    },
+    "IV = predicted RV": {
+      "action": "NO_TRADE",
+      "reason": "no five-strike structure passed development and holdout robustness"
+    },
+    "IV > predicted RV": {
+      "action": "NO_TRADE_UNDER_PRIMARY_COST_STRESS",
+      "reason": "no five-strike structure passed development and holdout robustness"
+    }
+  }
+}

@@ -1,0 +1,134 @@
+{
+  "installed_at": "2026-10-28T19:52:42.177277",
+  "paper_only": true,
+  "source_model_directory": "E:\\PCR\\hypothesis testing\\output\\zero_week_focus_stack_zero_brokerage\\models",
+  "production_endpoint": "http://127.0.0.1:8780/PCR",
+  "activation": "Next normal launch of the existing paper trading application",
+  "model_files_verified": 56,
+  "original_files": {
+    "E:\\inference Pipeline\\Inference_full_2026-10-24\\Inference\\live\\live_inference.py": {
+      "before": "0596a76df75f09a3e7fb3ae56c93a314218c180b4c27f95601e222c36294edbc",
+      "after": "809f9f6319e843f9994e99f2de2a7bfbcdfefddd038673484c3613493c4fbbdb"
+    },
+    "E:\\inference Pipeline\\Inference_full_2026-10-24\\Inference\\live\\live_config.json": {
+      "before": "de58512f6b371df6f11c09efe32c94fc538f6862cf60876b1710ed6d5384d05d",
+      "after": "de58512f6b371df6f11c09efe32c94fc538f6862cf60876b1710ed6d5384d05d"
+    },
+    "E:\\inference Pipeline\\Inference_full_2026-10-24\\Inference\\config.yaml": {
+      "before": "d3017838724a5352693e8f04cfe1466355a7e5f2f88baa0cab674c04de2f1c54",
+      "after": "d3017838724a5352693e8f04cfe1466355a7e5f2f88baa0cab674c04de2f1c54"
+    },
+    "E:\\inference Pipeline\\Inference_full_2026-10-24\\Inference\\live\\live_dashboard.html": {
+      "before": "3882c5da1100ed5f289d76fe7c153b962d908b41d73accde4fb4172445fa77e4",
+      "after": "3882c5da1100ed5f289d76fe7c153b962d908b41d73accde4fb4172445fa77e4"
+    }
+  },
+  "pcr_tests": {
+    "tests": "13",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "21.838"
+  },
+  "original_app_tests": {
+    "tests": "24",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "11.722"
+  },
+  "reference_summary_exact_match": true,
+  "reference_summary": {
+    "trades": "902",
+    "green_trades": "575",
+    "red_trades": "327",
+    "win_rate_pct": "63.74722838137472",
+    "gross_rupees": "158754.80000000016",
+    "statutory_cost_rupees": "30234.749465471552",
+    "slippage_rupees": "29610.0",
+    "total_cost_rupees": "59844.74946547154",
+    "net_rupees": "98910.05053452862",
+    "net_points": "5610.94799875147",
+    "mean_net_rupees": "109.65637531544193",
+    "median_net_rupees": "171.43287071625187",
+    "profit_factor": "1.4661523080972672",
+    "largest_win_rupees": "6457.259557514997",
+    "largest_loss_rupees": "-3834.608787329999",
+    "market_days": "311",
+    "active_days": "183",
+    "green_days": "121",
+    "red_days": "62",
+    "flat_days": "128",
+    "max_drawdown_rupees": "-25233.772563345014",
+    "drawdown_peak": "2024-04-16",
+    "drawdown_trough": "2024-04-30",
+    "max_drawdown_duration_market_days": "109",
+    "daily_sharpe": "2.2114873711729803",
+    "daily_sortino": "3.40149179395264",
+    "mean_trade_ttest_pvalue": "4.649038684576683e-05",
+    "mean_trade_ci95_low": "53.728066920383874",
+    "mean_trade_ci95_high": "164.14466545706637",
+    "synthetic_exit_trades": "178",
+    "horizon_60_trades": "376",
+    "horizon_120_trades": "526",
+    "target_rupees": "3000.0",
+    "stop_rupees": "-1500.0",
+    "brokerage_rupees": "0.0",
+    "target_exits": "4",
+    "stop_exits": "60",
+    "time_exits": "838",
+    "cutoff_exits": "0",
+    "missing_monitoring_paths": "0",
+    "maximum_open_positions": "3",
+    "capacity_rejections": "4218"
+  },
+  "browser_validation": {
+    "page_loaded": true,
+    "four_model_outputs_visible": true,
+    "three_position_capacity_visible": true,
+    "cutoff_save_success": true,
+    "console_errors": 0,
+    "screenshot": "validation/dashboard.jpg"
+  },
+  "prospective_live_market_session_executed": false,
+  "config": {
+    "enabled": true,
+    "strategy_id": "PCR_60_120_MAX3_TP3000_SL1500",
+    "timezone": "Asia/Kolkata",
+    "entry_start": "10:15:00",
+    "entry_end": "13:00:00",
+    "square_off": "15:14:30",
+    "horizons_minutes": [
+      60,
+      120
+    ],
+    "extension_buffer_points": 5.0,
+    "maximum_open_positions": 3,
+    "win_probability_thresholds": {
+      "0": 0.5953519546951542,
+      "1": 0.4899177527467293,
+      "2": 0.5155104479417535,
+      "3_4": 0.4987736581923341
+    },
+    "lots_per_position": 1,
+    "profit_target_net_rupees": 3000.0,
+    "stop_loss_net_rupees": -1500.0,
+    "brokerage_rupees": 0.0,
+    "round_trip_slippage_points": 2.0,
+    "price_max_age_seconds": 60,
+    "max_leg_timestamp_difference_seconds": 10,
+    "oi_max_age_seconds": 900,
+    "max_processing_delay_seconds": 10,
+    "minimum_history_minutes": 61,
+    "max_missing_feature_fraction": 0.25,
+    "live_cost_source": "parent_live_config",
+    "risk_free_rate_default": 0.065,
+    "transport_queue_capacity": 300,
+    "reference_raw_cache": "E:\\PCR\\hypothesis testing\\output\\win_classifier\\all_m1_rows_features_v2.pkl"
+  },
+  "limitations": [
+    "Historical reference contains 178 synthetic exits.",
+    "Historical test has been repeatedly reviewed and is not a fresh evaluation.",
+    "Live LTP fills and current configured fees can differ from historical results."
+  ]
+}

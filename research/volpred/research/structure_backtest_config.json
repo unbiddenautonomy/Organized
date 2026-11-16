@@ -1,0 +1,46 @@
+{
+  "horizons": [15, 30, 60, 120],
+  "dte_min": 0.0,
+  "dte_max": 25.0,
+  "train_days": 60,
+  "test_block": "month",
+  "purge_minutes": 120,
+  "entry_grid_minutes": 15,
+  "lot_size_history": [
+    {"through": "2024-12-24", "lot_size": 15},
+    {"from": "2024-12-25", "lot_size": 30}
+  ],
+  "execution": {
+    "quote_source": "price_only_no_bid_ask",
+    "modeled_half_spread_bps": 25.0,
+    "spread_cap_bps": 100.0,
+    "opening_spread_cap_bps": 75.0,
+    "brokerage_per_order": 20.0
+  },
+  "risk": {
+    "lambda_cvar": 0.10,
+    "edge_z": 1.0,
+    "stop_expected_gain_multiple": 2.0,
+    "max_trades_per_day": 2,
+    "no_overlap": true
+  },
+  "structures": {
+    "wing_k": [1.0, 1.5],
+    "wing_definitions": ["intraday_move", "expiry_move"]
+  },
+  "tax_rates": [
+    {"from": "1900-01-01", "through": "2024-03-31", "stt_sell": 0.000625, "exchange": 0.0005},
+    {"from": "2024-04-01", "through": "2024-09-30", "stt_sell": 0.000625, "exchange": 0.000495},
+    {"from": "2024-10-01", "through": "2026-03-31", "stt_sell": 0.001, "exchange": 0.0003503},
+    {"from": "2026-04-01", "stt_sell": 0.0015, "exchange": 0.0003553}
+  ],
+  "router": {
+    "opening": "opening_extended",
+    "chain_primary": "Realized_GARCH_extended",
+    "chain_sensitivity": "Realized_GARCH_style",
+    "spot_fallback": "HAR",
+    "iv_primary": "quantile_median_5f",
+    "iv_regression_check": "compact_log_iv_q50"
+  }
+}
+

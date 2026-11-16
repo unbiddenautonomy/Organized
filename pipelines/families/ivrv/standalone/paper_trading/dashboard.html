@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>ScanRisk Paper Straddle</title>
+  <style>
+    :root{--bg:#071018;--panel:#0e1b26;--line:#203342;--text:#e8f0f5;--muted:#8ca2b2;--green:#47d18c;--red:#ff6b6b;--amber:#ffc857;--blue:#55b8ff}
+    *{box-sizing:border-box}body{margin:0;background:linear-gradient(135deg,#071018,#0b1721 55%,#061119);color:var(--text);font:14px Inter,Segoe UI,sans-serif}
+    main{max-width:1500px;margin:auto;padding:24px}.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}.brand{font-size:23px;font-weight:750}.badge{padding:7px 11px;border:1px solid var(--amber);border-radius:20px;color:var(--amber);font-weight:700}
+    .grid{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}.card{background:rgba(14,27,38,.94);border:1px solid var(--line);border-radius:12px;padding:15px;box-shadow:0 12px 35px #0004}.metric .label{color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:.08em}.metric .value{font-size:24px;font-weight:720;margin-top:7px}.wide{grid-column:span 3}.full{grid-column:1/-1}h2{font-size:15px;margin:0 0 14px;color:#cfe0eb}table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:9px;border-bottom:1px solid var(--line);white-space:nowrap}th{color:var(--muted);font-size:11px;text-transform:uppercase}.pos{color:var(--green)}.neg{color:var(--red)}.muted{color:var(--muted)}.empty{padding:28px;text-align:center;color:var(--muted)}
+    .bep{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.bep div{padding:12px;background:#09151e;border-radius:8px}.bep span{display:block;color:var(--muted);font-size:11px;margin-bottom:6px}.status{width:8px;height:8px;border-radius:50%;display:inline-block;background:var(--green);margin-right:7px;box-shadow:0 0 10px var(--green)}
+    @media(max-width:1000px){.grid{grid-template-columns:repeat(2,1fr)}.wide{grid-column:span 2}}@media(max-width:600px){main{padding:12px}.grid{grid-template-columns:1fr}.wide,.full{grid-column:span 1}}
+  </style>
+</head>
+<body><main>
+  <div class="top"><div><div class="brand">ScanRisk · Short Straddle</div><div class="muted"><span class="status"></span>Live inference / virtual execution</div></div><div><a href="/retraining.html" style="color:var(--blue);margin-right:14px">Retraining monitor</a><span class="badge">PAPER ONLY</span></div></div>
+  <section class="grid">
+    <div class="card metric"><div class="label">Equity</div><div class="value" id="equity">—</div></div>
+    <div class="card metric"><div class="label">Realized P&amp;L</div><div class="value" id="realized">—</div></div>
+    <div class="card metric"><div class="label">Unrealized P&amp;L</div><div class="value" id="unrealized">—</div></div>
+    <div class="card metric"><div class="label">Margin used</div><div class="value" id="margin">—</div></div>
+    <div class="card metric"><div class="label">BANKNIFTY</div><div class="value" id="spot">—</div></div>
+    <div class="card metric"><div class="label">India VIX</div><div class="value" id="vix">—</div></div>
+    <div class="card full"><h2>Runtime & contract universe</h2><div id="runtime"></div></div>
+    <div class="card wide"><h2>Open position & break-even</h2><div id="position" class="empty">No open paper position</div></div>
+    <div class="card wide"><h2>Latest model decision</h2><div id="signals" class="empty">Waiting for synchronized spot and IV predictions</div></div>
+    <div class="card full"><h2>Prediction readiness</h2><div id="readiness"></div></div>
+    <div class="card full"><h2>Stacked HMM · P&amp;L · adverse-excursion forecasts</h2><div id="pnlForecasts"></div></div>
+    <div class="card full"><h2>Spot model · actual vs predicted (all horizons)</h2><div id="spotAudit"></div></div>
+    <div class="card full"><h2>IV model · actual vs predicted (all horizons)</h2><div id="ivAudit"></div></div>
+    <div class="card full"><h2>Completed trades</h2><div id="trades"></div></div>
+    <div class="card full"><h2>Recent guard-rail rejections</h2><div id="rejects"></div></div>
+  </section>
+  <p class="muted" id="updated"></p>
+</main><script>
+const money=n=>n==null?'—':new Intl.NumberFormat('en-IN',{style:'currency',currency:'INR',maximumFractionDigits:0}).format(n);
+const num=(n,d=2)=>n==null?'—':Number(n).toFixed(d); const cls=n=>n>0?'pos':n<0?'neg':'';
+function metric(id,value,format=money){const e=document.getElementById(id);e.textContent=format(value);e.className='value '+cls(value)}
+function draw(s){metric('equity',s.equity);metric('realized',s.realized_pnl);metric('unrealized',s.unrealized_pnl);metric('margin',s.margin_used);metric('spot',s.spot,n=>num(n));metric('vix',s.india_vix,n=>num(n));
+ const c=s.contract_master||{},f=s.front_future||{},r=s.runtime||{};document.getElementById('runtime').innerHTML=`<div class="bep"><div><span>Engine</span>${r.status??'—'} · ${r.paper_only?'PAPER ONLY':'—'}</div><div><span>FO multicast</span>${r.fo_multicast??'—'}</div><div><span>CM multicast</span>${r.cm_multicast??'—'}</div><div><span>Contract expiry</span>${c.expiry??'—'}</div><div><span>Option tokens</span>${c.option_tokens??'—'} (${c.call_tokens??0} CE / ${c.put_tokens??0} PE)</div><div><span>Front future</span>${f.token??'—'} · ${f.expiry??'—'}</div></div><div class="muted" style="margin-top:10px;overflow-wrap:anywhere">Contract source: ${c.source??'—'} · Interface: ${r.interface_ip??'—'}</div>`;
+ document.getElementById('readiness').innerHTML=readinessTable(s.prediction_readiness);
+ const p=s.position;document.getElementById('position').innerHTML=p?`<div class="bep"><div><span>Structure</span>${p.direction} · ${num(p.strike,0)} short straddle</div><div><span>Open lots</span>${p.open_lots} / ${p.original_lots}</div><div><span>Entry credit</span>${num(p.entry_credit)}</div><div><span>Lower BEP</span>${num(p.lower_bep)}</div><div><span>Upper BEP</span>${num(p.upper_bep)}</div><div><span>Holding extensions</span>${p.extensions} · next exit minute ${p.planned_exit_minute}</div></div>`:'<div class="empty">No open paper position</div>';
+ const sp=s.spot_prediction,iv=s.iv_prediction,d=s.latest_decision,h=String(d?.horizon??15);document.getElementById('signals').innerHTML=sp&&iv?`<div class="bep"><div><span>Selected horizon</span>${d?`${h}m · ${d.direction}`:'Waiting for eligible horizon'}</div><div><span>Current spot</span>${num(sp.current_spot)}</div><div><span>Predicted spot (${h}m)</span>${num(d?.predicted_spot??sp.predictions?.[h]?.predicted_spot)}</div><div><span>Current IV</span>${num(iv.current_iv,4)}</div><div><span>Predicted IV Δ (${h}m)</span>${num(d?.predicted_iv_change??iv.predictions?.[h]?.predicted_iv_change,5)}</div><div><span>VIX 5m Δ</span>${num(s.vix_change_5m)}</div></div>`:'<div class="empty">Waiting for synchronized spot and IV predictions</div>';
+ document.getElementById('trades').innerHTML=table(s.closed_trades,['trade_id','direction','strike','original_lots','realized_pnl','exit_reason']);
+ document.getElementById('pnlForecasts').innerHTML=`<div class="muted" style="margin-bottom:10px">Latest synchronized stacked minute: ${s.stacked_prediction_minute??'—'}</div>`+pnlTable(s.pnl_forecasts);
+ document.getElementById('spotAudit').innerHTML=auditTable(s.spot_actual_vs_predicted,2);
+ document.getElementById('ivAudit').innerHTML=auditTable(s.iv_actual_vs_predicted,5);
+ document.getElementById('rejects').innerHTML=table(s.rejections,['exchange_minute','reasons']);document.getElementById('updated').textContent='Updated '+s.updated_at}
+function table(rows,cols){if(!rows?.length)return '<div class="empty">No records yet</div>';return `<table><thead><tr>${cols.map(c=>`<th>${c.replaceAll('_',' ')}</th>`).join('')}</tr></thead><tbody>${rows.map(r=>`<tr>${cols.map(c=>`<td>${Array.isArray(r[c])?r[c].join(', '):(r[c]??'—')}</td>`).join('')}</tr>`).join('')}</tbody></table>`}
+function auditTable(rows,digits){if(!rows?.length)return '<div class="empty">Waiting for model predictions</div>';return `<table><thead><tr><th>Prediction time</th><th>Horizon</th><th>Current</th><th>Predicted</th><th>Target time</th><th>Actual</th><th>Error</th><th>Status</th></tr></thead><tbody>${rows.slice(0,30).map(r=>`<tr><td>${r.prediction_time}</td><td>${r.horizon}m</td><td>${num(r.current,digits)}</td><td>${num(r.predicted,digits)}</td><td>${r.target_time}</td><td>${num(r.actual,digits)}</td><td class="${cls(-(r.absolute_error??0))}">${num(r.error,digits)}</td><td>${r.status}</td></tr>`).join('')}</tbody></table>`}
+function pnlTable(rows){const x=Object.entries(rows||{});if(!x.length)return '<div class="empty">Waiting for synchronized stacked forecasts</div>';return `<table><thead><tr><th>Horizon</th><th>Expected P&amp;L / lot</th><th>Profit probability</th><th>P&amp;L q10</th><th>P&amp;L q50</th><th>P&amp;L q90</th><th>MAE q90</th><th>HMM state</th><th>In distribution</th><th>Score</th></tr></thead><tbody>${x.map(([h,r])=>`<tr><td>${h}m</td><td class="${cls(r.expected_pnl)}">${money(r.expected_pnl)}</td><td>${num(100*r.profit_probability,1)}%</td><td>${money(r.pnl_q10)}</td><td>${money(r.pnl_q50)}</td><td>${money(r.pnl_q90)}</td><td>${money(r.mae_q90)}</td><td>${r.hmm_state}</td><td>${r.hmm_in_distribution?'yes':'no'}</td><td>${num(r.selection_score,3)}</td></tr>`).join('')}</tbody></table>`}
+function readinessTable(rows){const x=Object.entries(rows||{});if(!x.length)return '<div class="empty">Waiting for feed history</div>';return `<table><thead><tr><th>Horizon</th><th>Spot bars</th><th>IV bars</th><th>Remaining</th><th>Warmup ETA</th><th>Latest predicted minute</th><th>Next predicted minute</th><th>Next update</th><th>Status</th></tr></thead><tbody>${x.map(([h,r])=>{const sec=r.estimated_seconds_remaining,time=r.ready?'Complete':sec==null?'Waiting for feed':sec?`${Math.floor(sec/60)}m ${sec%60}s`:'0m 0s';const next=r.next_update_seconds;return `<tr><td>${h}m</td><td>${r.spot.available_bars}/${r.spot.required_bars}</td><td>${r.iv.available_bars}/${r.iv.required_bars}</td><td>${r.bars_remaining} bars</td><td>${time}</td><td>${r.latest_predicted_minute??'—'}</td><td>${r.next_predicted_minute??'—'}</td><td>${next==null?'—':`${Math.floor(next/60)}m ${next%60}s`}</td><td class="${r.ready?'pos':'muted'}">${r.ready?'READY':r.feed_advancing?'WARMING UP':'FEED WAIT'}</td></tr>`}).join('')}</tbody></table>`}
+async function refresh(){try{draw(await(await fetch('/api/state',{cache:'no-store'})).json())}catch(e){document.getElementById('updated').textContent='Dashboard disconnected'}finally{setTimeout(refresh,1000)}}refresh();
+</script></body></html>

@@ -1,0 +1,128 @@
+--- original live_inference.py
++++ with isolated 43Weeks extension
+@@ -55,6 +55,28 @@
+ ANNUAL_MINUTES = 252.0 * 375.0
+ EPSILON = 1e-12
+ LOGGER = logging.getLogger("fixed_strike_live")
++
++
++def _weeks43_module():
++    """Optional isolated OTM extension. Its models and logs live outside this app."""
++    import importlib
++    folder = PROJECT_DIR.parents[1] / "43Weeksmodels"
++    if not (folder / "weeks43_bridge.py").is_file():
++        return None
++    if str(folder) not in sys.path:
++        sys.path.append(str(folder))
++    return importlib.import_module("weeks43_bridge")
++
++
++def _weeks43_notify(engine, method, *args):
++    bridge = getattr(engine, "weeks43", None)
++    if bridge is not None:
++        try:
++            getattr(bridge, method)(*args)
++        except Exception:
++            LOGGER.exception("Optional 43Weeks extension failed during %s", method)
++
++
+ MARKET_TIMEZONE = ZoneInfo("Asia/Kolkata")
+ # Optional PCR extension: independent worker and namespaced dashboard routes.
+ # Existing models, routing, paper positions, configuration and logs are untouched.
+@@ -831,6 +853,7 @@
+             self.latest_option_ticks[update.token] = (
+                 float(update.last_traded_price), int(update.log_time)
+             )
++            _weeks43_notify(self, "tick", update.token, update.last_traded_price, update.log_time)
+         if update.token in self.contracts:
+             self._mark_paper_position(update.log_time, updated_token=update.token)
+         else:
+@@ -853,6 +876,7 @@
+             )):
+                 continue
+             self.oi_by_token[update.token] = (update.open_interest, update.log_time, update.transaction_code)
++            _weeks43_notify(self, "oi", update.token, update.open_interest, update.log_time)
+ 
+     def _reset_if_rewound(self, minute: int) -> None:
+         latest = max(
+@@ -916,6 +940,7 @@
+             self.latest_event = event
+ 
+     def _finalize_minute(self, minute: int) -> None:
++        _weeks43_notify(self, "snapshot", minute)
+         spot_bar = self.spot_bars.get(minute)
+         future_bar = self.future_bars.get(minute)
+         if spot_bar is None or future_bar is None:
+@@ -943,6 +968,7 @@
+             self._set_wait(minute, "invalid_iv_or_surface", spot=spot)
+             return
+         self.rows_by_minute[minute] = row
++        _weeks43_notify(self, "atm_row", dict(row), self.latest_exchange_second)
+         self.spot_by_minute[minute] = spot
+         wide = self._add_lags_and_spot_features(minute, row)
+         missing_columns = [name for name in self.required_feature_names if name not in wide]
+@@ -1663,6 +1689,7 @@
+         self.output.close()
+         self.fixed_strike_output.close()
+         self.paper_engine.close()
++        _weeks43_notify(self, "close")
+ 
+ 
+ class LogDashboardView:
+@@ -1752,6 +1779,11 @@
+ class DashboardServer:
+     def __init__(self, host: str, port: int, html_path: Path, engine: Any) -> None:
+         owner = self
++        try:
++            weeks43_api = _weeks43_module()
++        except Exception:
++            LOGGER.exception("Optional 43Weeks dashboard could not load")
++            weeks43_api = None
+ 
+         class Handler(BaseHTTPRequestHandler):
+             def do_GET(self) -> None:  # noqa: N802
+@@ -1761,6 +1793,11 @@
+                         return
+                     if parsed.path in {"/", "/index.html"}:
+                         self._send(html_path.read_bytes(), "text/html; charset=utf-8")
++                    elif parsed.path == "/firstTwoWeeks" or parsed.path.startswith("/firstTwoWeeks/"):
++                        if weeks43_api is None:
++                            self._json({"error": "43Weeks extension unavailable"}, 503)
++                        else:
++                            weeks43_api.handle_get(self, parsed)
+                     elif parsed.path == "/api/status":
+                         self._json(engine.status())
+                     elif parsed.path == "/api/predictions":
+@@ -1777,7 +1814,17 @@
+                     self._json({"error": str(error)}, 500)
+ 
+             def do_POST(self) -> None:  # noqa: N802
+-                if PCR_WEB is not None and PCR_WEB.handle_post(self, urlparse(self.path)):
++                parsed = urlparse(self.path)
++                if parsed.path.startswith("/firstTwoWeeks/"):
++                    if weeks43_api is None:
++                        self._json({"error": "43Weeks extension unavailable"}, 503)
++                    else:
++                        try:
++                            weeks43_api.handle_post(self, parsed)
++                        except Exception as error:
++                            self._json({"error": str(error)}, 500)
++                    return
++                if PCR_WEB is not None and PCR_WEB.handle_post(self, parsed):
+                     return
+                 self.send_error(405)
+ 
+@@ -1936,6 +1983,13 @@
+         if stop_at is not None and datetime.now(stop_at.tzinfo) >= stop_at:
+             LOGGER.warning("SESSION_SKIPPED stop time already passed: %s", stop_at.isoformat())
+             return
++
++        try:
++            extension = _weeks43_module()
++            engine.weeks43 = extension.attach(engine) if extension is not None else None
++        except Exception:
++            LOGGER.exception("43Weeks startup failed; existing paper trader continues")
++            engine.weeks43 = None
+ 
+         if PCR_BRIDGE is not None:
+             PCR_BRIDGE.safe_call(pcr, "start")

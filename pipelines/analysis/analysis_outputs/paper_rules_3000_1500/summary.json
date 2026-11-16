@@ -1,0 +1,69 @@
+{
+  "source_csv": "E:\\SmileSkew method\\data\\icharts_option_banknifty_monthly_atm_up_to_5strikes.csv",
+  "evaluation_window": {
+    "start": "2024-09-19",
+    "end": "2025-05-09"
+  },
+  "evaluation_status": "reused held-out diagnostic; not a fresh post-training holdout",
+  "accounting": "gross before costs and slippage",
+  "mark_price_source": "E:\\v2\\data\\icharts_option_banknifty.csv",
+  "historical_entry_assumption": "entry at the signal minute's recorded fixed-strike prices",
+  "constraints": {
+    "fixed_entry_strike_and_expiry": true,
+    "one_lot_quantity": 30,
+    "maximum_open_positions": 3,
+    "profit_target_inr": 3000.0,
+    "stop_loss_inr": -1500.0,
+    "maximum_holding_minutes": 120,
+    "square_off_time": "15:14:30",
+    "confidence_rule": "strictly greater than 0.90"
+  },
+  "prediction_rows": 6478,
+  "base_eligible_rows": 3447,
+  "scenarios": [
+    {
+      "scenario": "without_probability_filter",
+      "target_inr": 3000.0,
+      "stop_loss_inr": -1500.0,
+      "maximum_open_positions": 3,
+      "trades": 569,
+      "gross_pnl_inr": 197298.00000000006,
+      "wins": 408,
+      "losses": 161,
+      "win_rate_pct": 71.70474516695958,
+      "average_pnl_inr": 346.7451669595783,
+      "profit_factor": 2.384751437053882,
+      "maximum_drawdown_inr": -23503.5,
+      "exit_reasons": {
+        "time_exit_120m": 392,
+        "stop_loss": 50,
+        "session_square_off_151430": 118,
+        "profit_target": 9
+      },
+      "qualified_signals": 3447,
+      "signals_skipped_at_position_cap": 2878,
+      "signals_skipped_missing_entry_price": 0
+    },
+    {
+      "scenario": "with_probability_gt_0.90",
+      "target_inr": 3000.0,
+      "stop_loss_inr": -1500.0,
+      "maximum_open_positions": 3,
+      "trades": 14,
+      "gross_pnl_inr": 11934.000000000022,
+      "wins": 14,
+      "losses": 0,
+      "win_rate_pct": 100.0,
+      "average_pnl_inr": 852.428571428573,
+      "profit_factor": null,
+      "maximum_drawdown_inr": 0.0,
+      "exit_reasons": {
+        "time_exit_120m": 11,
+        "session_square_off_151430": 3
+      },
+      "qualified_signals": 18,
+      "signals_skipped_at_position_cap": 4,
+      "signals_skipped_missing_entry_price": 0
+    }
+  ]
+}

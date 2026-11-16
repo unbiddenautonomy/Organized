@@ -1,0 +1,17 @@
+{
+  "status": "REJECT_NO_POSITIVE_TARGET_COVERAGE_RULE",
+  "research_only": true,
+  "model": "ridge_100",
+  "edge_threshold": 82.00041880056706,
+  "coverage_target_days": [
+    210,
+    231
+  ],
+  "train": "2019-2022",
+  "validation": "2023",
+  "test": "2024",
+  "holdout": "2025 through 2025-05-09",
+  "same_monthly_expiry": true,
+  "horizon_minutes": 120,
+  "live_deployment": false
+}

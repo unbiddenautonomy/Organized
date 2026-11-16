@@ -1,0 +1,40 @@
+{
+  "status": "POSITIVE_HISTORICAL_WALK_FORWARD_PAPER_ONLY",
+  "live_deployment": false,
+  "development_cutoff": "2023-12-31",
+  "evaluation_data_period": "2024-01-01 through 2025-05-09",
+  "last_signal_date": "2025-04-16",
+  "near_expiry_sleeve": {
+    "structure": "one-lot short ATM straddle",
+    "dte": "0-3",
+    "entry_times": [
+      "09:30",
+      "11:45"
+    ],
+    "holding_minutes": 120
+  },
+  "model_sleeve": {
+    "structure": "one-lot short ATM straddle",
+    "dte": "8-14",
+    "entry": "first ATM row between 09:45 and 09:59",
+    "exit": "last same-expiry row between 15:15 and 15:30",
+    "model": "huber",
+    "threshold_quantile": 0.6,
+    "monthly_refit": "all rows strictly before test month",
+    "features": [
+      "dte",
+      "log_premium_ratio",
+      "atm_iv",
+      "iv_skew",
+      "log_rv_past_5",
+      "log_rv_past_15",
+      "log_rv_past_60",
+      "overnight_return",
+      "vol_of_vol_30",
+      "oi_imbalance"
+    ]
+  },
+  "primary_half_spread_bps": 25.0,
+  "selection_used_post_2023_outcomes": false,
+  "research_history_warning": "The repository's 2024-2025 data had been inspected before this composite was specified; only future paper data can be pristine."
+}

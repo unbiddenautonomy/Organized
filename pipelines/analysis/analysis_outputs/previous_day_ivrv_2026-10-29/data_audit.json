@@ -1,0 +1,43 @@
+{
+  "source": "E:\\inference Pipeline\\Data\\banknifty_atm5_minute.csv",
+  "rows": 3750,
+  "minutes": 375,
+  "first_minute": "2026-10-29 09:15",
+  "last_minute": "2026-10-29 15:29",
+  "rows_per_minute": {
+    "10": 375
+  },
+  "strikes_per_minute": {
+    "5": 375
+  },
+  "sides_per_strike": {
+    "2": 1875
+  },
+  "missing_live_inputs": [
+    "spot_price",
+    "Future_oi"
+  ],
+  "best_bid_ask_missing": {
+    "BestBuyPrice_1": 0,
+    "BestSellPrice_1": 0,
+    "BestBuyQty_1": 0,
+    "BestSellQty_1": 0
+  },
+  "invalid_bid_ask": 0,
+  "invalid_sizes": 0,
+  "t120_rows_present": 2550,
+  "t120_rows_missing": 1200,
+  "future_ltp_unique_per_minute_max": 1,
+  "expiry_unique": [
+    "2026-11-23"
+  ],
+  "prediction_status": "BLOCKED_MISSING_LIVE_FEATURES",
+  "t120_offset_minutes": {
+    "120.0": 2550
+  },
+  "t120_invalid_bid_ask": 0,
+  "current_packet_missing": 0,
+  "current_packet_zero": 0,
+  "entry_mark": "sell at BestBuyPrice_1",
+  "exit_mark": "buy at t120_BestSellPrice_1; evaluation only"
+}

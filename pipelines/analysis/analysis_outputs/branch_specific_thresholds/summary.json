@@ -1,0 +1,62 @@
+{
+  "objective": "maximize historical gross P&L under one shared maximum-three-position cap",
+  "evaluation_status": "optimized on reused historical evaluation data; requires forward paper validation",
+  "fixed_above_rv_threshold_strict_gt": 0.8005355169472045,
+  "standalone_branch_optima": {
+    "near_equal": {
+      "threshold_strict_gt": 0.0,
+      "qualified_signals": 61,
+      "executed_trades": 42,
+      "skipped_at_three_position_cap": 19,
+      "gross_pnl_inr": 21802.50000000001,
+      "win_rate_pct": 71.42857142857143,
+      "profit_factor": 3.0497814130588066,
+      "maximum_drawdown_inr": -5097.000000000004,
+      "active_trade_days": 18
+    },
+    "below_rv": {
+      "threshold_strict_gt": 0.0,
+      "qualified_signals": 183,
+      "executed_trades": 75,
+      "skipped_at_three_position_cap": 108,
+      "gross_pnl_inr": 48025.50000000003,
+      "win_rate_pct": 73.33333333333333,
+      "profit_factor": 3.3834586466165457,
+      "maximum_drawdown_inr": -5134.499999999989,
+      "active_trade_days": 23
+    }
+  },
+  "best_joint_thresholds": {
+    "above_rv_strict_gt": 0.8005355169472045,
+    "near_equal_strict_gt": 0.4855468549353696,
+    "below_rv_strict_gt": 0.0
+  },
+  "best_joint_portfolio": {
+    "qualified_signals": 641,
+    "executed_trades": 233,
+    "skipped_at_three_position_cap": 408,
+    "gross_pnl_inr": 104250.00000000003,
+    "win_rate_pct": 73.39055793991416,
+    "profit_factor": 2.7402408793850315,
+    "maximum_drawdown_inr": -8838.0,
+    "active_trade_days": 74
+  },
+  "pnl_attribution": [
+    {
+      "branch": "above_rv",
+      "count": 142,
+      "sum": 54769.500000000015
+    },
+    {
+      "branch": "below_rv",
+      "count": 75,
+      "sum": 48025.50000000002
+    },
+    {
+      "branch": "near_equal",
+      "count": 16,
+      "sum": 1454.9999999999898
+    }
+  ],
+  "note": "Near-equal has no dedicated probability model and below-RV uses a separate event model; these cutoffs apply the convergence classifier as a ranking score and are empirical, not calibrated branch probabilities."
+}

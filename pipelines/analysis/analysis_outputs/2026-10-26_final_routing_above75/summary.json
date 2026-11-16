@@ -1,0 +1,45 @@
+{
+  "date": "2026-10-26",
+  "status": "counterfactual reconstruction from saved logs",
+  "routing": {
+    "iv_above_rv": "gap > 0.005, convergence rule, probability > 0.75",
+    "iv_near_rv": "abs(gap) <= 0.005 and RV-decline event score >= 0",
+    "iv_below_rv": "gap < -0.005 and RV-decline event score >= 0"
+  },
+  "risk": {
+    "target_inr": 1500.0,
+    "stop_loss_inr": -750.0,
+    "maximum_open_positions": 3
+  },
+  "scenarios": [
+    {
+      "scenario": "literal_current_paper_engine_quality_behavior",
+      "qualified_signals": 289,
+      "executed_trades": 12,
+      "skipped_at_three_position_cap": 277,
+      "executed_by_branch": {
+        "iv_above_rv": 11,
+        "iv_near_rv": 1
+      },
+      "gross_pnl_inr": 8703.00000000001,
+      "explicit_costs_inr": 483.531519132,
+      "net_pnl_inr": 8219.468480868009,
+      "net_with_0.5_point_slippage_per_leg_per_fill_inr": 7499.468480868009,
+      "net_with_1_point_slippage_per_leg_per_fill_inr": 6779.468480868009
+    },
+    {
+      "scenario": "also_require_quality_entry_ok",
+      "qualified_signals": 1,
+      "executed_trades": 1,
+      "skipped_at_three_position_cap": 0,
+      "executed_by_branch": {
+        "iv_above_rv": 1
+      },
+      "gross_pnl_inr": -55.50000000000068,
+      "explicit_costs_inr": 34.236624327,
+      "net_pnl_inr": -89.73662432700068,
+      "net_with_0.5_point_slippage_per_leg_per_fill_inr": -149.7366243270007,
+      "net_with_1_point_slippage_per_leg_per_fill_inr": -209.7366243270007
+    }
+  ]
+}

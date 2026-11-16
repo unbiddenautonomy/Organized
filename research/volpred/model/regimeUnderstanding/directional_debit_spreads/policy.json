@@ -1,0 +1,50 @@
+{
+  "status": "FORWARD_PAPER_TEST_ONLY",
+  "same_monthly_expiry": true,
+  "fixed_entry_strikes": true,
+  "intraday_session": "09:15-15:30",
+  "cost_model": "current encoded charges plus 25 bps premium-turnover slippage",
+  "forecast_passing_configurations": [
+    {
+      "scene": "IV < RV",
+      "family": "naked_atm",
+      "horizon_min": 120,
+      "signal_mode": "forecast_sign",
+      "gate": "sign_plus_expected_edge",
+      "hit_rate_development_2024": 0.42696629213483145,
+      "hit_rate_holdout_2025": 0.4,
+      "mean_net_development_2024": 76.00967276584585,
+      "mean_net_holdout_2025": 571.752035607734,
+      "net_pnl_development_2024": 6764.860876160281,
+      "net_pnl_holdout_2025": 5717.52035607734,
+      "p05_net_development_2024": -2902.969168868468,
+      "p05_net_holdout_2025": -3793.865652567833,
+      "profit_factor_development_2024": 1.0923635807527678,
+      "profit_factor_holdout_2025": 1.448062333458985,
+      "trades_development_2024": 89,
+      "trades_holdout_2025": 10,
+      "robust_positive": true
+    },
+    {
+      "scene": "IV < RV",
+      "family": "naked_atm",
+      "horizon_min": 120,
+      "signal_mode": "forecast_sign",
+      "gate": "sign_only",
+      "hit_rate_development_2024": 0.4166666666666667,
+      "hit_rate_holdout_2025": 0.4666666666666667,
+      "mean_net_development_2024": 68.13179997477418,
+      "mean_net_holdout_2025": 142.71428681554977,
+      "net_pnl_development_2024": 6540.652797578321,
+      "net_pnl_holdout_2025": 2140.7143022332466,
+      "p05_net_development_2024": -2937.234886244361,
+      "p05_net_holdout_2025": -4412.301444614265,
+      "profit_factor_development_2024": 1.0835369687902,
+      "profit_factor_holdout_2025": 1.1167182013648937,
+      "trades_development_2024": 96,
+      "trades_holdout_2025": 15,
+      "robust_positive": true
+    }
+  ],
+  "oracle_results_are_tradable": false
+}

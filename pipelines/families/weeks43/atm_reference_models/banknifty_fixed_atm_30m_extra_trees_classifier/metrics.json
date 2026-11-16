@@ -1,0 +1,20 @@
+{
+  "horizon_minutes": 30,
+  "model": "extra_trees_classifier",
+  "probability_threshold": 0.55,
+  "historical_rows": 51748,
+  "holdout_rows": 12035,
+  "artifact": "frozen_classifier_30m.joblib",
+  "metrics_2026": {
+    "prediction_threshold_net_points": 0.55,
+    "trades": 163,
+    "signal_days": 32,
+    "win_rate_after_slippage": 0.5276073619631901,
+    "gross_points_before_cost": 542.9000000000015,
+    "net_points_after_2pt_slippage": 216.90000000000146,
+    "average_net_points": 1.3306748466257758,
+    "profit_factor": 1.1559478017039952,
+    "maximum_drawdown_points": -196.0999999999999,
+    "wilson_win_rate_lower_95": 0.45121409688168
+  }
+}

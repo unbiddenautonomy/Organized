@@ -1,0 +1,15 @@
+{
+  "status": "FORWARD_PAPER_TEST_ONLY",
+  "priority": [
+    "refined variance-transition trade",
+    "validated expanded hybrid only when the refined rule has no trade that date"
+  ],
+  "same_monthly_expiry": true,
+  "intraday_only": true,
+  "no_overlapping_positions": true,
+  "slippage_bps": 25.0,
+  "development_period": "2024; the refined component was selected on 2024",
+  "untouched_holdout": "2025-01-01 through 2025-05-09",
+  "forced_annual_target_rejected": "All 120m structures at 126-147 validation days lost money in 2023",
+  "live_deployment": false
+}

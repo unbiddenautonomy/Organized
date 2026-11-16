@@ -1,0 +1,5 @@
+horizon_min,model_file,algorithm,alpha,train_start,train_end,training_days,training_rows,feature_count
+15,enhanced_rv_15m_model.joblib,har,0.1,2025-03-20,2025-07-31,60,14536,3
+30,enhanced_rv_30m_model.joblib,har,0.1,2025-03-13,2025-07-31,60,14385,3
+60,enhanced_rv_60m_model.joblib,har,0.1,2025-03-10,2025-07-31,60,13181,3
+120,enhanced_rv_120m_model.joblib,har,0.1,2025-02-27,2025-06-25,60,10995,3

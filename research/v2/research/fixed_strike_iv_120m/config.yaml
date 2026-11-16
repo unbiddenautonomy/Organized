@@ -1,0 +1,30 @@
+data:
+  entry_surface_csv: ../../data/icharts_option_banknifty_monthly_atm_5strikes.csv
+  full_chain_csv: ../../data/icharts_option_banknifty.csv
+  entries_csv: artifacts/fixed_strike_entries.csv
+  dataset_csv: artifacts/fixed_strike_iv_120m_dataset.csv
+  model_features_csv: artifacts/model_features.csv
+  model_targets_csv: artifacts/model_targets.csv
+  feature_manifest_json: artifacts/feature_manifest.json
+  quality_report_json: artifacts/data_quality_report.json
+  chunksize: 250000
+  horizon_minutes: 120
+  minimum_surface_points: 4
+  assume_full_chain_sorted: true
+
+quality:
+  require_exact_atm_strike: true
+  require_entry_iv_converged: true
+  require_exit_iv_converged: true
+  maximum_surface_rmse: 0.01
+  minimum_option_price: 0.05
+
+features:
+  lag_minutes: [5, 15, 30, 60, 120]
+  surface_forward_column: future_open
+
+splits:
+  validation_fraction: 0.15
+  test_fraction: 0.15
+  purge_minutes: 120
+

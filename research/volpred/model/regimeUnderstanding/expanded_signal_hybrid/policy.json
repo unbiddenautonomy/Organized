@@ -1,0 +1,15 @@
+{
+  "status": "FORWARD_PAPER_TEST_ONLY",
+  "priority": [
+    "current_coverage_hybrid",
+    "120m short ATM+/-2 strangle when score >= q75 2023 threshold",
+    "120m short_atm_straddle when score >= selected 2023 threshold"
+  ],
+  "fallback_only_on_dates_without_an_earlier_priority_component": true,
+  "positions_must_not_overlap": true,
+  "same_monthly_expiry": true,
+  "slippage_bps": 25.0,
+  "selection_rule": "among >=40-day positive 2023 rules retaining >=80% of best validation net, maximize validation days",
+  "primary_threshold": 0.6931277592709387,
+  "secondary_threshold": 0.7016246301834123
+}

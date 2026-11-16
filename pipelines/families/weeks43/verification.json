@@ -1,0 +1,32 @@
+{
+  "tests_passed": 36,
+  "existing_app_tests": 24,
+  "new_extension_tests": 12,
+  "original_dashboard_and_config_unchanged": true,
+  "bridge_worker_start_stop_passed": true,
+  "all_11_atm_diagnostics_scored": true,
+  "backtest_button_test_passed": true,
+  "replay_results_reproducible": true,
+  "max_observed_concurrency": 3,
+  "trade_costs_reconciled": true,
+  "all_paths_fixed_contract_and_no_after_horizon_quotes": true,
+  "paths_audited": 192592,
+  "latest_backtest": "replay_20261028_200046",
+  "backtest_summary": {
+    "trades": 31,
+    "win_rate": 0.5161290322580645,
+    "net_pnl": -3210.7487707950067,
+    "gross_pnl": -851.2500000000068,
+    "total_costs": 2359.498770795,
+    "profit_factor": 0.5885261923746475,
+    "maximum_drawdown": -5002.401942416993,
+    "signal_days": 20,
+    "green_days": 9,
+    "red_days": 11,
+    "flat_days": 0,
+    "eligible_days": 150,
+    "no_trade_days": 130,
+    "coverage": 0.13333333333333333
+  },
+  "original_signal_snapshot_in_path_view_verified": true
+}

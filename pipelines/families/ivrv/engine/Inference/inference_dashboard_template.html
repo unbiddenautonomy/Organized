@@ -1,0 +1,66 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>IVRV Inference Dashboard</title>
+<style>
+:root{--bg:#0f1420;--card:#171e2e;--tx:#e6eaf2;--mut:#8b95ab;--b:#2a3550;--blue:#4c9aff;--amb:#f5a524;--grn:#3ecf8e;--red:#ef5b5b;--pur:#b48cf2}
+*{box-sizing:border-box}body{margin:0;font:14px system-ui,sans-serif;background:var(--bg);color:var(--tx);padding:20px}
+h1{font-size:20px;margin:0 0 4px}h2{font-size:14px;margin:0 0 10px;color:var(--mut);text-transform:uppercase;letter-spacing:.05em}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(520px,1fr));gap:14px}.card{background:var(--card);border:1px solid var(--b);border-radius:10px;padding:14px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:14px 0}.kpi{background:var(--card);border:1px solid var(--b);border-radius:10px;padding:10px 12px}
+.kpi b{display:block;font-size:20px;margin-top:2px}.kpi span{color:var(--mut);font-size:12px}
+canvas{width:100%;height:240px;display:block}table{width:100%;border-collapse:collapse;font-size:13px}th,td{text-align:left;padding:5px 8px;border-bottom:1px solid var(--b)}th{color:var(--mut);font-weight:500}
+.badge{background:var(--amb);color:#111;border-radius:4px;padding:1px 6px;font-size:11px;font-weight:600}.pos{color:var(--grn)}.neg{color:var(--red)}
+.leg span{margin-right:14px;font-size:12px;color:var(--mut)}.leg i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:5px}.note{color:var(--mut);font-size:12px;margin-top:6px}
+.bar{display:flex;align-items:center;gap:8px;margin:4px 0}.bar div{height:10px;background:var(--blue);border-radius:3px}.scroll{max-height:300px;overflow:auto}
+</style></head><body>
+<h1>IVRV Inference Dashboard</h1><div class="note" id="sub"></div>
+<div class="kpis" id="kpis"></div>
+<div class="grid">
+<div class="card"><h2>Spot &amp; predicted 120-min range</h2><div class="leg" id="l1"></div><canvas id="c1"></canvas><div class="note" id="n1"></div></div>
+<div class="card"><h2>Straddle price</h2><div class="leg" id="l2"></div><canvas id="c2"></canvas></div>
+<div class="card"><h2>Implied vs realised vol</h2><div class="leg" id="l3"></div><canvas id="c3"></canvas></div>
+<div class="card"><h2>Short-straddle model: convergence probability</h2><div class="leg" id="l4"></div><canvas id="c4"></canvas></div>
+<div class="card"><h2>Long-vol model trades <span class="badge">LONG-VOL MODEL</span></h2><table id="tr"></table><div class="note" id="pl"></div></div>
+<div class="card"><h2>Short-straddle model decisions</h2><div id="st"></div><div class="note" id="ps"></div></div>
+</div>
+<script>
+const DATA=/*DATA*/null;const $=id=>document.getElementById(id);
+const fmt=(x,n=2)=>x==null?"-":(+x).toLocaleString(undefined,{maximumFractionDigits:n});
+const P=DATA.preds,T=P.map(r=>r.t);
+function chart(cv,cols,opts){
+  opts=opts||{};const dpr=window.devicePixelRatio||1,W=cv.clientWidth,H=cv.clientHeight;cv.width=W*dpr;cv.height=H*dpr;
+  const g=cv.getContext("2d");g.scale(dpr,dpr);g.clearRect(0,0,W,H);
+  const vals=[];cols.forEach(c=>P.forEach(r=>{const v=r[c.k];if(v!=null)vals.push(v)}));(opts.bands||[]).forEach(b=>vals.push(b.lo,b.hi));(opts.hlines||[]).forEach(h=>vals.push(h.v));
+  if(!vals.length||!T.length){g.fillStyle="#8b95ab";g.fillText("No data",12,24);return}
+  let lo=Math.min(...vals),hi=Math.max(...vals);const p=(hi-lo)*.08||1;lo-=p;hi+=p;
+  const Lm=62,R=10,Tp=8,B=22,x=t=>Lm+(T.indexOf(t)<0?nearest(t):T.indexOf(t))/Math.max(T.length-1,1)*(W-Lm-R),y=v=>Tp+(1-(v-lo)/(hi-lo))*(H-Tp-B);
+  function nearest(t){let k=T.findIndex(s=>s>=t);return k<0?T.length-1:k}
+  g.strokeStyle="#2a3550";g.fillStyle="#8b95ab";g.font="11px system-ui";
+  for(let i=0;i<=4;i++){const v=lo+(hi-lo)*i/4;g.beginPath();g.moveTo(Lm,y(v));g.lineTo(W-R,y(v));g.stroke();g.fillText(fmt(v,hi<2?3:0),4,y(v)+4)}
+  for(let i=0;i<T.length;i+=Math.ceil(T.length/9))g.fillText(T[i],x(T[i])-12,H-6);
+  (opts.bands||[]).forEach(b=>{g.fillStyle=b.c;const x0=x(b.t0),x1=x(b.t1);g.fillRect(x0,y(b.hi),Math.max(x1-x0,2),y(b.lo)-y(b.hi));if(b.l){g.fillStyle="#f5a524";g.fillText(b.l,x0+4,y(b.hi)-4)}});
+  (opts.hlines||[]).forEach(h=>{g.strokeStyle=h.c;g.setLineDash([5,4]);g.beginPath();g.moveTo(Lm,y(h.v));g.lineTo(W-R,y(h.v));g.stroke();g.setLineDash([])});
+  (opts.marks||[]).forEach(m=>{g.strokeStyle=m.c;g.setLineDash([4,4]);g.beginPath();g.moveTo(x(m.t),Tp);g.lineTo(x(m.t),H-B);g.stroke();g.setLineDash([]);g.fillStyle=m.c;g.fillText(m.l,x(m.t)+3,Tp+10)});
+  cols.forEach(c=>{g.strokeStyle=c.c;g.lineWidth=1.5;g.beginPath();let st=false;P.forEach(r=>{const v=r[c.k];if(v==null)return;st?g.lineTo(x(r.t),y(v)):g.moveTo(x(r.t),y(v));st=true});g.stroke()});
+}
+function legend(el,items){el.innerHTML=items.map(i=>'<span><i style="background:'+i[1]+'"></i>'+i[0]+'</span>').join("")}
+const lv=DATA.longvol[0],ev=DATA.events,fills=ev.filter(e=>e.event_type=="long_vol_fill"),ent=ev.find(e=>e.event_type=="long_vol_entry");
+let pl=0;fills.forEach(f=>pl+=(f.side=="SELL"?1:-1)*f.price*f.qty);
+const last=P[P.length-1]||{},first=P[0]||{};
+const states=P.reduce((a,r)=>(a[r.reason||r.state]=(a[r.reason||r.state]||0)+1,a),{});
+$("sub").textContent=(first.d||"")+" · "+P.length+" minute-level predictions ("+(first.t||"")+" to "+(last.t||"")+") · expiry "+(DATA.latest.expiry||"-");
+$("kpis").innerHTML=[["Latest spot",fmt(last.spot)],["Straddle",fmt(last.straddle)],["IV / RV",fmt(last.civ,3)+" / "+fmt(last.rv,3)],["Short-straddle entries",P.filter(r=>r.taken).length],
+ ["Long-vol model","LONG @ "+(lv?"12:30":"-")],["Long-vol net P&L",fills.length?fmt(pl):"-"],["Path entries tracked",DATA.paths.entries]].map(k=>'<div class="kpi"><span>'+k[0]+'</span><b class="'+(String(k[1]).startsWith("-")&&k[1]!="-"?"neg":"")+'">'+k[1]+'</b></div>').join("");
+const marks=[];if(lv)marks.push({t:"12:30",c:"#3ecf8e",l:"12:30 LONG VOL"});if(fills.length)marks.push({t:"14:32",c:"#ef5b5b",l:"exit fills"});
+const bands=[];if(lv)bands.push({t0:"14:30",t1:T[T.length-1]>"14:40"?"14:40":T[T.length-1],lo:lv.predicted_spot_range_low,hi:lv.predicted_spot_range_high,c:"rgba(245,165,36,.45)",l:"Long-vol range "+lv.predicted_spot_range_low+"-"+lv.predicted_spot_range_high});
+legend($("l1"),[["Spot","#e6eaf2"],["1-sigma low","#4c9aff"],["1-sigma high","#4c9aff"],["Long-vol predicted range (at 14:30)","#f5a524"]]);
+chart($("c1"),[{k:"spot",c:"#e6eaf2"},{k:"l1",c:"#4c9aff"},{k:"h1",c:"#4c9aff"}],{bands,marks});
+$("n1").textContent=lv?"Orange block: long-vol model predicts spot "+lv.predicted_spot_range_low+"-"+lv.predicted_spot_range_high+" at the end of its 2-hour window (spot was "+fmt(lv.reference_spot)+" at 12:30).":"";
+legend($("l2"),[["ATM straddle","#4c9aff"]]);chart($("c2"),[{k:"straddle",c:"#4c9aff"}],{marks});
+legend($("l3"),[["Combined IV","#4c9aff"],["Realised vol","#b48cf2"]]);chart($("c3"),[{k:"civ",c:"#4c9aff"},{k:"rv",c:"#b48cf2"}],{marks});
+const thr=last.thr;legend($("l4"),[["Probability","#4c9aff"],["Entry threshold "+fmt(thr),"#ef5b5b"]]);chart($("c4"),[{k:"prob",c:"#4c9aff"}],{hlines:thr?[{v:thr,c:"#ef5b5b"}]:[],marks});
+$("tr").innerHTML="<tr><th>Time</th><th>Event</th><th>Detail</th></tr>"+ev.map(e=>"<tr><td>"+e.exchange_minute.slice(11)+"</td><td>"+e.event_type+"</td><td>"+(e.event_type=="long_vol_fill"?"#"+e.order_no+" "+e.side+" "+e.symbol+" x"+e.qty+" @ "+fmt(e.price)+" "+e.status:"LONG_VOL strike "+e.strike+" x"+e.qty+", planned exit "+e.planned_exit.slice(11,16))+"</td></tr>").join("");
+$("pl").textContent=fills.length?"Net P&L from fills: "+fmt(pl)+" (CE "+fmt((969-754.45)*3)+", PE "+fmt((531.6-627.15)*3)+"), before costs.":"";
+const mx=Math.max(1,...Object.values(states));
+$("st").innerHTML=Object.entries(states).sort((a,b)=>b[1]-a[1]).map(([k,v])=>'<div class="bar"><div style="width:'+v/mx*50+'%"></div><span>'+k+" &middot; "+v+"</span></div>").join("");
+$("ps").textContent="Position state: "+(DATA.position.status||"-")+" · open positions "+(DATA.position.open_position_count||0)+" · threshold "+(DATA.position.entry_convergence_probability_threshold||"-");
+render=null;window.addEventListener("resize",()=>location.reload());
+</script></body></html>

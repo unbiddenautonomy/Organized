@@ -1,0 +1,50 @@
+{
+  "date": "2026-10-27",
+  "status": "counterfactual reconstruction; live paper engine was still configured at 0.90",
+  "routing_cutoffs": {
+    "iv_above_rv": {
+      "regime": "IV_current - RV_current > 0.005",
+      "model_rule": "predicted IV declines and moves toward predicted RV",
+      "convergence_probability_operator": ">",
+      "convergence_probability_cutoff": 0.8005355169472045
+    },
+    "iv_near_rv": {
+      "regime": "abs(IV_current - RV_current) <= 0.005",
+      "model": "no-120m sharp-RV-decline model",
+      "event_score_operator": ">=",
+      "event_score_cutoff": 0.0
+    },
+    "iv_below_rv": {
+      "regime": "IV_current - RV_current < -0.005",
+      "model": "no-120m sharp-RV-decline model",
+      "event_score_operator": ">=",
+      "event_score_cutoff": 0.0
+    }
+  },
+  "risk": {
+    "profit_target_inr": 1500.0,
+    "stop_loss_inr": -750.0,
+    "maximum_open_positions": 3,
+    "lot_size": 30
+  },
+  "today": {
+    "qualified_signals": 2,
+    "executed_trades": 2,
+    "branch_counts": {
+      "iv_above_rv": 2,
+      "iv_near_rv": 0,
+      "iv_below_rv": 0
+    },
+    "gross_pnl_inr": 3105.0,
+    "explicit_costs_inr": 49.552541184,
+    "net_pnl_inr": 3055.447458816,
+    "net_with_0.5_point_slippage_per_leg_per_fill_inr": 2935.447458816,
+    "net_with_1_point_slippage_per_leg_per_fill_inr": 2815.447458816
+  },
+  "quality_entry_ok_variant": {
+    "executed_trades": 1,
+    "gross_pnl_inr": 1521.0,
+    "explicit_costs_inr": 24.486395442,
+    "net_pnl_inr": 1496.513604558
+  }
+}

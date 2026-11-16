@@ -1,0 +1,46 @@
+{
+  "date": "2026-10-27",
+  "status": "counterfactual reconstruction from today's logs",
+  "threshold_rule": "convergence probability strictly greater than 0.75000000",
+  "risk": {
+    "target_inr": 1500.0,
+    "stop_loss_inr": -750.0,
+    "maximum_open_positions": 3
+  },
+  "costs": "configured statutory/exchange costs, zero brokerage; slippage shown separately",
+  "scenarios": [
+    {
+      "scenario": "literal_current_paper_engine_gate",
+      "qualified_signals": 8,
+      "executed_trades": 3,
+      "skipped_at_three_position_cap": 5,
+      "gross_pnl_inr": 4762.499999999998,
+      "explicit_costs_inr": 74.251287639,
+      "net_pnl_inr": 4688.248712360998,
+      "net_with_0.5_point_slippage_per_leg_per_fill_inr": 4508.248712360998,
+      "net_with_1_point_slippage_per_leg_per_fill_inr": 4328.248712360998
+    },
+    {
+      "scenario": "also_require_legacy_three_rule_signal",
+      "qualified_signals": 8,
+      "executed_trades": 3,
+      "skipped_at_three_position_cap": 5,
+      "gross_pnl_inr": 4762.499999999998,
+      "explicit_costs_inr": 74.251287639,
+      "net_pnl_inr": 4688.248712360998,
+      "net_with_0.5_point_slippage_per_leg_per_fill_inr": 4508.248712360998,
+      "net_with_1_point_slippage_per_leg_per_fill_inr": 4328.248712360998
+    },
+    {
+      "scenario": "also_require_legacy_rule_and_quality_entry_ok",
+      "qualified_signals": 7,
+      "executed_trades": 3,
+      "skipped_at_three_position_cap": 4,
+      "gross_pnl_inr": 4828.499999999998,
+      "explicit_costs_inr": 73.869485097,
+      "net_pnl_inr": 4754.630514902999,
+      "net_with_0.5_point_slippage_per_leg_per_fill_inr": 4574.630514902999,
+      "net_with_1_point_slippage_per_leg_per_fill_inr": 4394.630514902999
+    }
+  ]
+}

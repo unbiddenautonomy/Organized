@@ -1,0 +1,9 @@
+{
+  "state": "DISABLED",
+  "error": null,
+  "pid": null,
+  "queue_depth": 0,
+  "dropped_events": 0,
+  "updated_at": "2026-11-03T15:40:00.012268+05:30",
+  "transport": "independent_raw_udp_queue"
+}

@@ -1,0 +1,9 @@
+model_scope,horizon_min,model_name,model_file,alpha,train_start,train_end,training_rows,qlike_improvement_vs_har_pct,evaluation_qlike
+intraday,15,Realized_GARCH_extended,rv_intraday_15m_model.joblib,300.0,2025-01-23,2025-05-09,9762,4.105345365541679,
+intraday,30,Realized_GARCH_extended,rv_intraday_30m_model.joblib,300.0,2025-01-23,2025-05-09,9368,6.425376593693002,
+intraday,60,Realized_GARCH_extended,rv_intraday_60m_model.joblib,300.0,2025-01-22,2025-05-09,8773,10.15753547769581,
+intraday,120,Realized_GARCH_extended,rv_intraday_120m_model.joblib,300.0,2025-01-22,2025-05-09,7122,13.708588396434708,
+09:15,15,opening_extended,rv_0915_15m_model.joblib,0.1,2021-01-08,2025-05-09,400,,0.24838538739916924
+09:15,30,opening_extended,rv_0915_30m_model.joblib,0.1,2021-01-08,2025-05-09,400,,0.22604144099554724
+09:15,60,opening_extended,rv_0915_60m_model.joblib,0.1,2021-01-05,2025-05-09,400,,0.19352601036241202
+09:15,120,opening_extended,rv_0915_120m_model.joblib,10.0,2021-01-05,2025-05-09,400,,0.23029859131635874

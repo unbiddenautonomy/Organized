@@ -1,0 +1,94 @@
+{
+  "evaluation_window": {
+    "start": "2024-09-19",
+    "end": "2025-05-09"
+  },
+  "eligible_trading_days": 141,
+  "risk": {
+    "profit_target_inr": 1500.0,
+    "stop_loss_inr": -750.0,
+    "maximum_open_positions": 3,
+    "lot_size": 30,
+    "maximum_holding_minutes": 120
+  },
+  "condition_definition": {
+    "near_equal": "abs(IV_current - RV_current) <= 0.005; assigned first to keep branches mutually exclusive",
+    "above": "IV_current > RV_current plus predicted IV decline and movement toward predicted RV",
+    "below": "IV_current < RV_current plus no-120m sharp-RV-decline model signal"
+  },
+  "summaries": [
+    {
+      "scenario": "IV_current_above_RV_current",
+      "qualified_signals": 3058,
+      "executed_trades": 583,
+      "signals_skipped_at_three_position_cap": 2475,
+      "active_trade_days": 131,
+      "gross_pnl_inr": 140446.49999999988,
+      "win_rate_pct": 65.18010291595198,
+      "profit_factor": 1.8592443722526584,
+      "maximum_drawdown_inr": -22494.00000000003
+    },
+    {
+      "scenario": "IV_current_near_RV_current",
+      "qualified_signals": 61,
+      "executed_trades": 42,
+      "signals_skipped_at_three_position_cap": 19,
+      "active_trade_days": 18,
+      "gross_pnl_inr": 21802.500000000015,
+      "win_rate_pct": 71.42857142857143,
+      "profit_factor": 3.0497814130588066,
+      "maximum_drawdown_inr": -5097.000000000004
+    },
+    {
+      "scenario": "IV_current_below_RV_current",
+      "qualified_signals": 183,
+      "executed_trades": 75,
+      "signals_skipped_at_three_position_cap": 108,
+      "active_trade_days": 23,
+      "gross_pnl_inr": 48025.50000000003,
+      "win_rate_pct": 73.33333333333333,
+      "profit_factor": 3.3834586466165457,
+      "maximum_drawdown_inr": -5134.499999999989
+    },
+    {
+      "scenario": "aggregated_three_conditions",
+      "qualified_signals": 3302,
+      "executed_trades": 641,
+      "signals_skipped_at_three_position_cap": 2661,
+      "active_trade_days": 140,
+      "gross_pnl_inr": 177566.99999999994,
+      "win_rate_pct": 65.99063962558502,
+      "profit_factor": 1.9804373032963387,
+      "maximum_drawdown_inr": -22305.00000000003
+    },
+    {
+      "scenario": "aggregated_three_conditions_and_confidence_gt_80.0536pct",
+      "qualified_signals": 415,
+      "executed_trades": 148,
+      "signals_skipped_at_three_position_cap": 267,
+      "active_trade_days": 53,
+      "gross_pnl_inr": 57834.000000000015,
+      "win_rate_pct": 75.67567567567568,
+      "profit_factor": 2.637753801716082,
+      "maximum_drawdown_inr": -8838.0
+    }
+  ],
+  "aggregated_trade_pnl_attribution": [
+    {
+      "condition": "IV_current_above_RV_current",
+      "executed_trades": 554,
+      "gross_pnl_inr": 132473.99999999994
+    },
+    {
+      "condition": "IV_current_below_RV_current",
+      "executed_trades": 69,
+      "gross_pnl_inr": 42880.500000000015
+    },
+    {
+      "condition": "IV_current_near_RV_current",
+      "executed_trades": 18,
+      "gross_pnl_inr": 2212.500000000012
+    }
+  ],
+  "warning": "The three-rule output is diagnostic in the current live engine; this is a requested counterfactual backtest."
+}

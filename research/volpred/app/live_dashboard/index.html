@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>VolPred Short Straddle Inference</title>
+  <style>
+    :root{--bg:#071018;--panel:#0e1b26;--line:#233747;--text:#e8f0f5;--muted:#91a6b5;--green:#49d493;--red:#ff7070;--amber:#ffc857;--blue:#55b8ff}
+    *{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 20% 0,#112638 0,#071018 48%);color:var(--text);font:14px Inter,Segoe UI,sans-serif}
+    main{max-width:1400px;margin:auto;padding:24px}.top{display:flex;justify-content:space-between;gap:20px;align-items:center;margin-bottom:18px}.brand{font-size:24px;font-weight:750}.sub{color:var(--muted);margin-top:5px}.badge{border:1px solid var(--amber);color:var(--amber);padding:7px 11px;border-radius:99px;font-weight:700}
+    .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.card{background:#0e1b26ee;border:1px solid var(--line);border-radius:13px;padding:16px;box-shadow:0 16px 40px #0004}.wide{grid-column:span 2}.full{grid-column:1/-1}.label{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.08em}.value{font-size:26px;font-weight:720;margin-top:7px}.status{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 12px var(--green);margin-right:7px}
+    h2{font-size:15px;margin:0 0 14px}table{width:100%;border-collapse:collapse}th,td{padding:10px;border-bottom:1px solid var(--line);text-align:right}th:first-child,td:first-child{text-align:left}th{color:var(--muted);font-size:11px;text-transform:uppercase}.band{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}.band div{background:#09151e;padding:12px;border-radius:9px}.band span{display:block;color:var(--muted);font-size:11px;margin-bottom:5px}
+    input,select{width:100%;background:#09151e;border:1px solid var(--line);border-radius:8px;color:var(--text);padding:10px;margin:7px 0 12px}.decision{font-size:22px;font-weight:750;padding:13px;border-radius:9px;background:#09151e}.wait{color:var(--amber)}.sell{color:var(--green)}.avoid{color:var(--red)}.note{color:var(--muted);line-height:1.55;margin-top:10px}.error{color:var(--red)}
+    @media(max-width:850px){.grid{grid-template-columns:repeat(2,1fr)}.wide{grid-column:span 2}.band{grid-template-columns:repeat(2,1fr)}}@media(max-width:520px){main{padding:12px}.grid{grid-template-columns:1fr}.wide,.full{grid-column:span 1}.top{align-items:flex-start}.band{grid-template-columns:1fr}}
+  </style>
+</head>
+<body><main>
+  <div class="top"><div><div class="brand">VolPred · Short Straddle Inference</div><div class="sub"><span class="status"></span><span id="runtime">Connecting to live model…</span></div></div><div class="badge">PAPER INFERENCE</div></div>
+  <section class="grid">
+    <div class="card"><div class="label">BANKNIFTY spot</div><div class="value" id="spot">—</div></div>
+    <div class="card"><div class="label">Latest bar</div><div class="value" id="bar" style="font-size:20px">—</div></div>
+    <div class="card"><div class="label">15m expected move</div><div class="value" id="move15">—</div></div>
+    <div class="card"><div class="label">120m expected move</div><div class="value" id="move120">—</div></div>
+    <div class="card wide"><h2>Forecast move bands</h2><div class="band" id="bands"></div></div>
+    <div class="card wide"><h2>Short-straddle decision</h2>
+      <label class="label" for="atmIv">Current ATM implied volatility (annualized %)</label><input id="atmIv" type="number" min="0" step="0.01" placeholder="Enter current ATM IV, e.g. 14.5">
+      <label class="label" for="horizon">Holding horizon</label><select id="horizon"><option value="15">15 minutes</option><option value="30">30 minutes</option><option value="60">60 minutes</option><option value="120" selected>120 minutes</option></select>
+      <div id="decision" class="decision wait">Awaiting ATM IV</div><div id="decisionNote" class="note">ATM IV is compared with the model's upper-tail RV in the same time units.</div>
+    </div>
+    <div class="card full"><h2>All model horizons</h2><table><thead><tr><th>Horizon</th><th>Mean RV</th><th>90% RV</th><th>Expected move</th><th>80% move</th><th>Status</th></tr></thead><tbody id="rows"></tbody></table></div>
+    <div class="card full note">Inference uses leakage-safe, horizon-specific RV models with empirical smearing and tail calibration. The decision panel performs a same-window implied-versus-realized variance comparison and does not place orders.</div>
+  </section>
+  <script>
+    const API='http://127.0.0.1:8765/latest'; let latest=null;
+    const fmt=(v,d=2)=>Number(v).toLocaleString('en-IN',{minimumFractionDigits:d,maximumFractionDigits:d});
+    function renderDecision(){
+      if(!latest)return; const ivPct=Number(document.getElementById('atmIv').value),h=document.getElementById('horizon').value,f=latest.forecasts[h],box=document.getElementById('decision'),note=document.getElementById('decisionNote');
+      if(!f.available){box.className='decision avoid';box.textContent='HORIZON PASSES MARKET CLOSE';note.textContent=`Only ${latest.quality.minutes_to_close} minutes remain in the session.`;return}
+      if(!f.trade_eligible){box.className='decision avoid';box.textContent='DATA / RANGE GATE FAILED';note.textContent=f.clipped_features.length?`Out-of-range features were clipped: ${f.clipped_features.join(', ')}.`:'Live data did not pass every trading gate.';return}
+      if(!(ivPct>0)){box.className='decision wait';box.textContent='Awaiting ATM IV';note.textContent='Enter annualized ATM IV to compare same-window implied variance with the 90th-percentile RV forecast.';return}
+      localStorage.setItem('atmIv',ivPct); const iv=ivPct/100, impliedVar=iv*iv*Number(h)/(252*375), vrp=impliedVar-f.future_variance, tailCushion=impliedVar/f.future_variance_q90;
+      if(impliedVar>f.future_variance_q90){box.className='decision sell';box.textContent='SHORT-VOL CANDIDATE';}else{box.className='decision avoid';box.textContent='NO UPPER-TAIL VRP EDGE';}
+      note.textContent=`Same-window implied variance: ${impliedVar.toExponential(3)} · mean forecast RV: ${f.future_variance.toExponential(3)} · 90% RV: ${f.future_variance_q90.toExponential(3)} · VRP: ${vrp.toExponential(3)} · tail cushion: ${tailCushion.toFixed(2)}×.`;
+    }
+    function render(x){latest=x;document.getElementById('runtime').textContent='Live model connected · auto-refresh 15s';document.getElementById('spot').textContent=fmt(x.spot_price);const t=new Date(x.bar_timestamp);document.getElementById('bar').textContent=t.toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit',second:'2-digit'});document.getElementById('move15').textContent='± '+fmt(x.forecasts['15'].expected_absolute_move_points);document.getElementById('move120').textContent='± '+fmt(x.forecasts['120'].expected_absolute_move_points);
+      document.getElementById('bands').innerHTML=Object.entries(x.forecasts).map(([h,f])=>`<div><span>${h} MINUTE BAND</span>${fmt(x.spot_price-f.one_sigma_move_points)} — ${fmt(x.spot_price+f.one_sigma_move_points)}</div>`).join('');
+      document.getElementById('rows').innerHTML=Object.entries(x.forecasts).map(([h,f])=>`<tr><td>${h} min · ${f.algorithm}</td><td>${fmt(f.annualized_rv*100)}%</td><td>${fmt(f.annualized_rv_q90*100)}%</td><td>${fmt(f.expected_absolute_move_points)}</td><td>${fmt(f.absolute_move_q80_points)}</td><td>${f.available?(f.trade_eligible?'Eligible':'Range gate'):'Closed'}</td></tr>`).join('');renderDecision();
+    }
+    async function refresh(){try{const r=await fetch(API,{cache:'no-store'});if(!r.ok)throw Error(`HTTP ${r.status}`);render(await r.json())}catch(e){document.getElementById('runtime').innerHTML=`<span class="error">Disconnected: ${e.message}</span>`}}
+    document.getElementById('atmIv').value=localStorage.getItem('atmIv')||'';document.getElementById('atmIv').addEventListener('input',renderDecision);document.getElementById('horizon').addEventListener('change',renderDecision);refresh();setInterval(refresh,15000);
+  </script>
+</main></body></html>

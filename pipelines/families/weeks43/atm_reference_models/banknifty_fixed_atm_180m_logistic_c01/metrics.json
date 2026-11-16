@@ -1,0 +1,20 @@
+{
+  "horizon_minutes": 180,
+  "model": "logistic_c01",
+  "probability_threshold": 0.75,
+  "historical_rows": 26907,
+  "holdout_rows": 6785,
+  "artifact": "frozen_classifier_180m.joblib",
+  "metrics_2026": {
+    "prediction_threshold_net_points": 0.75,
+    "trades": 1,
+    "signal_days": 1,
+    "win_rate_after_slippage": 1.0,
+    "gross_points_before_cost": 16.800000000000182,
+    "net_points_after_2pt_slippage": 14.800000000000182,
+    "average_net_points": 14.800000000000182,
+    "profit_factor": "Infinity",
+    "maximum_drawdown_points": 0.0,
+    "wilson_win_rate_lower_95": 0.20654329147389294
+  }
+}

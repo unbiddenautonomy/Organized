@@ -1,0 +1,21 @@
+horizon_min,model,model_file,train_start,train_end,training_days,training_rows,parameters
+15,linear_5f,linear_5f_15m.joblib,2025-01-24,2025-05-09,60,4992,{}
+15,ridge_5f,ridge_5f_15m.joblib,2025-01-24,2025-05-09,60,4992,"{""alpha"": 0.1}"
+15,lasso_5f,lasso_5f_15m.joblib,2025-01-24,2025-05-09,60,4992,"{""alpha"": 0.0001}"
+15,elastic_net_5f,elastic_net_5f_15m.joblib,2025-01-24,2025-05-09,60,4992,"{""alpha"": 0.001, ""l1_ratio"": 0.2}"
+15,quantile_median_5f,quantile_median_5f_15m.joblib,2025-01-24,2025-05-09,60,4992,"{""alpha"": 1e-05, ""quantile"": 0.5}"
+30,linear_5f,linear_5f_30m.joblib,2025-01-24,2025-05-09,60,4810,{}
+30,ridge_5f,ridge_5f_30m.joblib,2025-01-24,2025-05-09,60,4810,"{""alpha"": 100.0}"
+30,lasso_5f,lasso_5f_30m.joblib,2025-01-24,2025-05-09,60,4810,"{""alpha"": 0.001}"
+30,elastic_net_5f,elastic_net_5f_30m.joblib,2025-01-24,2025-05-09,60,4810,"{""alpha"": 0.001, ""l1_ratio"": 0.8}"
+30,quantile_median_5f,quantile_median_5f_30m.joblib,2025-01-24,2025-05-09,60,4810,"{""alpha"": 1e-05, ""quantile"": 0.5}"
+60,linear_5f,linear_5f_60m.joblib,2025-01-23,2025-05-09,60,4489,{}
+60,ridge_5f,ridge_5f_60m.joblib,2025-01-23,2025-05-09,60,4489,"{""alpha"": 100.0}"
+60,lasso_5f,lasso_5f_60m.joblib,2025-01-23,2025-05-09,60,4489,"{""alpha"": 0.001}"
+60,elastic_net_5f,elastic_net_5f_60m.joblib,2025-01-23,2025-05-09,60,4489,"{""alpha"": 0.001, ""l1_ratio"": 0.8}"
+60,quantile_median_5f,quantile_median_5f_60m.joblib,2025-01-23,2025-05-09,60,4489,"{""alpha"": 1e-05, ""quantile"": 0.5}"
+120,linear_5f,linear_5f_120m.joblib,2025-01-23,2025-05-09,60,3615,{}
+120,ridge_5f,ridge_5f_120m.joblib,2025-01-23,2025-05-09,60,3615,"{""alpha"": 100.0}"
+120,lasso_5f,lasso_5f_120m.joblib,2025-01-23,2025-05-09,60,3615,"{""alpha"": 0.001}"
+120,elastic_net_5f,elastic_net_5f_120m.joblib,2025-01-23,2025-05-09,60,3615,"{""alpha"": 0.001, ""l1_ratio"": 0.8}"
+120,quantile_median_5f,quantile_median_5f_120m.joblib,2025-01-23,2025-05-09,60,3615,"{""alpha"": 0.0001, ""quantile"": 0.5}"

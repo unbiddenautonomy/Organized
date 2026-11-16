@@ -1,0 +1,36 @@
+{
+  "status": "RESEARCH_ONLY_NOT_LIVE_DEPLOYED",
+  "decision": "PASS_BACKTEST_FORWARD_PAPER_ONLY",
+  "hypothesis_is_mandatory": true,
+  "cost_gate": "forecast Greek PnL / estimated complete round-trip cost >= selected multiple",
+  "observed_confirmation": "optional five-minute IV change aligned with the forecasted IV direction",
+  "development_stability": ">=8 days and positive net PnL in both 2024 halves",
+  "selection_objective": "maximize the worse half net PnL; tie-break on total development net and days",
+  "holdout": "2025 through 2025-05-09 is never used for selection",
+  "costs": "current encoded 2026 charges plus 25 bps premium-turnover slippage",
+  "long_vol_decision": "NO_RULE_PASSED_DEVELOPMENT_STABILITY",
+  "live_deployment": false,
+  "selected_rules": [
+    {
+      "side": "short_vol",
+      "signal_variant": "combined_or",
+      "confirmation": "observed_iv_5_aligned",
+      "structure": "short_2_strangle",
+      "horizon_min": 120,
+      "cost_multiple": 3.0,
+      "convergence_floor": 0.0,
+      "days_2024_H1": 10,
+      "days_2024_H2": 9,
+      "hit_rate_2024_H1": 0.7,
+      "hit_rate_2024_H2": 0.6666666666666666,
+      "net_pnl_2024_H1": 5299.568020637502,
+      "net_pnl_2024_H2": 511.8206773940547,
+      "profit_factor_2024_H1": 2.9157231877984486,
+      "profit_factor_2024_H2": 1.3364995078707198,
+      "development_days": 19,
+      "development_net": 5811.3886980315565,
+      "worst_half_net": 511.8206773940547,
+      "stable_profitable": true
+    }
+  ]
+}

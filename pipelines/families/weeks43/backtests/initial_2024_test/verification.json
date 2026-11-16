@@ -1,0 +1,9 @@
+{
+  "positions": 31,
+  "max_observed_concurrency": 3,
+  "fixed_strikes_preserved": true,
+  "pnl_cost_reconciliation": true,
+  "fixed_strike_path_records": 192592,
+  "pending_at_end": 0,
+  "unresolved_at_end": 0
+}

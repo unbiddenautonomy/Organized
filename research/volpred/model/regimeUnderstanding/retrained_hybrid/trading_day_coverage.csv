@@ -1,0 +1,7 @@
+strategy,period,total_available_days,signal_days,profitable_days,losing_or_flat_days,signal_day_coverage,profitable_signal_day_rate
+current_coverage_hybrid,development_2024,235,54,27,27,0.2297872340425532,0.5
+current_coverage_hybrid,holdout_2025,76,14,11,3,0.18421052631578946,0.7857142857142857
+retrained_short_vol_fallback,development_2024,235,53,36,17,0.225531914893617,0.6792452830188679
+retrained_short_vol_fallback,holdout_2025,76,13,10,3,0.17105263157894737,0.7692307692307693
+combined_retrained_hybrid,development_2024,235,87,47,40,0.3702127659574468,0.5402298850574713
+combined_retrained_hybrid,holdout_2025,76,23,17,6,0.3026315789473684,0.7391304347826086

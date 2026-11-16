@@ -1,0 +1,4 @@
+period,available_days,long_condition_days,short_condition_days,either_condition_days
+development_2024,235,156,217,224
+holdout_2025,76,39,76,76
+combined,311,195,293,300

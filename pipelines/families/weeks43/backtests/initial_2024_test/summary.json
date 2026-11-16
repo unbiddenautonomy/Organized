@@ -1,0 +1,108 @@
+{
+  "state": "COMPLETE",
+  "period_start": "2024-01-01",
+  "period_end": "2025-05-08",
+  "strategy": "one-strike OTM; 120 minutes; up to 3 positions; net TP1500 / SL-750",
+  "selection": {
+    "classifier": "logistic",
+    "regressor": "ridge",
+    "thresholds": {
+      "3_week": 0.5,
+      "4_week": 0.5
+    },
+    "meets_constraints": false,
+    "horizon_minutes": 120,
+    "tail_model": "otm_loss_q90",
+    "tail_correction": 0.0,
+    "expected_net_buffer_inr": 50.0,
+    "tail_loss_limit_inr": 750.0,
+    "max_open_positions": 3,
+    "profit_target_inr": 1500,
+    "stop_loss_inr": -750,
+    "frozen_before_test": "2024-01-01",
+    "selection_period": "2023-07-01 through 2023-12-31",
+    "status": "experimental_validation_constraints_not_met"
+  },
+  "summary": {
+    "trades": 31,
+    "win_rate": 0.5161290322580645,
+    "net_pnl": -3210.7487707950067,
+    "gross_pnl": -851.2500000000068,
+    "total_costs": 2359.498770795,
+    "profit_factor": 0.5885261923746475,
+    "maximum_drawdown": -5002.401942416993,
+    "signal_days": 20,
+    "green_days": 9,
+    "red_days": 11,
+    "flat_days": 0,
+    "eligible_days": 150,
+    "no_trade_days": 130,
+    "coverage": 0.13333333333333333
+  },
+  "by_bucket": {
+    "3_week": {
+      "trades": 19,
+      "win_rate": 0.5789473684210527,
+      "net_pnl": -2337.875149029016,
+      "gross_pnl": -927.0000000000164,
+      "total_costs": 1410.8751490289999,
+      "profit_factor": 0.5231276612781138,
+      "maximum_drawdown": -4098.299984421008,
+      "signal_days": 13,
+      "green_days": 6,
+      "red_days": 7,
+      "flat_days": 0,
+      "eligible_days": 84,
+      "no_trade_days": 71,
+      "coverage": 0.15476190476190477
+    },
+    "4_week": {
+      "trades": 12,
+      "win_rate": 0.4166666666666667,
+      "net_pnl": -872.8736217659907,
+      "gross_pnl": 75.75000000000955,
+      "total_costs": 948.6236217659998,
+      "profit_factor": 0.6990638333710207,
+      "maximum_drawdown": -2104.7537003549905,
+      "signal_days": 7,
+      "green_days": 3,
+      "red_days": 4,
+      "flat_days": 0,
+      "eligible_days": 66,
+      "no_trade_days": 59,
+      "coverage": 0.10606060606060606
+    }
+  },
+  "signals_logged": 17861,
+  "model_output_rows": 1909,
+  "decision_reasons": {
+    "need_5_15_30_60_minute_lags_max_age_1m_and_13_observations": 15952,
+    "expected_net_below_buffer": 829,
+    "insufficient_session_time": 710,
+    "otm_loss_limit_exceeded": 169,
+    "win_probability_below_threshold": 163,
+    "awaiting_fresh_post_decision_quotes": 36,
+    "three_position_limit": 2
+  },
+  "unresolved_positions": [],
+  "pending_entries": [],
+  "execution": "Next available pair after a 60-second signal delay; original strikes; quote age <=60 seconds. Gaps do not fabricate fills.",
+  "limitations": [
+    "Historical data is minute snapshots, not tick/order-book replay; stop losses can overshoot.",
+    "Cost rates and historical lots follow the provided source report; live configuration has separate current rates.",
+    "The previously examined 2024+ period is a retrospective benchmark, not fresh validation.",
+    "Reported realized P&L excludes unresolved positions; these are listed and retain capacity.",
+    "Daily color is the sum of closed-trade net P&L assigned to entry date."
+  ],
+  "cost_config": {
+    "strategy": "one_strike_otm",
+    "round_trip_slippage_points": 2.0,
+    "brokerage_per_order_inr": 0.0,
+    "stt_sell_premium_rate": 0.0015,
+    "nse_options_transaction_rate": 0.0003553,
+    "sebi_turnover_rate": 1e-06,
+    "stamp_buy_premium_rate": 3e-05,
+    "gst_rate": 0.18,
+    "historical_cost_mode": "source_report_rates"
+  }
+}

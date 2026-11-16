@@ -1,0 +1,5 @@
+horizon_min,model_file,algorithm,alpha,train_start,train_end,training_openings,validation_qlike
+15,spot_magnitude_0915_15m_model.joblib,opening_ridge,0.1,2021-02-19,2025-05-09,400,0.1591662900425419
+30,spot_magnitude_0915_30m_model.joblib,opening_ridge,0.1,2021-02-19,2025-05-09,400,0.14603088916863605
+60,spot_magnitude_0915_60m_model.joblib,opening_ridge,0.1,2021-02-12,2025-05-09,400,0.10215565568517754
+120,spot_magnitude_0915_120m_model.joblib,opening_ridge,0.1,2021-02-12,2025-05-09,400,0.10468338162564933
