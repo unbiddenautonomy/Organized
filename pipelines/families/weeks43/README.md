@@ -101,7 +101,7 @@ After this software update, use the original application's normal restart to loa
 | `runtime/bridge_status.json` | Worker process state, queue depth and any dropped-event count |
 | `backtests/<run>/` | Separate replay ledger and daily JSONL logs, summary, all-model CSV, trades CSV and daily P&L CSV |
 | `data/` | Cached source snapshots, full-chain quotes, training labels and data audit |
-| `backups/` | Original app source and original configuration/dashboard hashes |
+| `../../../archive/weeks43/backups/` | Original app source and original configuration/dashboard hashes |
 
 JSONL mirrors are append-only; the SQLite ledger is authoritative for deduplication and recovery. Pending orders are not restored as fills after a restart. Open positions retain their entry contracts and require new fresh quotes. A corrupted/unavailable state database prevents the OTM worker from opening a new book. Feed-queue overflow disables new OTM entries and is shown as an error; the existing paper trader continues.
 
@@ -123,7 +123,7 @@ Day counts are source-observed eligible dates, not all NSE trading sessions. A g
 
 The initial integration used guarded forwarding hooks in `live/live_inference.py`. The subsequent daily-service and dashboard repairs also added independent workers and queues, optimized the LZO decoder, and corrected the root dashboard's status labels and old-port routing. Model artifacts, trading rules, original strategy configuration and ledger paths are preserved. The original runtime's regression tests and focused startup, decoder and dashboard tests were run after the relevant changes.
 
-Set `enabled` to `false` in this package's `config.json` before the next app start to disable its worker while retaining historical viewing. For a full rollback, restore `backups/live_inference.before_43weeks.py` to the original `live/live_inference.py` while the application is stopped. Do not overwrite any later edits to that file without reviewing the diff.
+Set `enabled` to `false` in this package's `config.json` before the next app start to disable its worker while retaining historical viewing. For a full rollback, restore `archive/weeks43/backups/live_inference.before_43weeks.py` to the original `live/live_inference.py` while the application is stopped. Do not overwrite any later edits to that file without reviewing the diff.
 
 The worker uses the configured Python 3.13 executable and one model-computation thread at below-normal Windows priority. It does not install or upgrade packages in the existing app environment. `requirements-frozen.txt` records versions used for the new artifacts.
 

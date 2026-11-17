@@ -21,6 +21,8 @@ PCR = FAMILIES / "PCR"
 WEEKS = FAMILIES / "weeks43"
 MANIFEST = Path(__file__).with_name("model_manifest.json")
 PIPELINES = ("ivrv", "pcr", "43weeks", "rv120", "legacy-spot-iv")
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
 
 
 def _save_json(path: Path, data: dict) -> None:
@@ -105,7 +107,7 @@ def _preflight_ivrv(errors: list[str], notes: list[str]) -> None:
     sys.path.insert(0, str(APP))
     from live.live_inference import load_live_config
     from inference_pipeline import FixedStrikeInferencePipeline
-    from live.lzo_codec import Lzo1zDecoder
+    from voltr.feed.lzo import Lzo1zDecoder
 
     config = load_live_config(LIVE / "live_config.json")
     if config["enabled_pipelines"] != ["ivrv"]:

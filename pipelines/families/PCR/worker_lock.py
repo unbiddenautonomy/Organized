@@ -1,38 +1,15 @@
 """An OS lock prevents two PCR workers from trading the same ledger."""
-from contextlib import contextmanager
-import os
+from contextlib import ExitStack, contextmanager
 from pathlib import Path
+
+from voltr.core.io import file_lock
 
 
 @contextmanager
 def single_writer(directory):
-    directory = Path(directory)
-    directory.mkdir(parents=True, exist_ok=True)
-    handle = (directory / "worker.lock").open("a+b")
-    locked = False
-    try:
-        if handle.tell() == 0:
-            handle.write(b"0")
-            handle.flush()
-        handle.seek(0)
+    with ExitStack() as stack:
         try:
-            if os.name == "nt":
-                import msvcrt
-                msvcrt.locking(handle.fileno(), msvcrt.LK_NBLCK, 1)
-            else:
-                import fcntl
-                fcntl.flock(handle.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)
-            locked = True
+            stack.enter_context(file_lock(Path(directory) / "worker.lock"))
         except OSError as error:
             raise RuntimeError(f"Another PCR worker owns ledger {directory}") from error
         yield
-    finally:
-        if locked:
-            handle.seek(0)
-            if os.name == "nt":
-                import msvcrt
-                msvcrt.locking(handle.fileno(), msvcrt.LK_UNLCK, 1)
-            else:
-                import fcntl
-                fcntl.flock(handle.fileno(), fcntl.LOCK_UN)
-        handle.close()

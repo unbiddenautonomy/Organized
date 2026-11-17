@@ -17,9 +17,14 @@ import joblib
 import numpy as np
 import pandas as pd
 
-from contract_repository import OptionContract
-from decoder_7208 import MarketUpdate7208
-from spot_inference import MinuteBar, NSE_EPOCH, decode_banknifty_7207
+import _repo_path  # noqa: F401  (temporary, until step 10)
+from voltr.core.clock import NSE_EPOCH
+from voltr.instruments.master import OptionContract
+from voltr.market.bars import MinuteBar
+from voltr.market.options import greeks as _greeks, implied_volatility
+from voltr.market.stats import nan_window_stats as _nan_window_stats
+from voltr.feed.messages.indices import decode_banknifty_7207
+from voltr.feed.messages.market_by_price import MarketUpdate7208
 
 
 LOGGER = logging.getLogger(__name__)
@@ -27,78 +32,10 @@ HORIZONS = (5, 15)
 LAGS = (1, 5, 15, 30, 60)
 
 
-def _nan_window_stats(block: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
-    """Column-wise NaN-aware mean/std without warnings for padded history."""
-    valid = np.isfinite(block)
-    count = valid.sum(axis=0)
-    total = np.where(valid, block, 0.0).sum(axis=0)
-    mean = np.full(block.shape[1], np.nan, dtype=np.float64)
-    np.divide(total, count, out=mean, where=count > 0)
-    squared = np.where(valid, (block - mean) ** 2, 0.0).sum(axis=0)
-    variance = np.full(block.shape[1], np.nan, dtype=np.float64)
-    np.divide(squared, count, out=variance, where=count > 0)
-    return mean, np.sqrt(variance)
-
-
 @dataclass(frozen=True, slots=True)
 class IvRow:
     minute: int
     values: dict[str, float]
-
-
-def _normal_cdf(value: float) -> float:
-    return 0.5 * (1.0 + math.erf(value / math.sqrt(2.0)))
-
-
-def _normal_pdf(value: float) -> float:
-    return math.exp(-0.5 * value * value) / math.sqrt(2.0 * math.pi)
-
-
-def _bs_price(spot: float, strike: float, years: float, rate: float, sigma: float, is_call: bool) -> float:
-    root_t = math.sqrt(years)
-    d1 = (math.log(spot / strike) + (rate + 0.5 * sigma * sigma) * years) / (sigma * root_t)
-    d2 = d1 - sigma * root_t
-    discounted = strike * math.exp(-rate * years)
-    if is_call:
-        return spot * _normal_cdf(d1) - discounted * _normal_cdf(d2)
-    return discounted * _normal_cdf(-d2) - spot * _normal_cdf(-d1)
-
-
-def implied_volatility(price: float, spot: float, strike: float, years: float, rate: float, is_call: bool) -> float:
-    """Stable bisection IV; returns NaN when the quote violates arbitrage bounds."""
-    if min(price, spot, strike, years) <= 0:
-        return math.nan
-    discounted = strike * math.exp(-rate * years)
-    lower = max(0.0, spot - discounted) if is_call else max(0.0, discounted - spot)
-    upper = spot if is_call else discounted
-    if price < lower - 1e-6 or price > upper + 1e-6:
-        return math.nan
-    lo, hi = 0.0001, 5.0
-    for _ in range(80):
-        mid = (lo + hi) / 2.0
-        if _bs_price(spot, strike, years, rate, mid, is_call) < price:
-            lo = mid
-        else:
-            hi = mid
-    return (lo + hi) / 2.0
-
-
-def _greeks(spot: float, strike: float, years: float, rate: float, sigma: float, is_call: bool) -> dict[str, float]:
-    if not math.isfinite(sigma) or sigma <= 0 or years <= 0:
-        return {name: math.nan for name in ("delta", "gamma", "vega", "theta")}
-    root_t = math.sqrt(years)
-    d1 = (math.log(spot / strike) + (rate + 0.5 * sigma * sigma) * years) / (sigma * root_t)
-    d2 = d1 - sigma * root_t
-    pdf = _normal_pdf(d1)
-    delta = _normal_cdf(d1) if is_call else _normal_cdf(d1) - 1.0
-    gamma = pdf / (spot * sigma * root_t)
-    vega = spot * pdf * root_t / 100.0
-    decay = -(spot * pdf * sigma) / (2.0 * root_t)
-    if is_call:
-        theta = (decay - rate * strike * math.exp(-rate * years) * _normal_cdf(d2)) / 365.0
-    else:
-        theta = (decay + rate * strike * math.exp(-rate * years) * _normal_cdf(-d2)) / 365.0
-    return {"delta": delta, "gamma": gamma, "vega": vega, "theta": theta}
 
 
 class IvPredictionPipeline:

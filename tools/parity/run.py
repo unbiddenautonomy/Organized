@@ -41,6 +41,7 @@ SUITES = [
     ("pcr", FAMILIES / "PCR", ["test_pcr.py"]),
     ("weeks43", FAMILIES / "weeks43", ["test_completion_audit.py", "test_entry_controls.py", "test_weeks43.py"]),
     ("standalone", FAMILIES / "ivrv" / "standalone", ["."]),
+    ("voltr", REPO / "tests", ["."]),  # added in step 2; absent from the baseline
 ]
 REPLAY_SCRIPT = REPO / "simulations" / "run_replay_20261102.py"
 PREFLIGHT_SCRIPT = REPO / "setup" / "voltr.py"
@@ -179,18 +180,28 @@ CHECKS = {"A_tests": check_tests, "B_replay": check_replay, "C_livefeed": check_
           "D_preflight": check_preflight, "E_dashboard": check_dashboard}
 
 
-def capture(label: str, only: list[str] | None) -> Path:
+def capture(label: str, resume: bool = False) -> Path:
+    """Run every check into runtime/parity/<label>/.
+
+    A partial summary is saved after each check, so an interrupted run can be
+    finished with --resume instead of starting again.
+    """
     out = OUT_ROOT / label
-    if out.exists() and any(out.iterdir()):
-        raise SystemExit(f"{out} already exists; pick a new label")
-    out.mkdir(parents=True)
+    partial = out / "summary.partial.json"
+    if out.exists() and any(out.iterdir()) and not resume:
+        raise SystemExit(f"{out} already exists; pick a new label or pass --resume")
+    out.mkdir(parents=True, exist_ok=True)
+    summary = json.loads(partial.read_text(encoding="utf-8")) if resume and partial.exists() else {}
+    summary.setdefault("label", label)
+    summary.setdefault("started", time.strftime("%Y-%m-%d %H:%M:%S"))
     before = repo_state()
-    summary = {"label": label, "started": time.strftime("%Y-%m-%d %H:%M:%S")}
     for name, fn in CHECKS.items():
-        if only and name not in only:
+        if name in summary:
+            print(f"{name}: kept from earlier run", flush=True)
             continue
         t0 = time.time()
         summary[name] = fn(out)
+        partial.write_text(json.dumps(summary, indent=1, sort_keys=True), encoding="utf-8")
         print(f"{name}: done in {time.time() - t0:.0f}s", flush=True)
     summary["F_inventory"] = check_inventory()
     after = repo_state()
@@ -225,11 +236,11 @@ def main() -> int:
     sub = parser.add_subparsers(dest="command", required=True)
     c = sub.add_parser("capture")
     c.add_argument("--label", required=True)
-    c.add_argument("--only", nargs="*")
+    c.add_argument("--resume", action="store_true")
     k = sub.add_parser("check")
     k.add_argument("--label", required=True)
     k.add_argument("--against", default="baseline")
-    k.add_argument("--only", nargs="*")
+    k.add_argument("--resume", action="store_true")
     d = sub.add_parser("compare")
     d.add_argument("a")
     d.add_argument("b")
@@ -237,14 +248,12 @@ def main() -> int:
     if args.command == "compare":
         a, b = args.a, args.b
     else:
-        capture(args.label, args.only)
+        capture(args.label, args.resume)
         if args.command == "capture":
             return 0
         a, b = args.against, args.label
     base = json.loads((OUT_ROOT / a / "summary.json").read_text(encoding="utf-8"))
     cur = json.loads((OUT_ROOT / b / "summary.json").read_text(encoding="utf-8"))
-    if getattr(args, "only", None):
-        base = {k: v for k, v in base.items() if k in args.only or not k[:2].endswith("_")}
     diffs = differences(base, cur)
     report = OUT_ROOT / b / f"diff_vs_{a}.txt"
     report.write_text("\n".join(diffs) or "IDENTICAL", encoding="utf-8")

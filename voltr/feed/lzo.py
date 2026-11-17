@@ -1,4 +1,4 @@
-"""ctypes binding for NSE's LZO1Z decompression routine."""
+"""ctypes binding for NSE's LZO1Z decompression routine (native/lzo2.dll)."""
 
 from __future__ import annotations
 

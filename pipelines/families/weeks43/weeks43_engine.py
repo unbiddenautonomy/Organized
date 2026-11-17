@@ -12,9 +12,9 @@ import pandas as pd
 import joblib
 from weeks43_features import FEATURES, feature_row, history_add, pnl, parse_time
 from weeks43_settings import MAX_POSITIONS, defaults, validate_settings
+from voltr.core.clock import NSE_EPOCH as EPOCH
 
 ROOT=Path(__file__).resolve().parent
-EPOCH=datetime(1980,1,1)
 
 def second(t): return int((parse_time(t)-EPOCH).total_seconds())
 def stamp(t): return (EPOCH+timedelta(seconds=float(t))).isoformat(sep=' ')

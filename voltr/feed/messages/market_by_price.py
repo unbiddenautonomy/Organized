@@ -1,4 +1,4 @@
-"""Decoder for NSE FO BCAST_ONLY_MBP transaction code 7208."""
+"""Decoder for NSE FO BCAST_ONLY_MBP market-by-price messages (7208 legacy, 17208 enhanced)."""
 
 from __future__ import annotations
 

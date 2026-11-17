@@ -5,12 +5,11 @@ from datetime import date
 from decimal import Decimal
 from pathlib import Path
 
-from contract_repository import OptionContract
-from decoder_7208 import DecodeError, decode_7208
-from order_book import BankNiftyOrderBook
-from paper_trading.market import decode_indices_message
-from spot_inference import decode_banknifty_7207
-from udp_receiver import NseFoUdpReceiver
+from voltr.feed.messages.market_by_price import DecodeError, decode_7208
+from voltr.feed.order_book import BankNiftyOrderBook
+from voltr.instruments.master import OptionContract
+from voltr.feed.messages.indices import decode_banknifty_7207, decode_indices_message
+from voltr.feed.udp import NseFoUdpReceiver
 
 
 class FakeLzo:

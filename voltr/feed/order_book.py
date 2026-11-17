@@ -7,8 +7,8 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import TextIO
 
-from contract_repository import OptionContract
-from decoder_7208 import DepthLevel, MarketUpdate7208
+from voltr.instruments.master import OptionContract
+from voltr.feed.messages.market_by_price import DepthLevel, MarketUpdate7208
 
 
 @dataclass(slots=True)

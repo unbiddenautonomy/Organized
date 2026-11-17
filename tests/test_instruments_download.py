@@ -3,33 +3,11 @@ from __future__ import annotations
 import base64
 import csv
 from datetime import date
-import gzip
-import io
 import json
 from pathlib import Path
 
-from live.contract_bootstrap import decode_erp_response, ensure_latest_contract_file
-
-
-FIELDS = [
-    "FinInstrmId", "UndrlygFinInstrmId", "FinInstrmNm", "TckrSymb",
-    "XpryDt", "StrkPric", "OptnTp", "NewBrdLotQty", "DelFlg",
-]
-
-
-def contract_gzip() -> bytes:
-    rows = [
-        [101, 26009, "OPTIDX", "BANKNIFTY", "2026-10-27", 5000000, "CE", 30, "N"],
-        [102, 26009, "OPTIDX", "BANKNIFTY", "2026-10-27", 5000000, "PE", 30, "N"],
-        [201, 26009, "OPTIDX", "BANKNIFTY", "2026-10-29", 5000000, "CE", 30, "N"],
-        [202, 26009, "OPTIDX", "BANKNIFTY", "2026-10-29", 5000000, "PE", 30, "N"],
-        [301, 26009, "FUTIDX", "BANKNIFTY", "2026-10-29", 0, "XX", 30, "N"],
-    ]
-    text = io.StringIO()
-    writer = csv.writer(text, lineterminator="\n")
-    writer.writerow(FIELDS)
-    writer.writerows(rows)
-    return gzip.compress(text.getvalue().encode("utf-8"))
+from voltr.instruments.download import decode_erp_response, ensure_latest_contract_file
+from voltr.instruments.testing import contract_gzip
 
 
 def config(directory: Path) -> dict:

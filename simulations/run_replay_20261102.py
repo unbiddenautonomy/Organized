@@ -22,10 +22,10 @@ OUT = DATA / "inference_replay"
 BASE_OUT = OUT
 FAMILIES = PACK / "families"
 IVROOT = FAMILIES / "ivrv" / "engine" / "Inference"
-sys.path[:0] = [str(FAMILIES / "ivrv" / "standalone"), str(IVROOT), str(FAMILIES), str(FAMILIES / "weeks43")]
+sys.path[:0] = [str(ROOT), str(FAMILIES / "ivrv" / "standalone"), str(IVROOT), str(FAMILIES), str(FAMILIES / "weeks43")]
 
 import pandas as pd
-from iv_inference import _greeks, implied_volatility
+from voltr.market.options import greeks as _greeks, implied_volatility
 from live.live_inference import (LiveFeatureInference, MinuteBar, NSE_EPOCH,
                                  paper_entry_route, required_live_input_features)
 from live.position_alert import notify_position_action, notify_signal

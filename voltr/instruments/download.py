@@ -1,4 +1,4 @@
-"""Fetch and validate the daily NSE FO contract master before live inference.
+"""Fetch and validate the daily NSE FO contract master before a live session.
 
 The ERP credential is deliberately read at runtime and is never written to the
 configuration, downloaded file, token manifest, or logs.
@@ -22,17 +22,9 @@ from typing import Any, Callable
 from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
 
+from voltr.core.machine import machine_local_overrides
+from voltr.instruments.master import REQUIRED_COLUMNS, nse_date as _parse_nse_date
 
-NSE_EPOCH = datetime(1980, 1, 1)
-REQUIRED_COLUMNS = {
-    "FinInstrmId",
-    "UndrlygFinInstrmId",
-    "FinInstrmNm",
-    "TckrSymb",
-    "XpryDt",
-    "StrkPric",
-    "OptnTp",
-}
 CONTRACT_NAME = re.compile(r"^NSE_FO_contract_(\d{2})(\d{2})(\d{4})\.csv\.gz$")
 Fetcher = Callable[[str, dict[str, str], bytes, float], bytes]
 
@@ -49,14 +41,6 @@ class ContractBootstrapResult:
     pipeline_option_tokens: int
     front_future_token: int
     front_future_expiry: date
-
-
-def _parse_nse_date(value: str) -> date:
-    text = str(value).strip()
-    try:
-        return (NSE_EPOCH + timedelta(seconds=int(float(text)))).date()
-    except ValueError:
-        return datetime.fromisoformat(text).date()
 
 
 def _file_date(path: Path) -> date:
@@ -348,25 +332,6 @@ def ensure_latest_contract_file(
     )
 
 
-# Settings that differ per PC. Only these may be set in the git-ignored
-# machine.local.json next to live_config.json; strategy settings stay shared.
-MACHINE_LOCAL_KEYS = frozenset({"interface_ip", "cm_interface_ip", "contract_download_url", "dashboard_port"})
-
-
-def machine_local_overrides(live_config: Path) -> dict[str, Any]:
-    """Return this PC's settings from machine.local.json, or {} if it is absent."""
-    machine = Path(live_config).with_name("machine.local.json")
-    if not machine.is_file():
-        return {}
-    overrides = json.loads(machine.read_text(encoding="utf-8"))
-    if not isinstance(overrides, dict):
-        raise ValueError(f"{machine} must be a JSON object")
-    unknown = set(overrides) - MACHINE_LOCAL_KEYS
-    if unknown:
-        raise ValueError(f"{machine} may only override {sorted(MACHINE_LOCAL_KEYS)}; got {sorted(unknown)}")
-    return overrides
-
-
 def _load_config(path: Path) -> dict[str, Any]:
     path = path.resolve()
     local = json.loads(path.read_text(encoding="utf-8"))
@@ -389,9 +354,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(
         description="Ensure the latest NSE FO contract master and export BANKNIFTY tokens",
     )
-    parser.add_argument(
-        "--config", type=Path, default=Path(__file__).resolve().parent / "live_config.json",
-    )
+    parser.add_argument("--config", type=Path, required=True, help="the pipeline's live_config.json")
     parser.add_argument("--asof", type=date.fromisoformat, help="optional YYYY-MM-DD override")
     args = parser.parse_args()
     result = ensure_latest_contract_file(_load_config(args.config), asof=args.asof)

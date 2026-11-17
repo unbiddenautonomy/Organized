@@ -1,53 +1,16 @@
 """Bounded, nonblocking raw-UDP fanout. No model code runs in the receiver."""
-from contextlib import contextmanager
 from pathlib import Path
-import json
 import os
 import queue
 import struct
 import subprocess
 import threading
 import time
-import uuid
 
 HEADER=struct.Struct('!cQdBI')
 MAX_FRAME=1024*1024
 
-def atomic_json(path,value):
-    path=Path(path);path.parent.mkdir(parents=True,exist_ok=True)
-    temp=path.with_name(path.name+'.'+uuid.uuid4().hex+'.tmp')
-    try:
-        temp.write_text(json.dumps(value,allow_nan=False,indent=2),encoding='utf-8')
-        for attempt in range(8):
-            try: os.replace(temp,path);break
-            except PermissionError:
-                if attempt==7: raise
-                time.sleep(min(.01*2**attempt,.2))
-    finally:
-        if temp.exists(): temp.unlink()
-
-def read_json(path,default=None):
-    try: return json.loads(Path(path).read_text(encoding='utf-8'))
-    except (OSError,ValueError): return default
-
-@contextmanager
-def single_writer(path):
-    path=Path(path);path.parent.mkdir(parents=True,exist_ok=True)
-    with path.open('a+b') as handle:
-        handle.seek(0)
-        if not handle.read(1): handle.write(b'0');handle.flush()
-        handle.seek(0)
-        if os.name=='nt':
-            import msvcrt
-            msvcrt.locking(handle.fileno(),msvcrt.LK_NBLCK,1)
-        else:
-            import fcntl
-            fcntl.flock(handle,fcntl.LOCK_EX|fcntl.LOCK_NB)
-        try: yield
-        finally:
-            handle.seek(0)
-            if os.name=='nt': msvcrt.locking(handle.fileno(),msvcrt.LK_UNLCK,1)
-            else: fcntl.flock(handle,fcntl.LOCK_UN)
+from voltr.core.io import atomic_write_json as atomic_json, file_lock as single_writer, read_json  # noqa: E402,F401
 
 def read_exact(stream,size):
     parts=[];remaining=size

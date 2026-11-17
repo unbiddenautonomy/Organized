@@ -1,15 +1,13 @@
-"""Exercise contract selection with a generated master, without PostgreSQL."""
+"""Contract selection from a generated master file."""
 
 import csv
 from datetime import date
 import gzip
 import io
-import json
-from pathlib import Path
 
 import pytest
 
-from contract_repository import (
+from voltr.instruments.master import (
     contract_source_summary,
     is_monthly_expiry,
     load_front_future,
@@ -17,7 +15,6 @@ from contract_repository import (
 )
 
 
-BASE = Path(__file__).resolve().parent
 FIELDS = ["FinInstrmId", "UndrlygFinInstrmId", "FinInstrmNm", "TckrSymb",
           "XpryDt", "StrkPric", "OptnTp", "NewBrdLotQty", "DelFlg"]
 
@@ -37,7 +34,7 @@ def config(tmp_path):
     writer.writerows(rows)
     master = tmp_path / "contract.csv.gz"
     master.write_bytes(gzip.compress(stream.getvalue().encode("utf-8")))
-    settings = json.loads((BASE / "config.example.json").read_text(encoding="utf-8"))
+    settings = {"contract_symbol": "BANKNIFTY", "price_divisor": 100.0}
     settings["contract_file"] = str(master)
     settings["contract_asof_date"] = "2026-10-07"
     return settings

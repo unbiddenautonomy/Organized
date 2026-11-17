@@ -52,4 +52,4 @@ No credentials are copied into worker contexts. A process lock prevents duplicat
 
 `test_isolated_runtime.py` injects queue backpressure, worker failure, startup failure and malformed framing. `test_pipeline_workers.py` loads all three real model packages against an archived contract **fixture**, sends empty synthetic packets without opening market sockets, kills IV/RV, and verifies PCR and 43Weeks continue receiving. These tests write isolated logs and never use an old contract master for live operation.
 
-Set `isolate_pipelines` to `false` in `service_config.json` only while the service is stopped to return to the legacy runtime. The pre-change source, configuration and Windows task definition are under `live/backups/before_isolated_scheduler_20261028/`.
+Set `isolate_pipelines` to `false` in `service_config.json` only while the service is stopped to return to the legacy runtime. The pre-change source, configuration and Windows task definition are under `archive/ivrv/live_backups/before_isolated_scheduler_20261028/` (repository root).

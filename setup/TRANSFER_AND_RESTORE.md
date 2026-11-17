@@ -73,7 +73,7 @@ source payload and may include local credentials. Use the tracked-file
 Do not flatten or rename the extracted `pipelines/families/` tree.
 The saved models, model metadata, configs, and DLL already sit in their
 expected relative directories. Keep `setup/`, `README.md`, and
-`LARGE_LOCAL_FILES_2026-11-09.md` and `research/` at their shipped
+`docs/history/LARGE_LOCAL_FILES_2026-11-09.md` and `research/` at their shipped
 repository-relative locations.
 
 For **fresh IVRV paper inference**, no historical CSV or feed journal is
@@ -100,7 +100,7 @@ for the workflow you intend to run:
 These `data/`, `datasets/`, and `contracts/` paths are ignored by Git. Large
 inputs may stay on a separate drive; use the environment variables or CLI
 paths to avoid duplicating them. The
-[large-file inventory](../LARGE_LOCAL_FILES_2026-11-09.md) gives exact original
+[large-file inventory](../docs/history/LARGE_LOCAL_FILES_2026-11-09.md) gives exact original
 paths, sizes, uses, and restore paths for all 528 excluded workspace files
 over 100 MiB, plus sixteen external training/research inputs over 100 MiB. The four
 missing older spot/IV model packages must eventually be restored under
@@ -138,7 +138,7 @@ missing and must be recovered from another backup or owner.
 3. Run `& '.venv\Scripts\python.exe' setup/voltr.py preflight --pipeline ivrv`.
    `--pipeline all` checks every engine but currently exits unsuccessfully
    for the four missing older spot/IV packages. Inspect the
-   [refactor validation report](VALIDATION_2026-11-11.md) for the tests already run.
+   [refactor validation report](../docs/history/VALIDATION_2026-11-11.md) for the tests already run.
 4. If you plan to retrain models, run `setup/setup_research.ps1`, then
    `setup/validate_research.ps1`. Place the five raw CSVs together on a data
    drive and call `setup/link_research_raw.ps1 -RawDataDirectory <path>`.

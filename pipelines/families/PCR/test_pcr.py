@@ -199,10 +199,10 @@ def test_original_dashboard_routes_and_new_pcr_route_coexist(tmp_path):
 def test_original_strategy_configuration_unchanged():
     # IVRV's strategy configuration must not change by accident. The baseline
     # was re-taken on 2026-11-16 after deliberate changes; the 2026-10-28
-    # install-time hashes remain in integration_backup/hashes_before.json.
+    # install-time hashes remain in archive/pcr/integration_backup/hashes_before.json.
     # Paths are relative to pipelines/families. Line endings are normalised
     # so a Git checkout with CRLF conversion hashes the same.
-    baseline = json.loads((ROOT / "integration_backup" / "hashes_current.json").read_text())
+    baseline = json.loads((ROOT / "ivrv_config_hashes.json").read_text())
     for name, expected in baseline.items():
         content = (ROOT.parent / name).read_bytes().replace(b"\r\n", b"\n")
         assert hashlib.sha256(content).hexdigest() == expected, name

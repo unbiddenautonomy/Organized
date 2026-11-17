@@ -11,13 +11,12 @@ import sys
 import threading
 import time
 import uuid
-from zoneinfo import ZoneInfo
 from .feed_fanout import Fanout,FeedChannel,atomic_json,read_json,single_writer
-from .feed_journal import FeedJournal
+from voltr.feed.journal import FeedJournal
+from voltr.core.clock import MARKET_TIMEZONE as TZ
 
 ROOT=Path(__file__).resolve().parents[1]
 RUNTIME=ROOT/'logs/isolated_service'
-TZ=ZoneInfo('Asia/Kolkata')
 NAMES=('ivrv','pcr','43weeks')
 LOG=logging.getLogger('isolated_service')
 
@@ -30,7 +29,7 @@ def daily_window(now,start='09:00',end='15:40'):
     return a,b
 
 def prepare_contracts(config,config_path,start,folder):
-    from .contract_bootstrap import ensure_latest_contract_file
+    from voltr.instruments.download import ensure_latest_contract_file
     cfg=dict(config,contract_force_download=True,contract_download_enabled=True)
     result=ensure_latest_contract_file(cfg,asof=start.date())
     if not result.downloaded:raise RuntimeError('A newly downloaded contract file is required')
@@ -179,7 +178,7 @@ class DashboardView:
 
 def run_service(config,config_path,run_now=False):
     from .live_inference import DashboardServer,archive_previous_day_logs,configure_logging
-    from .udp_receiver import NseFoUdpReceiver
+    from voltr.feed.udp import NseFoUdpReceiver
     RUNTIME.mkdir(parents=True,exist_ok=True)
     with single_writer(RUNTIME/'service.lock'):
         configure_logging(RUNTIME/'service.log',str(config.get('log_level','INFO')))
@@ -268,7 +267,7 @@ def _publish_status(stop,config_path):
             try:
                 if time.monotonic()-checked>=30:
                     from .live_inference import load_live_config
-                    from .contract_bootstrap import _auth_token
+                    from voltr.instruments.download import _auth_token
                     try:
                         _auth_token(load_live_config(config_path))
                         readiness=dict(contract_auth_ready=True)

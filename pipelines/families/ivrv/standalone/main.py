@@ -10,17 +10,19 @@ from pathlib import Path
 import selectors
 from datetime import datetime, timedelta
 
-from decoder_7208 import DecodeError, decode_7208
+import _repo_path  # noqa: F401  (temporary, until step 10)
+from voltr.feed.lzo import Lzo1zDecoder, LzoError
+from voltr.feed.messages.market_by_price import DecodeError, decode_7208
+from voltr.feed.udp import NseFoUdpReceiver, PacketError
 from iv_prediction import IvPredictionPipeline, SUPPORTED_OI_CODES
-from contract_repository import contract_source_summary, load_nearest_expiry_options
-from lzo_codec import Lzo1zDecoder, LzoError
-from order_book import BankNiftyOrderBook
+from contract_repository import load_nearest_expiry_options
+from voltr.feed.order_book import BankNiftyOrderBook
+from voltr.instruments.master import contract_source_summary
 from paper_trading import DashboardServer, PaperTradingEngine
 from spot_inference import SpotPredictionPipeline
 from pnl_live_inference import LivePnlInferenceAdapter
 from portable_config import load_source_config
 from live_retraining import LiveRetrainingManager
-from udp_receiver import NseFoUdpReceiver, PacketError
 
 
 BASE_DIR = Path(__file__).resolve().parent
@@ -40,7 +42,7 @@ def load_config(path: Path) -> dict:
 def main() -> int:
     parser = argparse.ArgumentParser(description="Receive and decode NSE FO UDP message 7208")
     parser.add_argument("--config", type=Path, default=BASE_DIR / "config.json")
-    parser.add_argument("--lzo-dll", type=Path, default=BASE_DIR / "native" / "lzo2.dll")
+    parser.add_argument("--lzo-dll", type=Path, help="default: the shared voltr/feed/native/lzo2.dll")
     args = parser.parse_args()
 
     config = load_config(args.config.resolve())
@@ -146,8 +148,8 @@ def main() -> int:
         "port": int(config.get("cm_port", 8222)),
         "interface_ip": config.get("cm_interface_ip", config.get("interface_ip", "0.0.0.0")),
     })
-    fo_receiver = NseFoUdpReceiver(fo_config, Lzo1zDecoder(args.lzo_dll.resolve()))
-    cm_receiver = NseFoUdpReceiver(cm_config, Lzo1zDecoder(args.lzo_dll.resolve()))
+    fo_receiver = NseFoUdpReceiver(fo_config, Lzo1zDecoder(args.lzo_dll))
+    cm_receiver = NseFoUdpReceiver(cm_config, Lzo1zDecoder(args.lzo_dll))
     fo_receiver.open()
     cm_receiver.open()
     socket_selector = selectors.DefaultSelector()

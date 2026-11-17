@@ -6,7 +6,7 @@ import io
 import sys
 import time
 from live.feed_fanout import FeedChannel,Fanout,atomic_json,read_json
-from test_contract_bootstrap import contract_gzip
+from voltr.instruments.testing import contract_gzip
 
 def test_all_real_workers_start_and_survivors_receive_after_one_crashes(tmp_path):
     root=Path(__file__).resolve().parent;package=root.parents[2]

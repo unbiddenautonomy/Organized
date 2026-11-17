@@ -1,5 +1,5 @@
 """Persistent operator entry policy; fitted models and their selection stay frozen."""
-from contextlib import contextmanager
+from contextlib import ExitStack, contextmanager
 from datetime import datetime
 from pathlib import Path
 from zoneinfo import ZoneInfo
@@ -9,6 +9,16 @@ import os
 import threading
 import time
 import uuid
+
+# Until the pipelines move under the repository root (refactor step 9), make
+# the shared `voltr` package importable when this folder is the entry point.
+import sys as _sys
+from pathlib import Path as _Path
+_REPO = next(p for p in _Path(__file__).resolve().parents if (p / "voltr" / "__init__.py").is_file())
+if str(_REPO) not in _sys.path:
+    _sys.path.insert(0, str(_REPO))
+
+from voltr.core.io import atomic_write_json as _atomic_write_json, file_lock
 
 ROOT = Path(__file__).resolve().parent
 MAX_POSITIONS = 3
@@ -56,45 +66,19 @@ def write_snapshot(path, settings):
     atomic_write_json(path, validate_settings(settings))
 
 def atomic_write_json(path, value):
-    """Publish a whole JSON document, tolerating short Windows reader locks."""
-    path = Path(path)
-    path.parent.mkdir(parents=True, exist_ok=True)
-    temp = path.with_name(path.name + '.' + uuid.uuid4().hex + '.tmp')
-    try:
-        with temp.open('w', encoding='utf-8') as f:
-            json.dump(value, f, indent=2, allow_nan=False)
-            f.write('\n'); f.flush(); os.fsync(f.fileno())
-        for attempt in range(8):
-            try:
-                os.replace(temp, path)
-                break
-            except PermissionError:
-                if attempt==7: raise
-                time.sleep(min(.01*2**attempt,.2))
-    finally:
-        if temp.exists(): temp.unlink()
+    """Publish a whole JSON document (newline-terminated, fsynced), tolerating short Windows reader locks."""
+    _atomic_write_json(path, value, trailing_newline=True, fsync=True)
 
 @contextmanager
 def _settings_lock(root):
     # Different dashboard processes share the same lock, as well as threads.
-    with _LOCK:
-        runtime = root / 'runtime'; runtime.mkdir(parents=True, exist_ok=True)
-        with (runtime / 'entry_settings.lock').open('a+b') as f:
-            f.seek(0)
-            if not f.read(1): f.write(b'0'); f.flush()
-            f.seek(0)
-            if os.name == 'nt':
-                import msvcrt
-                try: msvcrt.locking(f.fileno(), msvcrt.LK_NBLCK, 1)
-                except OSError as exc: raise SettingsConflict('Another settings update is in progress; refresh and retry') from exc
-            else:
-                import fcntl
-                fcntl.flock(f, fcntl.LOCK_EX)
-            try: yield
-            finally:
-                f.seek(0)
-                if os.name == 'nt': msvcrt.locking(f.fileno(), msvcrt.LK_UNLCK, 1)
-                else: fcntl.flock(f, fcntl.LOCK_UN)
+    # Windows reports a concurrent update as a conflict; POSIX waits for it.
+    with _LOCK, ExitStack() as stack:
+        try:
+            stack.enter_context(file_lock(root / 'runtime' / 'entry_settings.lock', blocking=os.name != 'nt'))
+        except OSError as exc:
+            raise SettingsConflict('Another settings update is in progress; refresh and retry') from exc
+        yield
 
 def save_settings(thresholds, expected_revision, root=ROOT):
     root = Path(root); thresholds = validate_thresholds(thresholds)

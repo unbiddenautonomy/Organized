@@ -1,7 +1,7 @@
 import struct
 import unittest
 
-from iv_prediction.oi_decoder import OiDecodeError, decode_oi_message
+from voltr.feed.messages.open_interest import OiDecodeError, decode_oi_message
 
 
 class OiDecoderTest(unittest.TestCase):

@@ -11,6 +11,7 @@ import time
 from zoneinfo import ZoneInfo
 from . import live_inference as legacy
 from .feed_fanout import atomic_json
+from voltr.market.atm_features import AtmFeatureStream
 
 ROOT=Path(__file__).resolve().parents[1]
 PACKAGE_ROOT=ROOT.parents[2]
@@ -248,23 +249,14 @@ class PCRAdapter:
     def status(self):return dict(state='FAULT' if self.bridge.runtime.fault else 'RUNNING',fault=self.bridge.runtime.fault)
     def close(self):self.bridge.close()
 
-class OtmFeatureStream(legacy.LiveFeatureInference):
+class OtmFeatureStream(AtmFeatureStream):
     """Own bars and OI; no dependency on the IV/RV model or its paper engine."""
     def __init__(self,config,contracts,lot,expiry,future,source,bridge):
-        self.config=config;self.contracts=contracts;self.lot_size=lot;self.expiry=expiry;self.future_token=future
-        self.decode_spot=source['decode_banknifty_7207'];self.implied_volatility=source['implied_volatility']
-        self.greeks=source['_greeks'];self.decode_oi=source['decode_oi_message'];self.oi_error=source['OiDecodeError']
-        self.price_divisor=float(config.get('price_divisor',100));self.rate=float(config.get('risk_free_rate',.065))
-        self.minimum_surface_points=int(config.get('minimum_surface_points',4));self.pairs={}
-        for c in contracts.values():self.pairs.setdefault(float(c.strike_price),{})[c.option_type]=c.token
-        self.pairs={k:v for k,v in self.pairs.items() if {'CE','PE'}<=v.keys()};self.strikes=sorted(self.pairs)
+        super().__init__(config,contracts,lot,expiry,future,source)
         if len(self.strikes)<3:raise ValueError('OTM pipeline requires three paired strikes')
-        self.spot_bars={};self.future_bars={};self.option_bars={};self.latest_option_ticks={};self.oi_by_token={}
-        self.latest_exchange_second=None;self.last_paper_time_check_second=None
-        self.latest_spot_minute=None;self.latest_future_minute=None;self.last_finalized_minute=None
-        self.rows_by_minute={};self.spot_by_minute={};self.weeks43=bridge
-    def _mark_paper_position(self,*args,**kwargs):pass
-    def _set_wait(self,*args,**kwargs):pass
+        self.weeks43=bridge
+    def _on_option_tick(self,token,price,log_time):legacy._weeks43_notify(self,'tick',token,price,log_time)
+    def _on_open_interest(self,token,open_interest,log_time):legacy._weeks43_notify(self,'oi',token,open_interest,log_time)
     def _finalize_minute(self,minute):
         self.weeks43.snapshot(minute)
         if not self.weeks43.diagnostics:return

@@ -45,7 +45,7 @@ def test_daily_9am_includes_weekends_and_rolls_after_close():
     assert a.date()==date(2026,11,1)
 
 def test_daily_contract_prep_forces_download_and_excludes_secrets(tmp_path,monkeypatch):
-    import live.contract_bootstrap as bootstrap
+    import voltr.instruments.download as bootstrap
     contract=tmp_path/'master.csv.gz';contract.write_bytes(b'validated-source-fixture')
     calls=[]
     def obtain(config,asof):

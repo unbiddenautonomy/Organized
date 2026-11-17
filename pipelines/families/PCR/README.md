@@ -74,9 +74,9 @@ The worker checks model hashes before loading. An operating-system lock prevents
 | `features.py`, `runtime.py`, `worker.py`, `worker_lock.py`, `bridge.py`, `storage.py` | Live features, inference, ledger, feed bridge and persistence |
 | `web.py`, `dashboard.html`, `backtest.py` | HTTP integration, dashboard and backtest entry point |
 | `reference/` | Original historical candidates and full max-three results |
-| `integration_backup/` | Before-change host Python, configs, dashboard and original hashes |
+| `ivrv_config_hashes.json` | Expected hashes of the IVRV config files, checked by `test_pcr.py` |
 | `validation/` | Test reports, dashboard screenshot and installation audit |
-| `deployment_manifest.json` | Installation inventory, file hashes and validation summary |
+| `../../../archive/pcr/` | Historical installer, install-time host backup and deployment manifest |
 
 Daily data is saved under `logs/YYYY-MM-DD/`:
 
@@ -124,4 +124,4 @@ Optional offline page inspection: `py -3.13 -m PCR.web --port 8781`, then open `
 
 The original `live_config.json`, `config.yaml` and `live_dashboard.html` remain byte-for-byte unchanged. Only `live/live_inference.py` has additive imports, namespaced routes and exception-isolated feed/session hooks. No original model or position state was modified. The original app's 24 regression tests passed.
 
-To disable new PCR entries, set its `config.json` `enabled` to `false`; an active worker picks this up on the next minute and continues managing existing PCR positions. At the next host session startup, a disabled PCR worker does not start. Avoid disabling startup while PCR has unresolved positions. For full removal, after normal shutdown restore only `live/live_inference.py` from `integration_backup/live_inference.py`; retain PCR's artifacts and journals for audit.
+To disable new PCR entries, set its `config.json` `enabled` to `false`; an active worker picks this up on the next minute and continues managing existing PCR positions. At the next host session startup, a disabled PCR worker does not start. Avoid disabling startup while PCR has unresolved positions. For full removal, after normal shutdown restore only `live/live_inference.py` from `archive/pcr/integration_backup/live_inference.py`; retain PCR's artifacts and journals for audit.

@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from iv_inference import IvPredictionPipeline as _BaseIvPredictionPipeline
 
-from .oi_decoder import OiDecodeError, decode_oi_message
+from voltr.feed.messages.open_interest import OiDecodeError, decode_oi_message
 
 
 class IvPredictionPipeline(_BaseIvPredictionPipeline):

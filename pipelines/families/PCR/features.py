@@ -10,6 +10,8 @@ import math
 import numpy as np
 import pandas as pd
 
+from voltr.market.options import implied_volatility, normal_cdf
+
 
 def feature_frame(rows: list[dict]) -> pd.DataFrame:
     if not rows:
@@ -93,27 +95,16 @@ def feature_at(rows, signal_minute, dte, names):
 def option_stats(price, spot, strike, years, rate, call):
     """Spot Black-Scholes, decimal IV, daily theta, vega per volatility point.
 
-    Same units and formula as the existing feed's iv_inference helper.
+    IV comes from voltr.market.options; theta keeps PCR's original operation order.
     """
     missing = {"iv": math.nan, "theta": math.nan, "vega": math.nan, "gamma": math.nan}
     if min(price, spot, strike, years) <= 0:
         return missing
-    cdf = lambda x: .5 * (1 + math.erf(x / math.sqrt(2)))
-    discounted = strike * math.exp(-rate * years)
-    lower = max(0, spot - discounted) if call else max(0, discounted - spot)
-    if price < lower - 1e-6 or price > (spot if call else discounted) + 1e-6:
+    sigma = implied_volatility(price, spot, strike, years, rate, call)
+    if not math.isfinite(sigma):
         return missing
-    lo, hi = .0001, 5.
-    for _ in range(80):
-        sigma = (lo + hi) / 2
-        d1 = (math.log(spot / strike) + (rate + .5 * sigma * sigma) * years) / (sigma * math.sqrt(years))
-        d2 = d1 - sigma * math.sqrt(years)
-        value = spot * cdf(d1) - discounted * cdf(d2) if call else discounted * cdf(-d2) - spot * cdf(-d1)
-        if value < price:
-            lo = sigma
-        else:
-            hi = sigma
-    sigma = (lo + hi) / 2
+    cdf = normal_cdf
+    discounted = strike * math.exp(-rate * years)
     d1 = (math.log(spot / strike) + (rate + .5 * sigma * sigma) * years) / (sigma * math.sqrt(years))
     d2 = d1 - sigma * math.sqrt(years)
     pdf = math.exp(-.5 * d1 * d1) / math.sqrt(2 * math.pi)

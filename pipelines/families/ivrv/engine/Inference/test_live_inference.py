@@ -24,7 +24,7 @@ from live.live_inference import (
     required_live_input_features,
     run_historical_inference,
 )
-from live.udp_receiver import NseFoUdpReceiver
+from voltr.feed.udp import NseFoUdpReceiver
 
 
 ROOT = Path(__file__).resolve().parent
@@ -50,13 +50,13 @@ def test_live_config_resolves_local_paths_and_adapter_override(monkeypatch):
     assert config["paper_max_open_positions"] == 3
 
 
-def test_live_runtime_uses_local_udp_receiver(monkeypatch):
+def test_live_runtime_uses_shared_udp_receiver(monkeypatch):
     monkeypatch.setenv("VOLTR_FO_INTERFACE", "10.0.0.12")
     monkeypatch.setenv("VOLTR_CM_INTERFACE", "10.0.0.13")
     config = load_live_config(ROOT / "live" / "live_config.json")
     source = install_source_imports(config)
     assert source["NseFoUdpReceiver"] is NseFoUdpReceiver
-    assert source["NseFoUdpReceiver"].__module__ == "live.udp_receiver"
+    assert source["NseFoUdpReceiver"].__module__ == "voltr.feed.udp"
 
 
 def test_local_udp_receiver_unpacks_uncompressed_sequential_packet():
@@ -514,7 +514,7 @@ def test_rising_rv_signal_opens_long_paper_position(tmp_path, monkeypatch):
 
 def test_machine_local_accepts_only_machine_settings(tmp_path):
     import pytest
-    from live.contract_bootstrap import machine_local_overrides
+    from voltr.core.machine import machine_local_overrides
     config = tmp_path / "live_config.json"
     assert machine_local_overrides(config) == {}
     machine = tmp_path / "machine.local.json"

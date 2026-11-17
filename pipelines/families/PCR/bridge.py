@@ -16,10 +16,11 @@ import sys
 import threading
 import time
 
+from voltr.core.clock import NSE_EPOCH
+
 from .storage import atomic_json, read_text
 
 ROOT = Path(__file__).resolve().parent
-NSE_EPOCH = datetime(1980, 1, 1)
 LOGGER = logging.getLogger("PCR.bridge")
 
 

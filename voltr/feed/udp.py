@@ -1,4 +1,4 @@
-"""NSE multicast receiver and sequential-packet unpacker used by live inference."""
+"""NSE multicast receiver and sequential-packet unpacker."""
 
 from __future__ import annotations
 
@@ -7,10 +7,7 @@ import logging
 import socket
 import struct
 
-try:
-    from .lzo_codec import Lzo1zDecoder, LzoError
-except ImportError:  # Direct execution from the live directory.
-    from lzo_codec import Lzo1zDecoder, LzoError
+from .lzo import Lzo1zDecoder, LzoError
 
 
 LOGGER = logging.getLogger(__name__)

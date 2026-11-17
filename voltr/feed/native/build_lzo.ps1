@@ -4,7 +4,7 @@ $ErrorActionPreference = 'Stop'
 
 $projectRoot = Split-Path -Parent $MyInvocation.MyCommand.Path
 $lzoRoot = Join-Path $projectRoot 'lzo-2.10'
-$nativeDir = Join-Path $projectRoot 'native'
+$nativeDir = $projectRoot
 $outputDll = Join-Path $nativeDir 'lzo2.dll'
 if (-not $Gcc) {
     $command = Get-Command gcc.exe -ErrorAction SilentlyContinue

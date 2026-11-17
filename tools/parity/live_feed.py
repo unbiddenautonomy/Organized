@@ -28,21 +28,20 @@ def load_runtime():
     inference = REPO / "pipelines" / "families" / "ivrv" / "engine" / "Inference"
     sys.path.insert(0, str(inference))
     from live import live_inference as li  # type: ignore
-    from live.lzo_codec import Lzo1zDecoder as FastLzo  # type: ignore
-    from live.udp_receiver import NseFoUdpReceiver  # type: ignore
+    from voltr.feed.lzo import Lzo1zDecoder as FastLzo
+    from voltr.feed.udp import NseFoUdpReceiver
     config_path = inference / "live" / "live_config.json"
     config = li.load_live_config(config_path)
     source = li.install_source_imports(config)
-    import contract_repository  # type: ignore  (standalone, on sys.path after install_source_imports)
-    import lzo_codec as standalone_lzo  # type: ignore
+    from voltr.instruments.master import OptionContract
     return dict(
         config=config,
         source=source,
         engine_type=li.LiveFeatureInference,
         pipeline_type=li.FixedStrikeInferencePipeline,
-        contract_type=contract_repository.OptionContract,
+        contract_type=OptionContract,
         receiver_type=NseFoUdpReceiver,
-        lzo_types={"ivrv": FastLzo, "standalone": standalone_lzo.Lzo1zDecoder},
+        lzo_types={"ivrv": FastLzo},  # step 3 removed the slower standalone copy
         lzo_dll=(inference / "live" / "native" / "lzo2.dll"),
         inference_config=inference / "config.yaml",
     )
@@ -69,7 +68,6 @@ def run(day_folder: Path, out: Path) -> dict:
     tracked = set(contracts) | {day.future_token}
     receivers = {s: rt["receiver_type"](dict(config, receiver_name=s), rt["lzo_types"]["ivrv"](rt["lzo_dll"]))
                  for s in ("fo", "cm")}
-    other_lzo = rt["lzo_types"]["standalone"](rt["lzo_dll"])
     fast_lzo = rt["lzo_types"]["ivrv"](rt["lzo_dll"])
     decoded = hashlib.sha256()
     counts = dict(datagrams=0, messages=0, compressed=0, lzo_mismatch=0, mbp_updates=0)
@@ -78,8 +76,7 @@ def run(day_folder: Path, out: Path) -> dict:
         for packed, payload in compressed:
             counts["compressed"] += 1
             a = fast_lzo.decompress(packed, int(config["max_decompressed_bytes"]))
-            b = other_lzo.decompress(packed, int(config["max_decompressed_bytes"]))
-            if not (a == b == payload):
+            if a != payload:
                 counts["lzo_mismatch"] += 1
         for message in receivers[stream].unpack_datagram(datagram):
             counts["messages"] += 1

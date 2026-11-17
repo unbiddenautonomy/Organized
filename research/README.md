@@ -55,7 +55,7 @@ py -3.13 -m venv .venv-volpred
 
 The VolPred requirements include its LightGBM dependency. Run its tests with
 the **VolPred project as the working directory** and both the project and
-`research/` on `PYTHONPATH`; [the validation report](../setup/VALIDATION_2026-11-09.md)
+`research/` on `PYTHONPATH`; [the validation report](../docs/history/VALIDATION_2026-11-09.md)
 records the passing run.
 
 ## Raw data and derived panels
@@ -87,9 +87,9 @@ original `artifacts/` or `artifacts_fullchain/` subdirectories.
 
 VolPred training also uses derived `outputs/*.parquet` panels and
 `model/regimeUnderstanding/*.parquet` candidate/ledger panels. The root
-[large-file inventory](../LARGE_LOCAL_FILES_2026-11-09.md) lists every input
+[large-file inventory](../docs/history/LARGE_LOCAL_FILES_2026-11-09.md) lists every input
 over 100 MiB by original path; the
-[validation report](../setup/VALIDATION_2026-11-09.md) lists smaller inputs
+[validation report](../docs/history/VALIDATION_2026-11-09.md) lists smaller inputs
 required by the tested training routes. Raw-file rebuilding of every
 historical panel has not yet been verified end to end. Training outputs should
 be written under ignored `runtime/` or VolPred `outputs/`; promote a selected

@@ -9,8 +9,6 @@ trades.  It has no broker/order API.
 from __future__ import annotations
 
 import argparse
-import csv
-import gzip
 import json
 import logging
 from logging.handlers import RotatingFileHandler
@@ -18,7 +16,6 @@ import math
 from collections import deque
 from dataclasses import asdict, dataclass
 from datetime import date, datetime, time, timedelta
-from decimal import Decimal
 from pathlib import Path
 import selectors
 import threading
@@ -30,16 +27,17 @@ import joblib
 import numpy as np
 import pandas as pd
 
-from contract_repository import OptionContract
-from decoder_7208 import DecodeError, MarketUpdate7208, decode_7208
-from iv_inference import _greeks, implied_volatility
-from iv_prediction import SUPPORTED_OI_CODES
-from iv_prediction.oi_decoder import OiDecodeError, decode_oi_message
-from lzo_codec import Lzo1zDecoder, LzoError
-from order_book import BankNiftyOrderBook, OrderBookEntry
+import _repo_path  # noqa: F401  (temporary, until step 10)
+from voltr.feed.lzo import Lzo1zDecoder, LzoError
+from voltr.feed.messages.indices import decode_banknifty_7207
+from voltr.feed.order_book import BankNiftyOrderBook, OrderBookEntry
+from voltr.feed.messages.market_by_price import DecodeError, MarketUpdate7208, decode_7208
+from voltr.feed.messages.open_interest import SUPPORTED_OI_CODES, OiDecodeError, decode_oi_message
+from voltr.feed.udp import NseFoUdpReceiver, PacketError
+from voltr.core.clock import NSE_EPOCH
+from voltr.instruments.master import OptionContract, load_monthly_contracts
+from voltr.market.options import implied_volatility
 from portable_config import load_source_config
-from spot_inference import NSE_EPOCH, decode_banknifty_7207
-from udp_receiver import NseFoUdpReceiver, PacketError
 
 
 BASE_DIR = Path(__file__).resolve().parent
@@ -88,75 +86,6 @@ class PaperPosition:
     expected_long_pnl_points: float
     estimated_one_lot_cost: float
     model_probability: float | None
-
-
-def parse_nse_date(value: str) -> date:
-    text = str(value).strip()
-    try:
-        return (NSE_EPOCH + timedelta(seconds=int(float(text)))).date()
-    except ValueError:
-        return date.fromisoformat(text)
-
-
-def load_monthly_contracts(path: Path, asof: date, price_divisor: float) -> tuple[dict[int, OptionContract], int, date]:
-    """Load the nearest non-expired monthly BANKNIFTY option chain."""
-    if not path.exists():
-        raise FileNotFoundError(path)
-    opener = gzip.open if path.suffix.lower() == ".gz" else open
-    rows: list[dict[str, str]] = []
-    with opener(path, "rt", encoding="utf-8-sig", newline="") as handle:
-        reader = csv.DictReader(handle)
-        required = {"FinInstrmId", "UndrlygFinInstrmId", "FinInstrmNm", "TckrSymb", "XpryDt", "StrkPric", "OptnTp"}
-        missing = required.difference(reader.fieldnames or ())
-        if missing:
-            raise ValueError(f"contract file missing columns: {', '.join(sorted(missing))}")
-        for row in reader:
-            if row.get("DelFlg", "N").strip().upper() == "Y":
-                continue
-            if row.get("TckrSymb", "").strip().upper() != "BANKNIFTY":
-                continue
-            if row.get("FinInstrmNm", "").strip().upper() != "OPTIDX":
-                continue
-            if row.get("OptnTp", "").strip().upper() not in {"CE", "PE"}:
-                continue
-            expiry = parse_nse_date(row["XpryDt"])
-            if expiry >= asof:
-                row["_expiry"] = expiry  # type: ignore[assignment]
-                rows.append(row)
-    if not rows:
-        raise RuntimeError(f"no non-expired BANKNIFTY options in {path}")
-    monthly = {max(r["_expiry"] for r in rows if r["_expiry"].year == year and r["_expiry"].month == month)
-               for year, month in {(r["_expiry"].year, r["_expiry"].month) for r in rows}}
-    expiry = min(value for value in monthly if value >= asof)
-    selected = [row for row in rows if row["_expiry"] == expiry]
-    divisor = Decimal(str(price_divisor))
-    contracts: dict[int, OptionContract] = {}
-    lot_sizes: list[int] = []
-    for row in selected:
-        token = int(float(row["FinInstrmId"]))
-        contracts[token] = OptionContract(
-            token=token,
-            underlying_token=int(float(row.get("UndrlygFinInstrmId", "0") or 0)),
-            instrument_name="OPTIDX",
-            symbol="BANKNIFTY",
-            expiry=expiry,
-            strike_price=Decimal(row.get("StrkPric", "0") or "0") / divisor,
-            option_type=row["OptnTp"].strip().upper(),
-        )
-        raw_lot = row.get("NewBrdLotQty") or row.get("MinLot") or "0"
-        try:
-            lot = int(float(raw_lot))
-            if lot > 0:
-                lot_sizes.append(lot)
-        except ValueError:
-            pass
-    sides = {contract.option_type for contract in contracts.values()}
-    if sides != {"CE", "PE"}:
-        raise RuntimeError(f"monthly expiry {expiry} is missing a CE or PE side")
-    if not lot_sizes:
-        raise RuntimeError("could not determine BANKNIFTY lot size from contract master")
-    lot_size = max(set(lot_sizes), key=lot_sizes.count)
-    return contracts, lot_size, expiry
 
 
 def best_quote(entry: OrderBookEntry | None) -> Quote | None:
@@ -860,7 +789,7 @@ def main() -> int:
     parser.add_argument("--contract-file", type=Path, help="current FO contract master; otherwise use config contract_file")
     parser.add_argument("--model", type=Path, default=DEFAULT_MODEL)
     parser.add_argument("--hybrid-model", type=Path, default=DEFAULT_HYBRID_MODEL)
-    parser.add_argument("--lzo-dll", type=Path, default=BASE_DIR / "native" / "lzo2.dll")
+    parser.add_argument("--lzo-dll", type=Path, help="default: the shared voltr/feed/native/lzo2.dll")
     parser.add_argument("--logs-dir", type=Path, default=BASE_DIR / "logs" / "rv120")
     parser.add_argument("--dashboard-host", default="127.0.0.1")
     parser.add_argument("--dashboard-port", type=int, default=8770)
@@ -904,8 +833,8 @@ def main() -> int:
     cm_config = dict(config, receiver_name="NSE CM indices",
                      multicast_ip=config["cm_multicast_ip"], port=int(config["cm_port"]),
                      interface_ip=config.get("cm_interface_ip", config["interface_ip"]))
-    fo_receiver = NseFoUdpReceiver(fo_config, Lzo1zDecoder(args.lzo_dll.resolve()))
-    cm_receiver = NseFoUdpReceiver(cm_config, Lzo1zDecoder(args.lzo_dll.resolve()))
+    fo_receiver = NseFoUdpReceiver(fo_config, Lzo1zDecoder(args.lzo_dll))
+    cm_receiver = NseFoUdpReceiver(cm_config, Lzo1zDecoder(args.lzo_dll))
     fo_receiver.open()
     cm_receiver.open()
     selector = selectors.DefaultSelector()

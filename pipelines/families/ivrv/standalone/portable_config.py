@@ -1,56 +1,20 @@
-"""Resolve checkout-local paths and the selected Windows multicast adapter."""
+"""Standalone-engine settings. Path and adapter helpers now live in voltr.core.machine."""
 
 from __future__ import annotations
 
-import ipaddress
 import json
 import os
 from pathlib import Path
-import subprocess
 
+# Until the pipelines move under the repository root (refactor step 9), make
+# the shared `voltr` package importable when this folder is the entry point.
+import sys as _sys
+from pathlib import Path as _Path
+_REPO = next(p for p in _Path(__file__).resolve().parents if (p / "voltr" / "__init__.py").is_file())
+if str(_REPO) not in _sys.path:
+    _sys.path.insert(0, str(_REPO))
 
-def relative_to_config(value: str | Path, config_path: Path) -> Path:
-    path = Path(value).expanduser()
-    return (path if path.is_absolute() else config_path.resolve().parent / path).resolve()
-
-
-def local_ipv4_adapters() -> list[dict[str, str]]:
-    """Return active, non-loopback Windows adapter IPv4 addresses."""
-    if os.name != "nt":
-        raise RuntimeError("Automatic adapter discovery requires Windows; set an explicit interface IP")
-    script = (
-        "$up = @(Get-NetAdapter | Where-Object Status -eq 'Up' | Select-Object -ExpandProperty ifIndex); "
-        "@(Get-NetIPAddress -AddressFamily IPv4 | "
-        "Where-Object { $up -contains $_.InterfaceIndex -and $_.IPAddress -notmatch '^(127\\.|169\\.254\\.)' } | "
-        "Select-Object InterfaceAlias,IPAddress) | ConvertTo-Json -Compress"
-    )
-    result = subprocess.run(
-        ["powershell.exe", "-NoProfile", "-NonInteractive", "-Command", script],
-        capture_output=True, text=True, timeout=15, check=True,
-    )
-    payload = json.loads(result.stdout.strip() or "[]")
-    rows = payload if isinstance(payload, list) else [payload]
-    return sorted(
-        ({"alias": str(row["InterfaceAlias"]), "ip": str(row["IPAddress"])} for row in rows),
-        key=lambda row: (row["alias"], row["ip"]),
-    )
-
-
-def resolve_interface(value: str | None, *, environment: str) -> str:
-    selected = os.environ.get(environment, value or "auto").strip()
-    try:
-        return str(ipaddress.IPv4Address(selected))
-    except ipaddress.AddressValueError:
-        pass
-    rows = local_ipv4_adapters()
-    matches = rows if selected.lower() == "auto" else [row for row in rows if row["alias"].lower() == selected.lower()]
-    if len(matches) == 1:
-        return matches[0]["ip"]
-    available = ", ".join(f"{row['alias']}={row['ip']}" for row in rows) or "none"
-    raise RuntimeError(
-        f"Cannot select multicast adapter {selected!r}: {len(matches)} matches; "
-        f"available adapters: {available}. Set {environment} to an adapter alias or IPv4 address."
-    )
+from voltr.core.machine import local_ipv4_adapters, relative_to_config, resolve_interface  # noqa: E402,F401
 
 
 def load_source_config(path: Path) -> dict:

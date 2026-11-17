@@ -17,6 +17,7 @@ import threading
 import time
 from collections import deque
 from weeks43_settings import read_settings, save_settings, write_snapshot, atomic_write_json, SettingsConflict
+from voltr.core.clock import NSE_EPOCH as EPOCH
 
 ROOT=Path(__file__).resolve().parent
 
@@ -25,7 +26,6 @@ def python_executable(cfg):
     if configured in ('', 'auto', None): return sys.executable
     candidate = Path(configured).expanduser()
     return str((candidate if candidate.is_absolute() else ROOT/candidate).resolve())
-EPOCH=datetime(1980,1,1)
 LOG=logging.getLogger('weeks43_bridge')
 
 def read_records(kind,limit=100,run=None,offset=0,signal_id=None):

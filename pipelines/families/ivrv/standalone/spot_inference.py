@@ -11,12 +11,10 @@ from __future__ import annotations
 import json
 import logging
 import math
-import struct
 import warnings
 from collections import deque
 from dataclasses import dataclass
 from datetime import datetime, timedelta
-from decimal import Decimal
 from pathlib import Path
 from typing import TextIO
 from collections.abc import Callable
@@ -26,25 +24,16 @@ import numpy as np
 import pandas as pd
 import psycopg
 
-from contract_repository import OptionContract, is_monthly_expiry, load_front_future
-from decoder_7208 import MarketUpdate7208
-
-
-def _nan_window_stats(block: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
-    """Column-wise NaN-aware mean/std without warnings for empty columns."""
-    valid = np.isfinite(block)
-    count = valid.sum(axis=0)
-    total = np.where(valid, block, 0.0).sum(axis=0)
-    mean = np.full(block.shape[1], np.nan, dtype=np.float64)
-    np.divide(total, count, out=mean, where=count > 0)
-    squared = np.where(valid, (block - mean) ** 2, 0.0).sum(axis=0)
-    variance = np.full(block.shape[1], np.nan, dtype=np.float64)
-    np.divide(squared, count, out=variance, where=count > 0)
-    return mean, np.sqrt(variance)
+import _repo_path  # noqa: F401  (temporary, until step 10)
+from voltr.core.clock import NSE_EPOCH
+from voltr.instruments.master import OptionContract, is_monthly_expiry, load_front_future
+from voltr.market.bars import MinuteBar
+from voltr.market.stats import nan_window_stats as _nan_window_stats
+from voltr.feed.messages.indices import decode_banknifty_7207  # noqa: F401  (re-exported for callers)
+from voltr.feed.messages.market_by_price import MarketUpdate7208
 
 
 LOGGER = logging.getLogger(__name__)
-NSE_EPOCH = datetime(1980, 1, 1)
 BASE_FEATURES = (
     "atm_distance",
     "future_basis",
@@ -67,19 +56,6 @@ HORIZON_MODELS = {
 }
 
 
-@dataclass(slots=True)
-class MinuteBar:
-    open: float
-    high: float
-    low: float
-    close: float
-
-    def update(self, price: float) -> None:
-        self.high = max(self.high, price)
-        self.low = min(self.low, price)
-        self.close = price
-
-
 @dataclass(frozen=True, slots=True)
 class PriceRow:
     minute: int
@@ -96,28 +72,6 @@ class LoadedHorizon:
     target_scale: float
     input_features: tuple[str, ...]
     required_history_minutes: int
-
-
-def decode_banknifty_7207(message: bytes, price_divisor: float = 100.0) -> tuple[int, float] | None:
-    """Return (exchange_log_time, BANKNIFTY spot) from a BCAST_INDICES message."""
-    if len(message) < 42 or struct.unpack_from(">h", message, 10)[0] != 7207:
-        return None
-    log_time = struct.unpack_from(">i", message, 4)[0]
-    record_count = struct.unpack_from(">H", message, 40)[0]
-    # CM index records are packed on 2-byte boundaries: the 21-byte name is
-    # followed by one alignment byte, then the 4-byte index value.
-    record_size = 72
-    if record_count > 6 or len(message) < 42 + record_count * record_size:
-        return None
-    accepted_names = {"BANK NIFTY", "BANKNIFTY", "NIFTY BANK"}
-    for index in range(record_count):
-        offset = 42 + index * record_size
-        name = message[offset : offset + 21].decode("ascii", errors="ignore").strip(" \x00").upper()
-        if name in accepted_names:
-            raw_value = struct.unpack_from(">i", message, offset + 22)[0]
-            if raw_value > 0:
-                return log_time, raw_value / price_divisor
-    return None
 
 
 class SpotPredictionPipeline:

@@ -4,7 +4,7 @@ import sys
 
 from live.feed_fanout import FeedChannel, Fanout, read_json
 
-from live.feed_journal import FeedJournal
+from voltr.feed.journal import FeedJournal
 
 
 def test_minute_history_and_independent_replay(tmp_path):

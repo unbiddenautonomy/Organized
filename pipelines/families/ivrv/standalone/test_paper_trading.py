@@ -2,7 +2,7 @@ import unittest
 
 import numpy as np
 
-from iv_inference import _nan_window_stats
+from voltr.market.stats import nan_window_stats as _nan_window_stats
 from paper_trading.engine import PaperTradingEngine, bep_stress_margin_per_lot, combined_short_mtm
 
 

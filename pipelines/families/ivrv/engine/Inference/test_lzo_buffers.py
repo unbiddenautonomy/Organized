@@ -2,7 +2,7 @@ import ctypes
 import threading
 from concurrent.futures import ThreadPoolExecutor
 import pytest
-from live.lzo_codec import Lzo1zDecoder,LzoError
+from voltr.feed.lzo import Lzo1zDecoder,LzoError
 
 
 def decoder():

@@ -5,7 +5,6 @@ cursor, so a slow worker cannot fill another worker's queue. A fresh worker
 starts at the oldest retained minute and rebuilds its own feature history.
 """
 from pathlib import Path
-import os
 import struct
 import threading
 import time

@@ -87,8 +87,8 @@ feed sockets or dashboard port.
 
 ## Paper engines and independent validation
 
-The [11 November refactor validation](setup/VALIDATION_2026-11-11.md)
-records the checks on this layout. The [9 November validation](setup/VALIDATION_2026-11-09.md)
+The [11 November refactor validation](docs/history/VALIDATION_2026-11-11.md)
+records the checks on this layout. The [9 November validation](docs/history/VALIDATION_2026-11-09.md)
 records the dependency installation, offline tests, historical training and
 replays, temporary external data paths, and remaining blockers for each engine.
 The [research dependency map](setup/DEPENDENCIES_AND_RETRAINING.md) explains
@@ -113,7 +113,7 @@ master and feed access to run live.
 
 ## Historical data and generated dashboards
 
-[The large-file inventory](LARGE_LOCAL_FILES_2026-11-09.md) lists **every one
+[The large-file inventory](docs/history/LARGE_LOCAL_FILES_2026-11-09.md) lists **every one
 of the 528 files over 100 MiB** excluded from Git, with an exact restore path
 and usage. This includes 517 feed journals (84.72 GiB), four 43Weeks ledgers
 (0.65 GiB), four PCR/43Weeks logs (0.55 GiB), and three transfer archives
