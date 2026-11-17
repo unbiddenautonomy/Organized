@@ -1,4 +1,5 @@
 # Archived market data and transfer packages
+*.zip
 /datasets/
 /pipelines/analysis/Data/
 /pipelines/archives/
