@@ -37,10 +37,10 @@ DAYS = {
 # Location-specific: refactor steps update these and nothing else.
 FAMILIES = REPO / "pipelines" / "families"
 SUITES = [
-    ("ivrv", FAMILIES / "ivrv" / "engine" / "Inference", ["."]),
-    ("pcr", FAMILIES / "PCR", ["test_pcr.py"]),
-    ("weeks43", FAMILIES / "weeks43", ["test_completion_audit.py", "test_entry_controls.py", "test_weeks43.py"]),
-    ("standalone", FAMILIES / "ivrv" / "standalone", ["."]),
+    ("ivrv", REPO, ["pipelines/ivrv"]),
+    ("pcr", REPO, ["pipelines/pcr"]),
+    ("weeks43", REPO, ["pipelines/weeks43"]),
+    ("standalone", REPO, ["pipelines/rv120", "pipelines/legacy_spot_iv"]),
     ("voltr", REPO / "tests", ["."]),  # added in step 2; absent from the baseline
 ]
 REPLAY_SCRIPT = REPO / "simulations" / "run_replay_20261102.py"
@@ -254,7 +254,19 @@ def main() -> int:
         a, b = args.against, args.label
     base = json.loads((OUT_ROOT / a / "summary.json").read_text(encoding="utf-8"))
     cur = json.loads((OUT_ROOT / b / "summary.json").read_text(encoding="utf-8"))
+    moved = 0
+    for summary in (base, cur):
+        # Steps may move ignored files on purpose: compare their contents, not their paths.
+        inventory = summary.get("F_inventory")
+        if inventory and "files" in inventory:
+            summary["F_inventory"] = dict(count=inventory["count"], bytes=inventory["bytes"],
+                                          contents=sorted(f["sha256"] for f in inventory["files"].values()),
+                                          paths=sorted(inventory["files"]))
+    if "F_inventory" in base and "F_inventory" in cur:
+        moved = len(set(base["F_inventory"].pop("paths")) ^ set(cur["F_inventory"].pop("paths"))) // 2
     diffs = differences(base, cur)
+    if moved:
+        print(f"note: {moved} ignored files moved with unchanged contents")
     report = OUT_ROOT / b / f"diff_vs_{a}.txt"
     report.write_text("\n".join(diffs) or "IDENTICAL", encoding="utf-8")
     print("IDENTICAL" if not diffs else f"{len(diffs)} differences (see {report}):\n" + "\n".join(diffs[:40]))

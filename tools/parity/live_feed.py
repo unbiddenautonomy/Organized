@@ -25,12 +25,12 @@ import feedgen  # noqa: E402
 
 def load_runtime():
     """Return the production pieces the harness drives (location-specific)."""
-    inference = REPO / "pipelines" / "families" / "ivrv" / "engine" / "Inference"
-    sys.path.insert(0, str(inference))
-    from live import live_inference as li  # type: ignore
+    sys.path.insert(0, str(REPO))
+    inference = REPO / "pipelines" / "ivrv"
+    from pipelines.ivrv import live as li
     from voltr.feed.lzo import Lzo1zDecoder as FastLzo
     from voltr.feed.udp import NseFoUdpReceiver
-    config_path = inference / "live" / "live_config.json"
+    config_path = REPO / "config" / "live_config.json"
     config = li.load_live_config(config_path)
     source = li.install_source_imports(config)
     from voltr.instruments.master import OptionContract
@@ -42,7 +42,7 @@ def load_runtime():
         contract_type=OptionContract,
         receiver_type=NseFoUdpReceiver,
         lzo_types={"ivrv": FastLzo},  # step 3 removed the slower standalone copy
-        lzo_dll=(inference / "live" / "native" / "lzo2.dll"),
+        lzo_dll=(REPO / "voltr" / "feed" / "native" / "lzo2.dll"),
         inference_config=inference / "config.yaml",
     )
 

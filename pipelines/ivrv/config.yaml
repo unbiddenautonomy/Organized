@@ -1,0 +1,49 @@
+models:
+  rv_xgboost: models/fixed_strike_rv_forecast_120m/xgboost.joblib
+
+  combined_direct_lightgbm: models/combined_atm_iv_rv_convergence_v2_120m/combined_direct_lightgbm.joblib
+  combined_error_correction_ridge: models/combined_atm_iv_rv_convergence_v2_120m/combined_error_correction_ridge.joblib
+  combined_monotonic_xgboost: models/combined_atm_iv_rv_convergence_v2_120m/combined_monotonic_xgboost.joblib
+  combined_three_model_ensemble: models/combined_atm_iv_rv_convergence_v2_120m/combined_three_model_ensemble.joblib
+  combined_convergence_classifier: models/combined_atm_iv_rv_convergence_v2_120m/combined_convergence_classifier.joblib
+  combined_quantile_lightgbm: models/combined_atm_iv_rv_convergence_v2_120m/combined_quantile_lightgbm.joblib
+  combined_ngboost: models/combined_atm_iv_rv_convergence_v2_120m/combined_ngboost.joblib
+
+  call_hist_gradient_boosting: models/fixed_atm_strike_iv_legs_60m/call_hist_gradient_boosting.joblib
+  put_hist_gradient_boosting: models/fixed_atm_strike_iv_legs_60m/put_hist_gradient_boosting.joblib
+  call_lightgbm_q10: models/fixed_atm_strike_iv_legs_60m/call_lightgbm_q10.joblib
+  call_lightgbm_q50: models/fixed_atm_strike_iv_legs_60m/call_lightgbm_q50.joblib
+  call_lightgbm_q90: models/fixed_atm_strike_iv_legs_60m/call_lightgbm_q90.joblib
+  put_lightgbm_q10: models/fixed_atm_strike_iv_legs_60m/put_lightgbm_q10.joblib
+  put_lightgbm_q50: models/fixed_atm_strike_iv_legs_60m/put_lightgbm_q50.joblib
+  put_lightgbm_q90: models/fixed_atm_strike_iv_legs_60m/put_lightgbm_q90.joblib
+
+inference:
+  prediction_clip_log_ratio: 2.0
+  convergence_probability_threshold: 0.5
+  strict_feature_contract: true
+  annual_trading_days: 252
+  minutes_per_trading_day: 375
+  horizon_minutes: 120
+
+rv_iv_sharp_decline_signal:
+  model_path: models/rv_decline_event_no120/winner.joblib
+  current_rv_feature: rv_trailing_60m
+  iv_rv_gap_volatility_points: 0.5
+  volatility_points_per_decimal: 100.0
+  profit_target_inr: 1500.0
+  stop_loss_inr: -750.0
+  horizon_minutes: 120
+
+iv_gt_rv_120m_signal:
+  model_path: models/rising_rv_120m/best_model.joblib
+  probability_threshold: 0.5
+
+live_udp:
+  fo_multicast_ip: 233.1.2.5
+  fo_port: 34330
+  cm_multicast_ip: 233.1.2.5
+  cm_port: 8222
+  interface_ip: auto
+  cm_interface_ip: auto
+

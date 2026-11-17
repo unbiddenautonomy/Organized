@@ -6,9 +6,9 @@ param(
 
 $ErrorActionPreference = 'Stop'
 $repo = (Resolve-Path -LiteralPath (Join-Path $PSScriptRoot '..')).Path
-$app = Join-Path $repo 'pipelines\families\ivrv\engine\Inference'
+$app = $repo  # the service runs from the repository root
 $python = Join-Path $repo '.venv\Scripts\python.exe'
-$config = Join-Path $app 'live\live_config.json'
+$config = Join-Path $repo 'config\live_config.json'
 if (-not (Test-Path -LiteralPath $python)) { throw 'Run setup\setup.ps1 first' }
 if (-not $Apply) {
     Write-Host "Planned task: $TaskName at $StartTime daily; Python=$python; working directory=$app"
@@ -22,7 +22,7 @@ if (-not $env:ERP_AUTH_TOKEN) { throw 'ERP_AUTH_TOKEN is missing from this user 
 & $python (Join-Path $repo 'setup\voltr.py') preflight --pipeline ivrv
 if ($LASTEXITCODE -ne 0) { throw 'IVRV preflight failed; task was not registered' }
 
-$action = New-ScheduledTaskAction -Execute $python -Argument ('-m live.live_inference --config "{0}"' -f $config) -WorkingDirectory $app
+$action = New-ScheduledTaskAction -Execute $python -Argument ('-m pipelines.ivrv.live --config "{0}"' -f $config) -WorkingDirectory $app
 $trigger = New-ScheduledTaskTrigger -Daily -At $StartTime
 $principal = New-ScheduledTaskPrincipal -UserId ([System.Security.Principal.WindowsIdentity]::GetCurrent().Name) -LogonType Interactive -RunLevel Limited
 $settings = New-ScheduledTaskSettingsSet -StartWhenAvailable -ExecutionTimeLimit (New-TimeSpan -Hours 10)

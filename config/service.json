@@ -1,0 +1,40 @@
+{
+  "isolate_pipelines": true,
+  "enabled_pipelines": [
+    "ivrv"
+  ],
+  "session_start": "09:00",
+  "session_end": "15:40",
+  "schedule_prepare_seconds": 300,
+  "contract_force_download": true,
+  "contract_retry_seconds": 60,
+  "pipeline_queue_capacity": 50000,
+  "pipeline_reader_queue_capacity": 1024,
+  "pipeline_startup_seconds": 180,
+  "pipeline_stall_seconds": 60,
+  "pipeline_restart_limit": 3,
+  "pipeline_max_backlog_seconds": 10,
+  "feed_journal_retention_minutes": 65,
+  "dashboard_alias_ports": [
+    8792
+  ],
+  "host": "pipelines.ivrv.live",
+  "dashboard_pipeline": "ivrv",
+  "runtime_dir": "pipelines/ivrv/logs/isolated_service",
+  "pipelines": {
+    "ivrv": {
+      "adapter": "pipelines.ivrv.pipeline:IVRVAdapter",
+      "lock": "pipelines/ivrv/logs/ivrv_worker.lock"
+    },
+    "pcr": {
+      "adapter": "pipelines.pcr.pipeline:PCRAdapter",
+      "lock": "pipelines/pcr/logs/worker.lock",
+      "status_file": "pipelines/pcr/bridge_status.json"
+    },
+    "43weeks": {
+      "adapter": "pipelines.weeks43.pipeline:OTMAdapter",
+      "lock": "pipelines/weeks43/runtime/worker.lock",
+      "status_file": "pipelines/weeks43/runtime/bridge_status.json"
+    }
+  }
+}

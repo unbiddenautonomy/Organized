@@ -20,19 +20,18 @@ DATA = ROOT / "datasets" / "banknifty" / "2026-11-02"
 PACK = ROOT / "pipelines"
 OUT = DATA / "inference_replay"
 BASE_OUT = OUT
-FAMILIES = PACK / "families"
-IVROOT = FAMILIES / "ivrv" / "engine" / "Inference"
-sys.path[:0] = [str(ROOT), str(FAMILIES / "ivrv" / "standalone"), str(IVROOT), str(FAMILIES), str(FAMILIES / "weeks43")]
+IVROOT = PACK / "ivrv"
+sys.path.insert(0, str(ROOT))
 
 import pandas as pd
 from voltr.market.options import greeks as _greeks, implied_volatility
-from live.live_inference import (LiveFeatureInference, MinuteBar, NSE_EPOCH,
+from pipelines.ivrv.live import (LiveFeatureInference, MinuteBar, NSE_EPOCH,
                                  paper_entry_route, required_live_input_features)
-from live.position_alert import notify_position_action, notify_signal
-from inference_pipeline import FixedStrikeInferencePipeline
-from PCR.runtime import PCRRuntime, Models as PCRModels, load_config as pcr_load_config
-from weeks43_engine import Ledger, ModelRunner, PaperEngine, second as nse_second, stamp as nse_stamp
-from weeks43_settings import read_settings
+from voltr.web.alerts import notify_position_action, notify_signal
+from pipelines.ivrv.model import FixedStrikeInferencePipeline
+from pipelines.pcr.runtime import PCRRuntime, Models as PCRModels, load_config as pcr_load_config
+from pipelines.weeks43.engine import Ledger, ModelRunner, PaperEngine, second as nse_second, stamp as nse_stamp
+from pipelines.weeks43.settings import read_settings
 
 EXPIRY = date(2026, 11, 23)
 FUTURE_TOKEN = 61466
@@ -359,7 +358,7 @@ def replay_pcr(options, futures, pairs):
     context = dict(mode="recorded_replay", source_mode="recorded_replay", expiry=EXPIRY.isoformat(),
                    future_token=FUTURE_TOKEN, lot_size=LOT_SIZE, pairs={str(k): v for k, v in pairs.items()},
                    risk_free_rate=0.065, cost_rates=FEES, initial_positions=[])
-    runtime = PCRRuntime(context, out, models=PCRModels(FAMILIES / "PCR"), config=config)
+    runtime = PCRRuntime(context, out, models=PCRModels(PACK / "pcr"), config=config)
     for t in sorted(options):
         market = futures.get(t)
         if market is None:
@@ -414,15 +413,15 @@ def otm_row(t, quotes, market):
 
 def replay_43weeks(options, futures):
     out = OUT / "43weeks"
-    config = json.loads((FAMILIES / "weeks43/config.json").read_text())
+    config = json.loads((PACK / "weeks43/config.json").read_text())
     config.update(max_open_positions=MAX_POSITIONS, lots_per_position=1,
                   profit_target_inr=TARGET_INR, stop_loss_inr=STOP_INR,
                   round_trip_slippage_points=0.0, brokerage_per_order_inr=0.0,
                   historical_cost_mode="current_config_rates",
                   **{k: v for k, v in FEES.items() if k in config})
     ledger = Ledger(out, durable=False)
-    engine = PaperEngine(config, ledger, ModelRunner(FAMILIES / "weeks43"),
-                         live=False, entry_settings=read_settings(FAMILIES / "weeks43"))
+    engine = PaperEngine(config, ledger, ModelRunner(PACK / "weeks43"),
+                         live=False, entry_settings=read_settings(PACK / "weeks43"))
     pending_row = None
     for t in sorted(options):
         market = futures.get(t)

@@ -1,0 +1,15 @@
+{
+  "multicast_ip": "233.1.2.5",
+  "port": 34330,
+  "cm_multicast_ip": "233.1.2.5",
+  "cm_port": 8222,
+  "receive_buffer_bytes": 4194304,
+  "max_datagram_bytes": 65535,
+  "max_decompressed_bytes": 65535,
+  "socket_timeout_seconds": 1.0,
+  "replay_rewind_tolerance_minutes": 5,
+  "price_divisor": 100.0,
+  "log_level": "INFO",
+  "log_raw_datagrams": false,
+  "contract_symbol": "BANKNIFTY"
+}

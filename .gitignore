@@ -28,15 +28,9 @@
 **/backtests/replay_*/
 *.sqlite3
 
-# Saved IVRV models loaded by Inference/config.yaml
-!/pipelines/families/ivrv/engine/models/combined_atm_iv_rv_convergence_v2_120m/artifacts/
-!/pipelines/families/ivrv/engine/models/combined_atm_iv_rv_convergence_v2_120m/artifacts/*.joblib
-!/pipelines/families/ivrv/engine/models/fixed_strike_iv_to_rv_convergence_120m/artifacts_rv_improved_full/
-!/pipelines/families/ivrv/engine/models/fixed_strike_iv_to_rv_convergence_120m/artifacts_rv_improved_full/*.joblib
-!/pipelines/families/ivrv/engine/research/fixed_strike_iv_120m/models/predict_fixed_atm_strike_iv_120m/artifacts_inference_60m/
-!/pipelines/families/ivrv/engine/research/fixed_strike_iv_120m/models/predict_fixed_atm_strike_iv_120m/artifacts_inference_60m/*.joblib
 # Local credentials and machine-specific secrets
-/pipelines/families/ivrv/standalone/config.json
+/pipelines/rv120/config.json
+/pipelines/legacy_spot_iv/config.json
 **/machine.local.json
 *.env
 *.env.*

@@ -72,3 +72,18 @@ def machine_local_overrides(live_config: Path) -> dict[str, Any]:
     if unknown:
         raise ValueError(f"{machine} may only override {sorted(MACHINE_LOCAL_KEYS)}; got {sorted(unknown)}")
     return overrides
+
+
+def load_engine_config(path: Path, path_keys: tuple[str, ...]) -> dict[str, Any]:
+    """Load a standalone engine's JSON config: listed paths resolve against the
+    file, and the multicast adapters resolve from VOLTR_FO/CM_INTERFACE or "auto"."""
+    path = path.resolve()
+    config = json.loads(path.read_text(encoding="utf-8"))
+    for key in path_keys:
+        if config.get(key):
+            config[key] = str(relative_to_config(config[key], path))
+    config["interface_ip"] = resolve_interface(config.get("interface_ip"), environment="VOLTR_FO_INTERFACE")
+    config["cm_interface_ip"] = resolve_interface(
+        config.get("cm_interface_ip", config["interface_ip"]), environment="VOLTR_CM_INTERFACE"
+    )
+    return config

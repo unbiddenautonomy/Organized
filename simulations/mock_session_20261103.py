@@ -23,9 +23,8 @@ from urllib.parse import urlparse
 ROOT = Path(__file__).resolve().parents[1]
 DATA_ROOT = ROOT / "datasets" / "banknifty"
 MOCK_OUTPUT_ROOT = ROOT / "runtime" / "mock_sessions"
-IVROOT = ROOT / "pipelines" / "families" / "ivrv" / "engine" / "Inference"
-sys.path.insert(0, str(IVROOT))
-from live import live_inference as live
+sys.path.insert(0, str(ROOT))
+from pipelines.ivrv import live
 
 MOCK_HTML = Path(__file__).with_name("mock_session_dashboard.html")
 
@@ -114,7 +113,7 @@ class MockSession:
                            last_wait_reason=None, paper_trading={}, realized_gross_pnl=0.0,
                            highest_probability=None, entries_taken=0,
                            completed=False, source_resolution="one quote observation per minute")
-        self.config = json.loads((IVROOT / "live" / "live_config.json").read_text(encoding="utf-8"))
+        self.config = json.loads((ROOT / "config" / "live_config.json").read_text(encoding="utf-8"))
         self.config.update(paper_trade_events_log="paper_trade_events.jsonl", paper_position_state="paper_position_state.json")
         os.environ["POSITION_ALERT_DISABLED"] = "1"
         live.BASE_DIR = self.output

@@ -24,10 +24,9 @@ VOLATILE = {"server_time", "csrf_token", "time", "now", "updated_at", "mtime", "
 
 
 def load_runtime():
-    inference = REPO / "pipelines" / "families" / "ivrv" / "engine" / "Inference"
-    sys.path.insert(0, str(inference))
-    from live import live_inference as li  # type: ignore
-    config = li.load_live_config(inference / "live" / "live_config.json")
+    sys.path.insert(0, str(REPO))
+    from pipelines.ivrv import live as li
+    config = li.load_live_config(REPO / "config" / "live_config.json")
     return li, config
 
 
@@ -59,7 +58,7 @@ def main() -> int:
     with socket.socket() as s:
         s.bind(("127.0.0.1", 0))
         port = s.getsockname()[1]
-    server = li.DashboardServer("127.0.0.1", port, li.LIVE_DIR / "live_dashboard.html", li.LogDashboardView(config))
+    server = li.DashboardServer("127.0.0.1", port, li.DASHBOARD_HTML, li.LogDashboardView(config))
     server.start()
     result = {}
     try:

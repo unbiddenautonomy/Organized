@@ -13,12 +13,12 @@ import sys
 
 
 ROOT = Path(__file__).resolve().parents[1]
-FAMILIES = ROOT / "pipelines" / "families"
-APP = FAMILIES / "ivrv" / "engine" / "Inference"
-LIVE = APP / "live"
-SOURCE = FAMILIES / "ivrv" / "standalone"
-PCR = FAMILIES / "PCR"
-WEEKS = FAMILIES / "weeks43"
+APP = ROOT / "pipelines" / "ivrv"
+LIVE = ROOT / "config"
+RV120 = ROOT / "pipelines" / "rv120"
+SOURCE = ROOT / "pipelines" / "legacy_spot_iv"
+PCR = ROOT / "pipelines" / "pcr"
+WEEKS = ROOT / "pipelines" / "weeks43"
 MANIFEST = Path(__file__).with_name("model_manifest.json")
 PIPELINES = ("ivrv", "pcr", "43weeks", "rv120", "legacy-spot-iv")
 if str(ROOT) not in sys.path:
@@ -50,30 +50,31 @@ def configure(args: argparse.Namespace) -> int:
         _save_json(machine_file, machine)
     print(f"machine settings: {machine_file if machine else 'portable defaults'}")
 
-    source_file = SOURCE / "config.json"
-    if source_file.exists():
-        source = json.loads(source_file.read_text(encoding="utf-8"))
-        print(f"preserved local source config: {source_file}")
-    else:
-        source = json.loads((SOURCE / "config.example.json").read_text(encoding="utf-8"))
-        _save_json(source_file, source)
-        print(f"created local source config: {source_file}")
-    if args.legacy_contract_file:
-        source["contract_file"] = str(Path(args.legacy_contract_file).expanduser().resolve())
-        _save_json(source_file, source)
+    for engine in (RV120, SOURCE):
+        source_file = engine / "config.json"
+        if source_file.exists():
+            source = json.loads(source_file.read_text(encoding="utf-8"))
+            print(f"preserved local engine config: {source_file}")
+        else:
+            source = json.loads((engine / "config.example.json").read_text(encoding="utf-8"))
+            _save_json(source_file, source)
+            print(f"created local engine config: {source_file}")
+        if args.legacy_contract_file:
+            source["contract_file"] = str(Path(args.legacy_contract_file).expanduser().resolve())
+            _save_json(source_file, source)
     print("No strategy thresholds or existing credentials were reset.")
     return 0
 
 
 def _model_group(relative: str) -> str | None:
     path = relative.replace("\\", "/")
-    if "/standalone/models/rv120/" in path:
+    if path.startswith("pipelines/rv120/models/"):
         return "rv120"
-    if "/families/PCR/" in path:
+    if path.startswith("pipelines/pcr/"):
         return "pcr"
-    if "/families/weeks43/" in path:
+    if path.startswith("pipelines/weeks43/"):
         return "43weeks"
-    if "/families/ivrv/" in path or "/families/rising_rv/" in path:
+    if path.startswith("pipelines/ivrv/") or path == "voltr/feed/native/lzo2.dll":
         return "ivrv"
     return None
 
@@ -104,15 +105,14 @@ def verify_models(group: str, errors: list[str]) -> int:
 
 
 def _preflight_ivrv(errors: list[str], notes: list[str]) -> None:
-    sys.path.insert(0, str(APP))
-    from live.live_inference import load_live_config
-    from inference_pipeline import FixedStrikeInferencePipeline
+    from pipelines.ivrv.live import load_live_config
+    from pipelines.ivrv.model import FixedStrikeInferencePipeline
     from voltr.feed.lzo import Lzo1zDecoder
 
     config = load_live_config(LIVE / "live_config.json")
     if config["enabled_pipelines"] != ["ivrv"]:
         notes.append(f"enabled scheduled workers: {config['enabled_pipelines']}")
-    for key in ("source_root", "source_config", "inference_config", "lzo_dll"):
+    for key in ("source_config", "inference_config", "lzo_dll"):
         if not Path(config[key]).exists():
             errors.append(f"missing {key}: {config[key]}")
     if not errors:
@@ -128,16 +128,14 @@ def _preflight_ivrv(errors: list[str], notes: list[str]) -> None:
 
 
 def _preflight_pcr(errors: list[str]) -> None:
-    sys.path.insert(0, str(FAMILIES))
-    from PCR.runtime import Models, load_config
+    from pipelines.pcr.runtime import Models, load_config
 
     load_config()
     Models()
 
 
 def _preflight_weeks(errors: list[str]) -> None:
-    sys.path.insert(0, str(WEEKS))
-    from weeks43_engine import ModelRunner
+    from pipelines.weeks43.engine import ModelRunner
 
     config = json.loads((WEEKS / "config.json").read_text(encoding="utf-8"))
     if not config.get("enabled"):
@@ -148,13 +146,13 @@ def _preflight_weeks(errors: list[str]) -> None:
 def _preflight_rv120(errors: list[str], notes: list[str]) -> None:
     import joblib
 
-    folder = SOURCE / "models" / "rv120"
+    folder = RV120 / "models"
     rv = joblib.load(folder / "rv_intraday_120m_model.joblib")
     hybrid = joblib.load(folder / "expanded_hybrid_models.joblib")
     if rv.get("horizon_min") != 120 or hybrid.get("secondary_horizon_min") != 120:
         errors.append("RV/hybrid saved horizon is not 120 minutes")
-    config_file = SOURCE / "config.json"
-    config = json.loads((config_file if config_file.is_file() else SOURCE / "config.example.json").read_text())
+    config_file = RV120 / "config.json"
+    config = json.loads((config_file if config_file.is_file() else RV120 / "config.example.json").read_text())
     if not config.get("contract_file"):
         notes.append("RV/hybrid live start requires a current contract file in local config or --contract-file")
 
@@ -164,8 +162,7 @@ def _preflight_legacy(errors: list[str], notes: list[str]) -> None:
     if not config_file.is_file():
         errors.append("run setup configure to create the ignored older-engine config.json")
         return
-    sys.path.insert(0, str(SOURCE))
-    from portable_config import load_source_config
+    from pipelines.legacy_spot_iv.config import load_source_config
 
     config = load_source_config(config_file)
     for key in ("spot_model_dir", "iv_model_dir", "pnl_model_dir", "hmm_model_dir"):
@@ -209,7 +206,7 @@ def main() -> int:
     setup.add_argument("--cm-interface", help="adapter alias, IP or auto")
     setup.add_argument("--contract-url", help="machine's contract service URL")
     setup.add_argument("--dashboard-port", type=int)
-    setup.add_argument("--legacy-contract-file", help="current FO master for the older standalone engines")
+    setup.add_argument("--legacy-contract-file", help="current FO master for the RV120 and legacy engines")
     check = commands.add_parser("preflight", help="verify local models and configuration without receiving market data")
     check.add_argument("--pipeline", choices=(*PIPELINES, "all"), default="ivrv")
     args = parser.parse_args()
