@@ -18,9 +18,9 @@ The existing `InferencePipeline-PaperTrading` Windows task now starts the indepe
 
 `http://127.0.0.1:8780/firstTwoWeeks`
 
-The updated service was restarted and verified on 2026-10-29 with empty paper books. The configured Windows user must remain signed in. ERP authentication is configured locally; credentials are never copied into model artifacts or logs. Runtime details and rollback instructions are in `../engine/Inference/live/ISOLATED_RUNTIME.md`.
+The updated service was restarted and verified on 2026-10-29 with empty paper books. The configured Windows user must remain signed in. ERP authentication is configured locally; credentials are never copied into model artifacts or logs. Runtime details are in `voltr/service/README.md`.
 
-The old `http://127.0.0.1:8782/firstTwoWeeks` bookmark now redirects to the actual live page on port 8780. The service owns that compatibility listener; do not launch a duplicate preview process. `preview_dashboard.py` is retained only as a redirect helper and does not run inference. Use `/pipelines` for actual worker and contract readiness. The root fixed-strike page distinguishes feature warmup from live predictions.
+The old `http://127.0.0.1:8782/firstTwoWeeks` bookmark now redirects to the actual live page on port 8780. The service owns that compatibility listener; do not launch a duplicate preview process. The old `preview_dashboard.py` redirect helper is in `archive/weeks43/`. Use `/pipelines` for actual worker and contract readiness. The root fixed-strike page distinguishes feature warmup from live predictions.
 
 ## Trading rules
 
@@ -121,9 +121,9 @@ Day counts are source-observed eligible dates, not all NSE trading sessions. A g
 
 ## Integration and rollback
 
-The initial integration used guarded forwarding hooks in `live/live_inference.py`. The subsequent daily-service and dashboard repairs also added independent workers and queues, optimized the LZO decoder, and corrected the root dashboard's status labels and old-port routing. Model artifacts, trading rules, original strategy configuration and ledger paths are preserved. The original runtime's regression tests and focused startup, decoder and dashboard tests were run after the relevant changes.
+The initial integration used guarded forwarding hooks in `pipelines/ivrv/live.py`. The subsequent daily-service and dashboard repairs also added independent workers and queues, optimized the LZO decoder, and corrected the root dashboard's status labels and old-port routing. Model artifacts, trading rules, original strategy configuration and ledger paths are preserved. The original runtime's regression tests and focused startup, decoder and dashboard tests were run after the relevant changes.
 
-Set `enabled` to `false` in this package's `config.json` before the next app start to disable its worker while retaining historical viewing. For a full rollback, restore `archive/weeks43/backups/live_inference.before_43weeks.py` to the original `live/live_inference.py` while the application is stopped. Do not overwrite any later edits to that file without reviewing the diff.
+Set `enabled` to `false` in this package's `config.json` before the next app start to disable its worker while retaining historical viewing. For a full rollback, restore `archive/weeks43/backups/live_inference.before_43weeks.py` to the original `pipelines/ivrv/live.py` while the application is stopped. Do not overwrite any later edits to that file without reviewing the diff.
 
 The worker uses the configured Python 3.13 executable and one model-computation thread at below-normal Windows priority. It does not install or upgrade packages in the existing app environment. `requirements-frozen.txt` records versions used for the new artifacts.
 

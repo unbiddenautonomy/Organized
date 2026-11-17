@@ -26,10 +26,10 @@ branches of work:
   evaluates models; and contains additional strategy research. The
   `rv_prediction_complete.py` and `expanded_signal_hybrid.py` trainers
   produced the model families used by the standalone 120-minute RV/hybrid
-  paper engine in `pipelines/families/ivrv/standalone/`.
+  paper engine in `pipelines/legacy_spot_iv/`.
 - `model/` holds its local model registry and small serialized estimators.
   The active standalone engine already has a separate deployed copy of its
-  two selected models in `standalone/models/rv120/`.
+  two selected models in `pipelines/rv120/models/`.
 - `app/` is another paper-only spot inference/API/dashboard path. It reads an
   updating one-minute spot feed or HTTP source; it is not the scheduled IVRV
   supervisor. `app/trade_puncher.py` emits paper intents using the DTE 4–20
@@ -93,5 +93,5 @@ over 100 MiB by original path; the
 required by the tested training routes. Raw-file rebuilding of every
 historical panel has not yet been verified end to end. Training outputs should
 be written under ignored `runtime/` or VolPred `outputs/`; promote a selected
-model into `pipelines/families/` only after comparing its feature
+model into `pipelines/` only after comparing its feature
 contract and offline/live preflight results.

@@ -1,60 +1,77 @@
-# Portable workspace architecture
+# Architecture
 
-The repository root is resolved from each entry point or its config file. Run
-the commands in the root README from the extracted root; it can be on any drive.
-Generated data, credentials, contracts, logs and local virtual environments are
-ignored. `setup/model_manifest.json` records the deployed model bytes.
+## Layers
 
-| Directory | Role |
-|---|---|
-| `pipelines/families/ivrv/engine/Inference/` | Scheduled IVRV model, paper books, supervisor, feed fanout and live dashboard. `live/service_config.json` enables IVRV alone by default. |
-| `pipelines/families/PCR/`, `pipelines/families/weeks43/` | Optional supervisor workers, their packaged models, historical backtests and dashboards. |
-| `pipelines/families/rising_rv/` | Rising-RV model called by the IVRV family. |
-| `pipelines/families/ivrv/standalone/` | Market decoder, independent 120-minute RV/hybrid engine, and older spot/IV engine. The older engine needs four missing model packages. |
-| `research/v2/`, `research/volpred/` | Trainers, feature builders, tests, separate VolPred spot app and saved research models. Large raw and derived panels remain external. |
-| `simulations/` | Historical three-worker replay, quote repricing and mock dashboard. Outputs go under ignored `runtime/`. |
-| `setup/` | Machine setup, preflight, training input configuration, external-data links and ZIP export. |
+```text
+pipelines/<name>/   strategy code: features it adds, models, entry/exit rules, paper book, dashboard
+        │ imports
+        ▼
+voltr/              shared, strategy-neutral code
+  service/   supervisor ─ worker ─ fanout ─ registry      (the daily process tree)
+  market/    bars, implied volatility, greeks, AtmFeatureStream
+  instruments/  contract master, daily download
+  feed/      UDP receiver, LZO, message decoders, order book, journal
+  core/      clock, machine settings, JSON files, locks
+```
 
-## Data and execution boundaries
+Two rules keep this navigable:
 
-The supervisor takes every market tick from the feed and fans it out to the
-enabled workers. The IVRV model receives a completed one-minute sample; open
-paper positions are marked and stop/target exits are checked as ticks arrive.
-The one-minute mock dashboard is an approximation because its prepared files
-have one observed quote per minute. PCR and 43Weeks are packaged and can be
-enabled deliberately; this branch ships `enabled_pipelines: ["ivrv"]`.
-VolPred's spot app and the 120-minute RV/hybrid engine are independent entry
-points, not supervisor workers. All trade paths here are paper only.
+1. `voltr` never imports a pipeline by name. The one place that names pipelines
+   is `config/service.json`, read by `voltr/service/registry.py`.
+2. A pipeline never imports another pipeline. Anything two pipelines need moves
+   into `voltr`.
 
-Default machine configuration is local and ignored. Setup leaves strategy
-thresholds intact and writes `machine.local.json` only for explicit machine
-settings. Contract downloads and feed access are external services. For
-historical training, keep one raw-data copy on a separate drive and link
-`research/v2/data/` and `research/volpred/data/raw/` to it with
-`setup/link_research_raw.ps1`. The optional feature tables and their restore
-paths are in `setup/DEPENDENCIES_AND_RETRAINING.md`.
+## The daily service
 
-## Adding a strategy
+```text
+Task Scheduler 08:55 → python -m pipelines.ivrv.live --config config/live_config.json
+                        └ isolate_pipelines=true → voltr.service.supervisor.run_service
+UDP FO/CM multicast ──► supervisor (receiver only, no model code)
+                         ├─ FeedJournal: 65-minute raw datagram journal for replay after a restart
+                         └─ Fanout ──► one FeedChannel per enabled pipeline
+                                        └─ python -m voltr.service.worker --name <pipeline>
+                                             decode packets (voltr.feed) → adapter.index / market / oi
+```
 
-1. Put the executable family, selected saved models and its own tests under
-   `pipelines/families/<family>/`. Put feature generation and trainers under
-   `research/`, with generated outputs in ignored directories.
-2. Define the market input, one-minute feature contract, model feature order,
-   paper decision record, and tick-time valuation/exit behavior. Use paths
-   relative to a config or `__file__`; expose external sources as arguments or
-   environment variables.
-3. For a supervisor worker, register its adapter in
-   `pipelines/families/ivrv/engine/Inference/live/pipeline_adapters.py` and
-   worker dispatch in `pipeline_worker.py`. Add it to `service_config.json`
-   only after offline validation. Independent engines keep their own entry
-   point and dashboard.
-4. Add deployed model hashes to `setup/model_manifest.json` and preflight
-   coverage to `setup/voltr.py`. Add training-only inputs to the dependency
-   map and large-file inventory; never commit raw feed journals or credentials.
-5. Run model preflight, family tests, historical backtest/replay, dashboard
-   HTTP checks and a real paper session on the destination machine before
-   scheduling it. A saved model that loads is only the first check.
+* **Schedule.** 09:00–15:40 IST every day; contracts are downloaded first
+  (`voltr.instruments.download`) and each worker gets the same session context.
+* **Isolation.** A worker that crashes, stalls or falls behind is restarted or
+  blocked from new entries on its own; the others keep receiving the feed.
+* **Registry.** `config/service.json` lists every pipeline:
+  `adapter` (`package.module:Class`), `lock` (one owner per ledger) and an optional
+  `status_file` for the pipeline's own dashboard, and optional `web` (dashboard routes served by the
+  main dashboard) and `bridge` (used only by the older single-process session). `enabled_pipelines` chooses which run.
+  `host` names the module that provides the session config loader and the main
+  dashboard (IVRV today); `runtime_dir` is where service status and journals go.
+* **Adapter contract.** `__init__(config, contracts, lot_size, expiry, future_token, source)`,
+  then `index(message)`, `market(update)`, `oi(message)`, `pulse()`, `fault(reason)`,
+  `status() -> dict`, `close()`; optional `recent()`, `note_feed_gap()`,
+  `feed_gap_recovered()`. `source` maps names to the shared decoders and maths
+  (see `pipelines/ivrv/live.py: install_source_imports`).
 
-The structure groups existing code by purpose; it does not auto-discover
-strategies. The four legacy spot/IV packages and expanded-hybrid retraining
-gate remain outstanding, as described in the validation report.
+## Configuration
+
+`config/live_config.json` is loaded by `pipelines.ivrv.config.load_live_config`,
+which layers, in order: `feed.json` → `pipelines/ivrv/config.yaml` (`live_udp`,
+signal horizons) → `live_config.json` → `machine.local.json` (only interface IPs,
+contract URL and dashboard port) → `service.json`. Relative paths resolve against
+the file that names them.
+
+## Pipelines
+
+| Pipeline | Runs as | Data it adds | Paper book | Cost formula |
+|---|---|---|---|---|
+| ivrv | service worker | `AtmFeatureStream` row + lags, 120-minute RV/IV models | fixed-strike short straddles, target/stop/horizon, replacements | statutory, no brokerage (`strategy.current_costs`) |
+| pcr | service worker | per-second batches, PCR features | max 3 positions, target 3000 / stop 1500 | statutory + 2 points slippage (`runtime.costs`) |
+| weeks43 | service worker | own `AtmFeatureStream` + OTM chain | 3/4-week OTM straddles | brokerage + dated historical rates (`features.costs`) |
+| rv120 | own process | quotes and order book | RV/hybrid straddles | Zerodha schedule (`engine.charge_components`) |
+| legacy_spot_iv | own process (not runnable) | spot/IV/PnL models | original paper engine | its own |
+
+The four cost formulas differ on purpose and stay inside their pipelines.
+
+## Behaviour checks
+
+`tools/parity/run.py` replays both prepared days through IVRV, PCR and 43Weeks,
+drives a synthetic NSE feed (real LZO packets) through the live IVRV path,
+runs the model preflight and every dashboard route, and hashes every ignored
+file. A refactor is accepted only when the result matches the baseline.

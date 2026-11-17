@@ -4,12 +4,13 @@ import json
 
 import pytest
 
+from pipelines.ivrv import paths as ivrv_paths
 from pipelines.ivrv import live
 
 
 @pytest.fixture
 def stack(tmp_path, monkeypatch):
-    monkeypatch.setattr(live, 'BASE_DIR', tmp_path)
+    monkeypatch.setattr(ivrv_paths, 'BASE_DIR', tmp_path)
     monkeypatch.setenv('POSITION_ALERT_DISABLED', '1')
     engine = live.LiveFeatureInference.__new__(live.LiveFeatureInference)
     engine.paper_engine = live.PaperTradingEngine({

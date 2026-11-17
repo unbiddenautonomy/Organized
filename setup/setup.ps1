@@ -19,7 +19,7 @@ if (-not (Test-Path -LiteralPath $venvPython)) {
 }
 
 if (-not $SkipPackages) {
-    & $venvPython -m pip install -r (Join-Path $repo 'pipelines\requirements.txt')
+    & $venvPython -m pip install -r (Join-Path $repo 'requirements.txt')
     if ($LASTEXITCODE -ne 0) { throw 'Dependency installation failed' }
 }
 

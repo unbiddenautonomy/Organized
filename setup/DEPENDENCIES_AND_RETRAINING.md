@@ -9,7 +9,7 @@ to Git; their absence does not prevent cloning or offline model preflight.
 
 | Component | Code and saved models in the clone | Python packages |
 |---|---|---|
-| Scheduled IVRV, PCR, 43Weeks and older standalone engines | `pipelines/families/` | Python 3.13 and `pipelines/requirements.txt` in root `.venv` (NumPy 2.5.2, pandas 2.3.3, scikit-learn 1.9.0, SciPy 1.18.1, joblib 1.5.3, LightGBM 4.7.0, XGBoost 3.4.1, DuckDB 1.5.6, NGBoost, PyYAML, matplotlib, statsmodels, psycopg, hmmlearn, pytest). Windows LZO DLL is tracked. |
+| Scheduled IVRV, PCR, 43Weeks and older standalone engines | `pipelines/` | Python 3.13 and `requirements.txt` in root `.venv` (NumPy 2.5.2, pandas 2.3.3, scikit-learn 1.9.0, SciPy 1.18.1, joblib 1.5.3, LightGBM 4.7.0, XGBoost 3.4.1, DuckDB 1.5.6, NGBoost, PyYAML, matplotlib, statsmodels, psycopg, hmmlearn, pytest). Windows LZO DLL is tracked. |
 | IVRV model feature building and retraining | `research/v2/` | Same root `.venv`, plus CatBoost from `research/v2/requirements-training.txt` for fixed-strike call/put-IV training. |
 | VolPred RV/hybrid research, separate spot app and DTE paper intents | `research/volpred/` | Separate ignored `.venv-volpred` from `requirements-vol-research.txt`: pandas 3.0.5, NumPy 2.5.2, scikit-learn 1.9.0, SciPy 1.18.1, DuckDB 1.5.6, joblib 1.5.3, LightGBM 4.7.0, matplotlib 3.11.1 and pytest 9.1.1. |
 
@@ -56,7 +56,7 @@ services, or credentials is in Git.
 | Fixed-strike call/put IV | `model_features.csv` 181.9 MiB, `model_targets.csv` 32.8 MiB, and `feature_manifest.json` | `research/v2/research/fixed_strike_iv_120m/models/predict_fixed_atm_strike_iv_120m/train.py`; generated `fixed_iv.yaml`. |
 | VolPred 120-minute RV | `outputs/spot_magnitude_models/spot_magnitude_feature_panel.parquet` 103.5 MiB, `outputs/volatility_specific_models/volatility_feature_extensions.parquet` 52.4 MiB, and `outputs/rv_prediction_models/five_strike_smile_features.parquet` 3.3 MiB | Run `research/volpred/research/rv_prediction_complete.py` from the VolPred root. The source and all eight model outputs were validated in the clone; model hashes matched the originals. |
 | VolPred expanded hybrid | Spot feature panel, historical option exit/ATM panels, model prediction panels, candidate/coverage ledgers, and the raw full chain; exact paths below | `research/volpred/research/expanded_signal_hybrid.py --output <ignored-dir>`; its current selection gate rejects the rebuilt panel. |
-| 43Weeks 2026 holdout retrain | `banknifty_options_model_input_2026.csv` (73.1 MiB) and `BANKNIFTY_2026.parquet` (156.4 MiB) | Restore to `pipelines/families/weeks43/data/` or set `VOLTR_43W_2026_ENTRY_SOURCE` and `VOLTR_43W_2026_CHAIN_SOURCE`. Seven frozen-model retrain scripts use these defaults. |
+| 43Weeks 2026 holdout retrain | `banknifty_options_model_input_2026.csv` (73.1 MiB) and `BANKNIFTY_2026.parquet` (156.4 MiB) | Restore to `pipelines/weeks43/data/` or set `VOLTR_43W_2026_ENTRY_SOURCE` and `VOLTR_43W_2026_CHAIN_SOURCE`. Seven frozen-model retrain scripts use these defaults. |
 
 For the expanded-hybrid retrain, restore these excluded files under
 `research/volpred/` (or regenerate them from the raw data using the
@@ -118,15 +118,15 @@ Run `setup/validate_research.ps1` after installation and before retraining.
 
 ## Missing assets and model promotion
 
-The older `standalone/main.py` engine still lacks four complete model
+The legacy `pipelines/legacy_spot_iv/main.py` engine still lacks four complete model
 packages (`legacy_spot_iv/spot`, `iv`, `pnl`, `hmm`). They were absent on this
 PC; their last-known paths and restore locations are in
-[`legacy_spot_iv/README.md`](<../pipelines/families/ivrv/standalone/models/legacy_spot_iv/README.md>).
+[`legacy_spot_iv/README.md`](<../pipelines/legacy_spot_iv/models/README.md>).
 Its contracts can come from a current FO master or configured PostgreSQL.
 
 Training outputs should remain under ignored `runtime/` or VolPred `outputs/`.
 After retraining, inspect metrics and feature contracts, compare the selected
 artifact with the deployed model, and rerun `setup/voltr.py preflight` and a
 historical paper replay before deliberately promoting a model into
-`pipelines/families/`. The source import and validation runs did not
+`pipelines/`. The source import and validation runs did not
 change the deployed model bytes or live paper behavior.

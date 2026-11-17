@@ -1,11 +1,12 @@
 from datetime import date, datetime
 
+from pipelines.ivrv import paths as ivrv_paths
 from pipelines.ivrv import live as live_inference
 from voltr.web import alerts as position_alert
 
 
 def test_ivrv_open_and_close_each_alert_once(tmp_path, monkeypatch):
-    monkeypatch.setattr(live_inference, 'BASE_DIR', tmp_path)
+    monkeypatch.setattr(ivrv_paths, 'BASE_DIR', tmp_path)
     alerts=[]
     monkeypatch.setattr(position_alert, 'notify_position_action', lambda: alerts.append('action'))
     engine=live_inference.PaperTradingEngine({

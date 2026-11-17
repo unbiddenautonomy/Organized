@@ -20,7 +20,7 @@ def main():
         raw_path = ROOT / raw_path
     if not raw_path.is_file():
         raise FileNotFoundError(f"Historical raw option cache unavailable: {raw_path}")
-    sys.path.insert(0, str(ROOT / "research"))
+    sys.path.insert(0, str(ROOT.parents[1] / "research" / "pcr"))  # the PCR trainers
     import run_target_3000_stop_1500_max3 as runner
     runner.INPUT = ROOT / "reference"
     runner.OUTPUT = args.output

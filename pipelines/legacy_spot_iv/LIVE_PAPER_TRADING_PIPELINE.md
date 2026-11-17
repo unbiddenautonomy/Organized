@@ -5,7 +5,7 @@ This document describes the live, paper-only trading code under
 
 1. the default multi-horizon spot/IV/P&L engine started by `main.py`; and
 2. the separate 120-minute expanded-hybrid worker started by
-   `banknifty_120m_live_inference.py`.
+   `../rv120/engine.py (pipelines/rv120)`.
 
 Neither worker contains a broker API. Entries and exits are simulated from the
 NSE market-by-price feed and written to append-only JSONL files.
@@ -319,7 +319,7 @@ live selector thread.
 
 ## 2. Separate 120-minute expanded-hybrid worker
 
-`banknifty_120m_live_inference.py` is independent of `main.py` and the default
+`../rv120/engine.py (pipelines/rv120)` is independent of `main.py` and the default
 paper engine. It has its own dashboard, logs, position class and entry policy.
 
 ### Contract and feature construction
@@ -439,7 +439,7 @@ The worker dashboard defaults to port 8770 but can be changed with
 
 ## 3. Inference-only fixed-strike stack in `E:\v2`
 
-`E:\v2\Inference\live\live_inference.py` is a third, separate runtime. It
+`E:\v2\Inference\pipelines\ivrv\live.py` is a third, separate runtime. It
 constructs the fixed-strike IV/RV model contracts and publishes predictions to
 its dashboard and JSONL logs, but it explicitly has no position, entry or broker
 integration. Its convergence outputs must not be mistaken for an executed paper
@@ -461,7 +461,7 @@ Configuration is read from `config.json`; another file can be supplied with
 
 ```powershell
 cd 'E:\Models\Live Trades'
-python .\banknifty_120m_live_inference.py `
+python .\../rv120/engine.py (pipelines/rv120) `
   --contract-file 'E:\Models\seqToseq\contracts\NSE_FO_contract_06102026.csv.gz' `
   --preflight
 ```
@@ -470,7 +470,7 @@ python .\banknifty_120m_live_inference.py `
 
 ```powershell
 cd 'E:\Models\Live Trades'
-python .\banknifty_120m_live_inference.py `
+python .\../rv120/engine.py (pipelines/rv120) `
   --contract-file 'E:\Models\seqToseq\contracts\NSE_FO_contract_06102026.csv.gz' `
   --dashboard-port 8870
 ```
@@ -503,7 +503,7 @@ Before a live paper session:
 - `pnl_live_inference.py` — HMM/P&L/MAE stack.
 - `paper_trading/engine.py` — default entry, sizing and exit policy.
 - `live_retraining.py` — shadow residual-training lifecycle.
-- `banknifty_120m_live_inference.py` — separate expanded 120-minute strategy.
+- `../rv120/engine.py (pipelines/rv120)` — separate expanded 120-minute strategy.
 - `rv120_dashboard.html` — 120-minute worker dashboard.
 
 When this document conflicts with executable code or `config.json`, the code and

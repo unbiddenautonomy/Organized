@@ -1,6 +1,6 @@
 # Daily paper service and feed isolation
 
-The normal `live_inference.py --config live/live_config.json` command now uses the independent-process service when `service_config.json` has `isolate_pipelines: true`. Historical CSV/UDP modes and explicit `--preflight` retain their existing paths. Trading configuration, model files and strategy dashboards are unchanged.
+The normal `live_inference.py --config config/live_config.json` command now uses the independent-process service when `config/service.json` has `isolate_pipelines: true`. Historical CSV/UDP modes and explicit `--preflight` retain their existing paths. Trading configuration, model files and strategy dashboards are unchanged.
 
 ## Daily operation
 
@@ -16,7 +16,7 @@ The installed task runs at normal process priority (4); model children run below
 
 ## Credential setup
 
-The configured ERP endpoint requires an `auth-token`. Put the token in the Windows user's **ERP_AUTH_TOKEN** environment variable, or add `contract_auth_token_file` to `service_config.json` pointing to a local UTF-8 token file. Do not put the token in chat, a command argument, a repository, logs or this JSON configuration. The downloader reads the named user environment variable on each attempt, so setting it does not require restarting a waiting service. Token-file contents are read only when downloading and are never saved to a session context.
+The configured ERP endpoint requires an `auth-token`. Put the token in the Windows user's **ERP_AUTH_TOKEN** environment variable, or add `contract_auth_token_file` to `config/service.json` pointing to a local UTF-8 token file. Do not put the token in chat, a command argument, a repository, logs or this JSON configuration. The downloader reads the named user environment variable on each attempt, so setting it does not require restarting a waiting service. Token-file contents are read only when downloading and are never saved to a session context.
 
 At initial deployment on 2026-10-28, this credential was absent. It was configured for the Windows user on 2026-10-29; the production service successfully downloaded and validated the 2026-10-28 contract master on 2026-10-29. No credential value is recorded here. The health page refreshes credential readiness every 30 seconds.
 
@@ -52,4 +52,4 @@ No credentials are copied into worker contexts. A process lock prevents duplicat
 
 `test_isolated_runtime.py` injects queue backpressure, worker failure, startup failure and malformed framing. `test_pipeline_workers.py` loads all three real model packages against an archived contract **fixture**, sends empty synthetic packets without opening market sockets, kills IV/RV, and verifies PCR and 43Weeks continue receiving. These tests write isolated logs and never use an old contract master for live operation.
 
-Set `isolate_pipelines` to `false` in `service_config.json` only while the service is stopped to return to the legacy runtime. The pre-change source, configuration and Windows task definition are under `archive/ivrv/live_backups/before_isolated_scheduler_20261028/` (repository root).
+Set `isolate_pipelines` to `false` in `config/service.json` only while the service is stopped to return to the legacy runtime. The pre-change source, configuration and Windows task definition are under `archive/ivrv/live_backups/before_isolated_scheduler_20261028/` (repository root).

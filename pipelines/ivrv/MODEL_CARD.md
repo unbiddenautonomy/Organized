@@ -10,4 +10,4 @@ The live `ivrv` worker combines three forecasting model families at a fixed BANK
 
 The exact saved feature names and order are in `model_feature_lists.csv`; the live runtime loads the serialized feature lists from each artifact and enforces a strict feature contract. The combined IV, leg IV, and RV models use 151, 143, and 168 features respectively in their active primary forecasts. The supplementary sharp RV decline model is in `../../rv_iv_no120_best_model_package` and has its own model card.
 
-The entry strike and expiry remain fixed for the forecast horizon. The RV artifact needs its saved inverse target transformation and calibration; the leg IV artifacts need their saved log-ratio inverse transformation. `inference_pipeline.py` applies these transforms and combines the predictions.
+The entry strike and expiry remain fixed for the forecast horizon. The RV artifact needs its saved inverse target transformation and calibration; the leg IV artifacts need their saved log-ratio inverse transformation. `model.py` applies these transforms and combines the predictions.

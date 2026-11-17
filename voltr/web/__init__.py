@@ -1,1 +1,1 @@
-"""Shared operator-facing pieces: position and signal sounds."""
+"""Operator-facing pieces shared by pipelines: signal and position sounds (alerts.py, assets/)."""

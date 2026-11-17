@@ -8,6 +8,7 @@ import struct
 from zoneinfo import ZoneInfo
 
 import pandas as pd
+from pipelines.ivrv import paths as ivrv_paths
 from pipelines.ivrv import live as live_inference
 from pipelines.ivrv.live import (
     LAGS,
@@ -210,7 +211,7 @@ def test_scheduled_session_date_overrides_cached_contract_asof(monkeypatch):
 
 
 def test_previous_day_logs_are_archived_and_current_day_logs_are_retained(tmp_path, monkeypatch):
-    monkeypatch.setattr(live_inference, "BASE_DIR", tmp_path)
+    monkeypatch.setattr(ivrv_paths, "BASE_DIR", tmp_path)
     logs = tmp_path / "logs"
     logs.mkdir()
     stale = logs / "live_runtime.log"
@@ -330,7 +331,7 @@ def test_fixed_strike_path_saves_the_entry_atm_without_reselecting_at_exit():
 
 
 def test_paper_engine_allows_overlaps_and_enforces_all_exit_rules(tmp_path, monkeypatch):
-    monkeypatch.setattr(live_inference, "BASE_DIR", tmp_path)
+    monkeypatch.setattr(ivrv_paths, "BASE_DIR", tmp_path)
 
     def exchange_second(value: str) -> int:
         return int((datetime.fromisoformat(value) - live_inference.NSE_EPOCH).total_seconds())
@@ -456,7 +457,7 @@ def test_paper_engine_allows_overlaps_and_enforces_all_exit_rules(tmp_path, monk
 
 
 def test_long_paper_book_uses_opposite_pnl_and_separate_state(tmp_path, monkeypatch):
-    monkeypatch.setattr(live_inference, "BASE_DIR", tmp_path)
+    monkeypatch.setattr(ivrv_paths, "BASE_DIR", tmp_path)
     config = {"paper_trade_events_log": "replay/trades.jsonl",
               "paper_position_state": "replay/state.json"}
     short = PaperTradingEngine(config, 30)
@@ -486,7 +487,7 @@ def test_long_paper_book_uses_opposite_pnl_and_separate_state(tmp_path, monkeypa
 def test_rising_rv_signal_opens_long_paper_position(tmp_path, monkeypatch):
     from types import SimpleNamespace
 
-    monkeypatch.setattr(live_inference, "BASE_DIR", tmp_path)
+    monkeypatch.setattr(ivrv_paths, "BASE_DIR", tmp_path)
     engine = live_inference.LiveFeatureInference.__new__(live_inference.LiveFeatureInference)
     engine.long_paper_engine = PaperTradingEngine({"paper_trade_events_log": "trades.jsonl",
                                                   "paper_position_state": "state.json"}, 30, "LONG_STRADDLE")

@@ -156,7 +156,6 @@ def test_oi_adapter_rejects_later_information():
 def test_existing_routes_and_new_route_are_isolated(monkeypatch):
     app=ROOT.parent/'ivrv'
     from pipelines.ivrv.live import DashboardServer
-    from pipelines.ivrv import live as app_module
     from pipelines.weeks43 import bridge as weeks43_bridge
     monkeypatch.setattr(weeks43_bridge,'launch_backtest',lambda:{'started':True,'run':'test_dispatch_only'})
     calls=[]
@@ -168,7 +167,8 @@ def test_existing_routes_and_new_route_are_isolated(monkeypatch):
             calls.append(parsed.path)
             if parsed.path=='/other-extension': handler._json({'other':True}); return True
             return False
-    monkeypatch.setattr(app_module,'PCR_WEB',OtherExtension)
+    from pipelines.ivrv import extensions
+    monkeypatch.setattr(extensions,'PCR_WEB',OtherExtension)
     view=SimpleNamespace(status=lambda:{'original':True},recent=lambda limit:[])
     server=DashboardServer('127.0.0.1',0,app/'dashboard/live_dashboard.html',view);server.start()
     try:

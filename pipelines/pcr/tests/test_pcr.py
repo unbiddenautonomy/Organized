@@ -98,7 +98,7 @@ def raw_rows():
 
 
 def test_feature_parity_with_training_and_future_poison():
-    sys.path.insert(0, str(ROOT / "research"))
+    sys.path.insert(0, str(ROOT.parents[1] / "research" / "pcr"))  # the PCR trainers
     import train_win_classifier as training
     rows = raw_rows()
     names = list(training.FEATURES) + [f"expiry_week_{i}" for i in range(5)]

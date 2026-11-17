@@ -1,5 +1,10 @@
 # NSE FO UDP 7208 decoder
 
+> **Status (2026-11-17):** this is the legacy spot/IV engine, kept but not runnable (four model
+> packages are missing; see `models/README.md`). The shared feed code it describes now lives in
+> `voltr/feed/`; the 120-minute RV engine is `pipelines/rv120/`. Run from the repository root with
+> `python -m pipelines.legacy_spot_iv.main`.
+
 > This is the original decoder and standalone-engine guide. The `E:\` launch
 > paths below are historical. Use the repository root README and
 > `setup/voltr.py` for this portable checkout; the older spot/IV engine
@@ -95,7 +100,7 @@ training-time median imputers. Each output event records this limitation.
 
 ## Expanded 120-minute hybrid paper inference
 
-`banknifty_120m_live_inference.py` loads the frozen RV artifact and the expanded
+`../rv120/engine.py (pipelines/rv120)` loads the frozen RV artifact and the expanded
 hybrid artifact from `E:\volpred`. It consumes the existing CM/FO multicast
 feeds, selects the nearest monthly expiry, builds five fixed strike pairs, and
 evaluates this causal live hierarchy:
@@ -119,7 +124,7 @@ separately from the offline backtest.
 Preflight:
 
 ```powershell
-python .\banknifty_120m_live_inference.py `
+python .\../rv120/engine.py (pipelines/rv120) `
   --contract-file 'E:\Models\seqToseq\contracts\NSE_FO_contract_06102026.csv.gz' `
   --preflight
 ```
@@ -127,7 +132,7 @@ python .\banknifty_120m_live_inference.py `
 Start the paper worker and dashboard:
 
 ```powershell
-python .\banknifty_120m_live_inference.py `
+python .\../rv120/engine.py (pipelines/rv120) `
   --contract-file 'E:\Models\seqToseq\contracts\NSE_FO_contract_06102026.csv.gz'
 ```
 

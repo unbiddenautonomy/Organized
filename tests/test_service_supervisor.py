@@ -140,7 +140,8 @@ def test_supervisor_starts_other_pipelines_when_one_startup_fails(tmp_path,monke
 def test_log_archive_keeps_unresolved_positions(tmp_path,monkeypatch):
     from pipelines.ivrv import live as app
     import os
-    monkeypatch.setattr(app,'BASE_DIR',tmp_path)
+    from pipelines.ivrv import paths as ivrv_paths
+    monkeypatch.setattr(ivrv_paths,'BASE_DIR',tmp_path)
     path=tmp_path/'logs/paper_position_state.json';path.parent.mkdir()
     path.write_text(json.dumps({'open_positions':[{'position_id':'retained'}]}))
     os.utime(path,(0,0))

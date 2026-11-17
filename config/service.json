@@ -29,12 +29,15 @@
     "pcr": {
       "adapter": "pipelines.pcr.pipeline:PCRAdapter",
       "lock": "pipelines/pcr/logs/worker.lock",
-      "status_file": "pipelines/pcr/bridge_status.json"
+      "status_file": "pipelines/pcr/bridge_status.json",
+      "web": "pipelines.pcr.web",
+      "bridge": "pipelines.pcr.bridge"
     },
     "43weeks": {
       "adapter": "pipelines.weeks43.pipeline:OTMAdapter",
       "lock": "pipelines/weeks43/runtime/worker.lock",
-      "status_file": "pipelines/weeks43/runtime/bridge_status.json"
+      "status_file": "pipelines/weeks43/runtime/bridge_status.json",
+      "web": "pipelines.weeks43.bridge"
     }
   }
 }

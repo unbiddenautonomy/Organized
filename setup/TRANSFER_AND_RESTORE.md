@@ -70,31 +70,31 @@ source payload and may include local credentials. Use the tracked-file
 
 ## Directory layout and files to restore
 
-Do not flatten or rename the extracted `pipelines/families/` tree.
+Do not flatten or rename the extracted `pipelines/` tree.
 The saved models, model metadata, configs, and DLL already sit in their
 expected relative directories. Keep `setup/`, `README.md`, and
 `docs/history/LARGE_LOCAL_FILES_2026-11-09.md` and `research/` at their shipped
 repository-relative locations.
 
 For **fresh IVRV paper inference**, no historical CSV or feed journal is
-needed. The daily FO contract is downloaded to the IVRV
-`Inference/live/contracts/` directory. Supply the contract-service URL,
+needed. The daily FO contract is downloaded to the ignored
+`runtime/contracts/` directory. Supply the contract-service URL,
 `ERP_AUTH_TOKEN`, multicast feed access, and a usable network interface on the
 new machine. The contract master may also be supplied locally for offline
 preflight. The 120-minute RV/hybrid engine needs a current master passed as
-`--contract-file` or set in its ignored `standalone/config.json`.
+`--contract-file` or set in its ignored `pipelines/rv120/config.json`.
 
 For **historical preparation, training, or replay**, restore only the inputs
 for the workflow you intend to run:
 
 | Input absent from Git | Suggested clone-relative path, or use the option shown |
 |---|---|
-| Five-strike CSV (743.3 MiB) | `pipelines/families/weeks43/data/icharts_option_banknifty_monthly_atm_5strikes.csv`; alternatively `VOLTR_43W_ENTRY_SOURCE`. PCR trainer accepts `--source <path>`. |
-| Full option-chain CSV (15,445.2 MiB) | `pipelines/families/weeks43/data/icharts_option_banknifty.csv`; alternatively `VOLTR_43W_FULL_CHAIN_SOURCE`. |
-| PCR raw feature cache (212.9 MiB) | `pipelines/families/PCR/data/all_m1_rows_features_v2.pkl`; alternatively `VOLTR_PCR_RAW_CACHE`. It can be rebuilt from the five-strike CSV. |
-| Rising-RV source CSV (825.9 MiB) | `pipelines/families/rising_rv/data/icharts_option_banknifty_monthly_atm_up_to_5strikes.csv`; alternatively pass `--source <path>` to its `train.py`. |
-| 43Weeks 2026 entry CSV (73.1 MiB) | `pipelines/families/weeks43/data/banknifty_options_model_input_2026.csv`; alternatively set `VOLTR_43W_2026_ENTRY_SOURCE`. |
-| 43Weeks 2026 chain Parquet (156.4 MiB) | `pipelines/families/weeks43/data/BANKNIFTY_2026.parquet`; alternatively set `VOLTR_43W_2026_CHAIN_SOURCE`. |
+| Five-strike CSV (743.3 MiB) | `pipelines/weeks43/data/icharts_option_banknifty_monthly_atm_5strikes.csv`; alternatively `VOLTR_43W_ENTRY_SOURCE`. PCR trainer accepts `--source <path>`. |
+| Full option-chain CSV (15,445.2 MiB) | `pipelines/weeks43/data/icharts_option_banknifty.csv`; alternatively `VOLTR_43W_FULL_CHAIN_SOURCE`. |
+| PCR raw feature cache (212.9 MiB) | `pipelines/pcr/data/all_m1_rows_features_v2.pkl`; alternatively `VOLTR_PCR_RAW_CACHE`. It can be rebuilt from the five-strike CSV. |
+| Rising-RV source CSV (825.9 MiB) | `pipelines/ivrv/models/rising_rv_120m/data/icharts_option_banknifty_monthly_atm_up_to_5strikes.csv`; alternatively pass `--source <path>` to its `train.py`. |
+| 43Weeks 2026 entry CSV (73.1 MiB) | `pipelines/weeks43/data/banknifty_options_model_input_2026.csv`; alternatively set `VOLTR_43W_2026_ENTRY_SOURCE`. |
+| 43Weeks 2026 chain Parquet (156.4 MiB) | `pipelines/weeks43/data/BANKNIFTY_2026.parquet`; alternatively set `VOLTR_43W_2026_CHAIN_SOURCE`. |
 | Dated replay inputs | `datasets/banknifty/YYYY-MM-DD/` if replaying that date, or pass the replay tool's `--data <path>`. |
 
 These `data/`, `datasets/`, and `contracts/` paths are ignored by Git. Large
@@ -104,7 +104,7 @@ paths to avoid duplicating them. The
 paths, sizes, uses, and restore paths for all 528 excluded workspace files
 over 100 MiB, plus sixteen external training/research inputs over 100 MiB. The four
 missing older spot/IV model packages must eventually be restored under
-`pipelines/families/ivrv/standalone/models/legacy_spot_iv/`
+`pipelines/legacy_spot_iv/models/legacy_spot_iv/`
 as `spot/`, `iv/`, `pnl/`, and `hmm/`; see that directory's README.
 
 The V2 and VolPred trainer source is now in `research/v2/` and

@@ -193,7 +193,7 @@ The serialized `.joblib` payloads were also loaded directly to verify container 
 
 ## Implemented stacked inference pipeline
 
-[`inference_pipeline.py`](inference_pipeline.py) loads the saved artifacts without refitting and uses their outputs together. Its model paths and inference constants are declared in [`config.yaml`](config.yaml).
+[`model.py`](model.py) loads the saved artifacts without refitting and uses their outputs together. Its model paths and inference constants are declared in [`config.yaml`](config.yaml).
 
 The pipeline emits:
 
@@ -213,9 +213,9 @@ The pipeline emits:
 ```python
 import pandas as pd
 
-from inference_pipeline import FixedStrikeInferencePipeline
+from pipelines.ivrv.model import FixedStrikeInferencePipeline
 
-pipeline = FixedStrikeInferencePipeline(r"E:\v2\Inference\config.yaml")
+pipeline = FixedStrikeInferencePipeline("pipelines/ivrv/config.yaml")
 
 combined = pd.read_csv("combined_features_for_inference.csv")
 legs = pd.read_csv("call_put_features_for_inference.csv")
@@ -229,7 +229,7 @@ predictions.to_csv("inference_predictions.csv", index=False)
 
 ```powershell
 cd E:\v2\Inference
-py -3.13 inference_pipeline.py `
+py -3.13 model.py `
   --combined-features combined_features_for_inference.csv `
   --leg-features call_put_features_for_inference.csv `
   --rv-features rv_features_for_inference.csv `
@@ -320,7 +320,7 @@ Run the repeatable tests with:
 
 ```powershell
 cd E:\v2\Inference
-py -3.13 -m pytest -q test_inference_pipeline.py
+py -3.13 -m pytest -q test_model.py
 ```
 
 The leakage audit and corrected common-window P&L are documented in
@@ -343,18 +343,18 @@ and the aggregate scenario summary. Regenerate it with
 
 The live runtime is organized under [`live/`](live/):
 
-- [`live/live_inference.py`](live/live_inference.py) aggregates the live feed,
+- [`pipelines/ivrv/live.py`](pipelines/ivrv/live.py) aggregates the live feed,
   constructs the exact saved-model feature contracts, runs all 16 artifacts,
   and serves the dashboard.
-- [`live/live_config.json`](live/live_config.json) contains only inference-side
+- [`config/live_config.json`](../../config/live_config.json) contains only inference-side
   overrides and paths. The multicast addresses, ports, and interface addresses
   used by the receiver are declared in the `live_udp` section of
   [`config.yaml`](config.yaml).
-- [`live/udp_receiver.py`](live/udp_receiver.py) owns the local multicast socket
+- [`voltr/feed/udp.py`](voltr/feed/udp.py) owns the local multicast socket
   and NSE sequential-packet unpacking used by this runtime.
-- [`live/lzo_codec.py`](live/lzo_codec.py) and `live/native/lzo2.dll` provide the
+- [`voltr/feed/lzo.py`](voltr/feed/lzo.py) and `voltr/feed/native/lzo2.dll` provide the
   package-local LZO1Z decompressor.
-- [`live/live_dashboard.html`](live/live_dashboard.html) shows the market
+- [`pipelines/ivrv/dashboard/live_dashboard.html`](pipelines/ivrv/dashboard/live_dashboard.html) shows the market
   snapshot, every `pred_*` output, call/put/combined IV forecasts, convergence
   diagnostics, current zero-brokerage costs, recent predictions, and the
   predicted one-sigma and approximate 90% SPOT boundaries.
@@ -379,14 +379,14 @@ Run a read-only preflight without opening multicast sockets:
 ```powershell
 cd E:\v2\Inference
 $env:ERP_AUTH_TOKEN = Read-Host "ERP auth token"
-py -3.13 live\live_inference.py --preflight
+py -3.13 pipelines\ivrv\live.py --preflight
 ```
 
 Run live inference:
 
 ```powershell
 cd E:\v2\Inference
-py -3.13 live\live_inference.py
+py -3.13 pipelines\ivrv\live.py
 ```
 
 The live command is a persistent weekday scheduler. It prepares the contracts
@@ -394,7 +394,7 @@ and models five minutes before the session, opens the feeds at **09:00**, closes
 them cleanly at **15:40**, and waits for the next weekday, all in
 `Asia/Kolkata`. The times and preparation lead are configured by
 `session_start`, `session_end`, and `schedule_prepare_seconds` in
-[`live/live_config.json`](live/live_config.json). Use `--run-now` only when an
+[`config/live_config.json`](../../config/live_config.json). Use `--run-now` only when an
 unscheduled diagnostic run is required.
 
 Windows Task Scheduler launches this persistent scheduler through the
@@ -417,7 +417,7 @@ dashboard:
 
 ```powershell
 cd E:\v2\Inference
-py -3.13 live\live_inference.py `
+py -3.13 pipelines\ivrv\live.py `
   --historical-replay-port 35001 `
   --historical-date 2026-10-22
 ```
@@ -433,7 +433,7 @@ opening UDP sockets or the dashboard:
 
 ```powershell
 cd E:\v2\Inference
-py -3.13 live\live_inference.py `
+py -3.13 pipelines\ivrv\live.py `
   --historical-data E:\path\to\features.csv `
   --historical-date 2026-10-22
 ```
@@ -446,7 +446,7 @@ across the original three tables, also pass `--historical-leg-data` and
 input file.
 
 Before either command loads contracts, models, or opens UDP sockets,
-[`live/contract_bootstrap.py`](live/contract_bootstrap.py) checks for the prior
+[`voltr/instruments/download.py`](voltr/instruments/download.py) checks for the prior
 NSE business day's `NSE_FO_contract_DDMMYYYY.csv.gz` in `live/contracts`. If it
 is missing or invalid, the runtime downloads it from the configured ERP API,
 validates the gzip and required CSV columns, and checks that usable BANKNIFTY
@@ -466,7 +466,7 @@ It can also be run independently:
 ```powershell
 cd E:\v2\Inference
 $env:ERP_AUTH_TOKEN = Read-Host "ERP auth token"
-py -3.13 live\contract_bootstrap.py
+py -3.13 voltr\instruments\download.py
 ```
 
 Then open `http://127.0.0.1:8780`. The runtime is inference-only and contains
@@ -480,7 +480,7 @@ dashboard reports the precise warmup or missing-feed reason.
 
 ## Rising-RV long-straddle paper route
 
-The model in `families/rising_rv` is loaded as a separate
+The model in `models/rising_rv_120m` is loaded as a separate
 probability signal. It requires mean entry call/put IV above trailing 120-minute
 spot RV, and it scores 19 training features. Its trailing RV uses the training
 model's sample-standard-deviation formula and annualized volatility points.

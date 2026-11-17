@@ -8,7 +8,7 @@ finish if anything in the repo outside runtime/parity changed while it ran.
 
 Checks
   A tests      the four suites, file by file where needed
-  B replay     simulations/run_replay_20261102.py on both prepared days
+  B replay     tools/replay/run_replay_20261102.py on both prepared days
   C livefeed   synthetic NSE packets through the real IVRV live path
   D preflight  setup/voltr.py preflight --pipeline all
   E dashboard  HTTP routes of the IVRV dashboard served from a livefeed run
@@ -25,6 +25,7 @@ import re
 import subprocess
 import sys
 import time
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[2]
@@ -43,7 +44,7 @@ SUITES = [
     ("standalone", REPO, ["pipelines/rv120", "pipelines/legacy_spot_iv"]),
     ("voltr", REPO / "tests", ["."]),  # added in step 2; absent from the baseline
 ]
-REPLAY_SCRIPT = REPO / "simulations" / "run_replay_20261102.py"
+REPLAY_SCRIPT = REPO / "tools" / "replay" / "run_replay_20261102.py"
 PREFLIGHT_SCRIPT = REPO / "setup" / "voltr.py"
 
 # Fields that record when or where a run happened, not what it decided.
@@ -119,27 +120,23 @@ def check_tests(out: Path) -> dict:
     return result
 
 
+def _per_day(out: Path, kind: str, command) -> dict:
+    """Run one subprocess per replay day in parallel; digest what each one wrote."""
+    def one(day):
+        target = out / kind / day
+        run = py(*command(DAYS[day], target))
+        (out / f"{kind}_{day}.txt").write_text(run.stdout[-20000:] + run.stderr[-20000:], encoding="utf-8")
+        return day, ({"error": f"exit {run.returncode}"} if run.returncode else digest_tree(target))
+    with ThreadPoolExecutor(max_workers=len(DAYS)) as pool:
+        return dict(pool.map(one, DAYS))
+
+
 def check_replay(out: Path) -> dict:
-    result = {}
-    for day, folder in DAYS.items():
-        target = out / "replay" / day
-        run = py(REPLAY_SCRIPT, "--data", folder, "--output", target)
-        (out / f"replay_{day}.txt").write_text(run.stdout[-20000:] + run.stderr[-20000:], encoding="utf-8")
-        if run.returncode:
-            result[day] = {"error": f"exit {run.returncode}"}
-            continue
-        result[day] = digest_tree(target)
-    return result
+    return _per_day(out, "replay", lambda folder, target: (REPLAY_SCRIPT, "--data", folder, "--output", target))
 
 
 def check_livefeed(out: Path) -> dict:
-    result = {}
-    for day, folder in DAYS.items():
-        target = out / "livefeed" / day
-        run = py(HERE / "live_feed.py", "--data", folder, "--output", target)
-        (out / f"livefeed_{day}.txt").write_text(run.stdout[-20000:] + run.stderr[-20000:], encoding="utf-8")
-        result[day] = {"error": f"exit {run.returncode}"} if run.returncode else digest_tree(target)
-    return result
+    return _per_day(out, "livefeed", lambda folder, target: (HERE / "live_feed.py", "--data", folder, "--output", target))
 
 
 def check_preflight(out: Path) -> dict:
