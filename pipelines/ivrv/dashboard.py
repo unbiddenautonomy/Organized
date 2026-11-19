@@ -15,6 +15,8 @@ from voltr.market.atm_features import REQUIRED_FEATURE_MINUTES
 from . import paths
 from . import extensions
 from .config import _load_json
+from .demo_positions import DemoPositionLedger
+from .paper_history import closed_paper_positions
 
 LOGGER = logging.getLogger("fixed_strike_live")  # one historic logger name for all IVRV modules
 
@@ -27,6 +29,7 @@ class LogDashboardView:
         self.prediction_path = (
             paths.BASE_DIR / str(config.get("prediction_log", "logs/live_predictions.jsonl"))
         ).resolve()
+        self.demo_state_path = self.prediction_path.with_name(self.prediction_path.stem + "_demo_positions.json")
         self.latest_path = (
             paths.BASE_DIR / str(config.get("latest_prediction", "logs/latest_prediction.json"))
         ).resolve()
@@ -105,6 +108,15 @@ class LogDashboardView:
     def recent(self, limit: int) -> list[dict]:
         return list(self.events)[-limit:]
 
+    def demo_positions(self) -> dict:
+        return DemoPositionLedger(self.demo_state_path, 1).snapshot()
+
+    def demo_csv(self) -> bytes:
+        return DemoPositionLedger(self.demo_state_path, 1).csv_bytes()
+
+    def closed_paper_positions(self) -> dict:
+        return closed_paper_positions(paths.BASE_DIR, self.config)
+
 
 class DashboardServer:
     def __init__(self, host: str, port: int, html_path: Path, engine: Any) -> None:
@@ -123,6 +135,15 @@ class DashboardServer:
                         return
                     if parsed.path in {"/", "/index.html"}:
                         self._send(html_path.read_bytes(), "text/html; charset=utf-8")
+                    elif parsed.path == "/demo-positions":
+                        self._send(paths.DEMO_DASHBOARD_HTML.read_bytes(), "text/html; charset=utf-8")
+                    elif parsed.path == "/api/demo-positions":
+                        self._json(engine.demo_positions())
+                    elif parsed.path == "/api/demo-positions.csv":
+                        filename = f"demo_positions_{datetime.now(MARKET_TIMEZONE):%Y-%m-%d}.csv"
+                        self._send(engine.demo_csv(), "text/csv; charset=utf-8", filename=filename)
+                    elif parsed.path == "/api/paper-closed-positions":
+                        self._json(engine.closed_paper_positions())
                     elif parsed.path == "/firstTwoWeeks" or parsed.path.startswith("/firstTwoWeeks/"):
                         if weeks43_api is None:
                             self._json({"error": "43Weeks extension unavailable"}, 503)
@@ -165,12 +186,15 @@ class DashboardServer:
             def _json(self, value: object, status: int = 200) -> None:
                 self._send(json.dumps(value, allow_nan=False).encode("utf-8"), "application/json", status)
 
-            def _send(self, body: bytes, content_type: str, status: int = 200) -> None:
+            def _send(self, body: bytes, content_type: str, status: int = 200,
+                      filename: str | None = None) -> None:
                 self.send_response(status)
                 self.send_header("Content-Type", content_type)
                 self.send_header("Content-Length", str(len(body)))
                 self.send_header("Cache-Control", "no-store")
                 self.send_header("X-Content-Type-Options", "nosniff")
+                if filename:
+                    self.send_header("Content-Disposition", f'attachment; filename="{filename}"')
                 self.end_headers()
                 self.wfile.write(body)
 

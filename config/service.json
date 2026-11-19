@@ -8,12 +8,13 @@
   "schedule_prepare_seconds": 300,
   "contract_force_download": true,
   "contract_retry_seconds": 60,
-  "pipeline_queue_capacity": 50000,
-  "pipeline_reader_queue_capacity": 1024,
+  "pipeline_queue_capacity": 100000,
+  "pipeline_reader_queue_capacity": 8192,
   "pipeline_startup_seconds": 180,
   "pipeline_stall_seconds": 60,
   "pipeline_restart_limit": 3,
   "pipeline_max_backlog_seconds": 10,
+  "pipeline_feed_silence_seconds": 10,
   "feed_journal_retention_minutes": 65,
   "dashboard_alias_ports": [
     8792

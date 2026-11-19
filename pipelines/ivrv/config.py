@@ -68,7 +68,7 @@ def load_live_config(path: Path) -> dict:
         service=_load_json(service_path)
         allowed={'isolate_pipelines','session_start','session_end','schedule_prepare_seconds','pipeline_queue_capacity',
             'pipeline_reader_queue_capacity','pipeline_stall_seconds','pipeline_startup_seconds','pipeline_restart_limit',
-            'pipeline_max_backlog_seconds','feed_journal_retention_minutes','contract_force_download','contract_retry_seconds','contract_auth_token_file','dashboard_alias_ports','enabled_pipelines',
+            'pipeline_max_backlog_seconds','pipeline_feed_silence_seconds','feed_journal_retention_minutes','contract_force_download','contract_retry_seconds','contract_auth_token_file','dashboard_alias_ports','enabled_pipelines',
             'host','dashboard_pipeline','runtime_dir','pipelines'}
         if set(service)-allowed:raise ValueError('Unknown service configuration keys: '+str(sorted(set(service)-allowed)))
         for key in ('pipeline_queue_capacity','pipeline_reader_queue_capacity'):

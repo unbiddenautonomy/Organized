@@ -5,7 +5,7 @@ for each finished minute, a training-compatible ATM row: IV per leg, greeks,
 quadratic IV surfaces, OI, quality flags, then lagged and realised-volatility
 features. IVRV scores these rows with its models; 43Weeks reads them for its
 ATM diagnostics. Subclasses implement `_finalize_minute` and may override the
-hooks `_mark_paper_position`, `_on_option_tick`, `_on_open_interest`, `_set_wait`.
+hooks `_mark_paper_position`, `_mark_demo_positions`, `_on_option_tick`, `_on_open_interest`, `_set_wait`.
 """
 from __future__ import annotations
 
@@ -98,6 +98,9 @@ class AtmFeatureStream:
     def _mark_paper_position(self, exchange_second: int, **_: Any) -> None:
         """Called on every tick so a paper book can mark positions; no-op here."""
 
+    def _mark_demo_positions(self, exchange_second: int, updated_token: int | None = None) -> None:
+        """Called after `_mark_paper_position` so an observation ledger can mark; no-op here."""
+
     def _on_option_tick(self, token: int, price: float, log_time: int) -> None:
         """Called for each tracked option tick; no-op here."""
 
@@ -130,6 +133,7 @@ class AtmFeatureStream:
         self._add_tick(self.spot_bars, minute, spot)
         self.latest_spot_minute = minute if self.latest_spot_minute is None else max(self.latest_spot_minute, minute)
         self._mark_paper_position(log_time, time_only=True)
+        self._mark_demo_positions(log_time)
         self._finalize_ready_minutes()
 
     def on_market_update(self, update: Any) -> None:
@@ -155,6 +159,7 @@ class AtmFeatureStream:
             self._mark_paper_position(update.log_time, updated_token=update.token)
         else:
             self._mark_paper_position(update.log_time, time_only=True)
+        self._mark_demo_positions(update.log_time, updated_token=update.token)
         self._finalize_ready_minutes()
 
     def on_oi_message(self, message: bytes) -> None:

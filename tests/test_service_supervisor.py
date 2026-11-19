@@ -4,7 +4,9 @@ from types import SimpleNamespace
 from zoneinfo import ZoneInfo
 import io
 import json
+import queue
 import sys
+import threading
 import time
 import pytest
 from voltr.service.fanout import FeedChannel,Fanout,HEADER,read_frame
@@ -40,6 +42,24 @@ def test_frame_handles_partial_reads_and_rejects_truncation():
         def read(self,n=-1):return super().read(min(n,3))
     assert read_frame(Short(raw))==(b'F',19,123.,True,payload)
     with pytest.raises(EOFError):read_frame(io.BytesIO(raw[:-2]))
+
+def test_memory_feed_reports_overflow_once_then_resumes_clean_frames():
+    class Pipe(io.BytesIO):
+        def close(self):pass
+
+    channel=FeedChannel.__new__(FeedChannel)
+    channel.queue=queue.Queue();channel.journal=None;channel.closing=False
+    channel.fault_lock=threading.Lock();channel.fault='FEED_QUEUE_OVERFLOW';channel.fault_generation=1
+    channel.transport_error=None;channel.delivered=0;channel.last_sequence=0
+    channel.process=SimpleNamespace(stdin=Pipe())
+    channel.queue.put((b'F',1,100.,b'first'))
+    channel.queue.put((b'F',2,101.,b'second'))
+    channel.queue.put(None)
+    channel._write()
+    frames=io.BytesIO(channel.process.stdin.getvalue())
+    assert read_frame(frames)==(b'F',1,100.,True,b'first')
+    assert read_frame(frames)==(b'F',2,101.,False,b'second')
+    assert channel.fault is None
 
 def test_daily_9am_includes_weekends_and_rolls_after_close():
     tz=ZoneInfo('Asia/Kolkata')

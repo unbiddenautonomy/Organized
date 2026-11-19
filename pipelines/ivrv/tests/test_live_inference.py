@@ -483,6 +483,38 @@ def test_long_paper_book_uses_opposite_pnl_and_separate_state(tmp_path, monkeypa
     short.close()
     long.close()
 
+def test_paper_position_max_drawdown_survives_restart_and_exit(tmp_path, monkeypatch):
+    monkeypatch.setattr(ivrv_paths, "BASE_DIR", tmp_path)
+    second = int((datetime(2026, 10, 22, 10, 0) - live_inference.NSE_EPOCH).total_seconds())
+    for side in ("SHORT_STRADDLE", "LONG_STRADDLE"):
+        config = {"paper_trade_events_log": f"{side}_events.jsonl",
+                  "paper_position_state": f"{side}_state.json"}
+        engine = PaperTradingEngine(config, 30, side)
+        assert engine.try_enter(
+            exchange_second=second, signal_minute=second // 60,
+            expiry=date(2026, 10, 29), strike=50000.0,
+            call_token=1, put_token=2, call_price=200.0, put_price=200.0,
+            triggered_rules=["test"], entry_route="iv_above_rv_convergence",
+        )
+        position_id = next(iter(engine.positions))
+        sign = 1 if side == "SHORT_STRADDLE" else -1
+        for minute, pnl in enumerate((300.0, -300.0), 1):
+            leg_price = (400.0 - sign * pnl / 30.0) / 2.0
+            assert engine.mark(position_id, second + minute * 60, leg_price, leg_price) is None
+        assert round(engine.snapshot()["open_positions"][0]["max_drawdown_inr"], 2) == -600.0
+        engine.close()
+
+        restored = PaperTradingEngine(config, 30, side)
+        assert round(restored.positions[position_id]["peak_unrealized_pnl_inr"], 2) == 300.0
+        assert round(restored.positions[position_id]["max_drawdown_inr"], 2) == -600.0
+        exit_price = (400.0 - sign * 150.0 / 30.0) / 2.0
+        event = restored.mark(position_id, second + 180, exit_price, exit_price,
+                              force_reason="test_exit")
+        assert round(event["max_drawdown_inr"], 2) == -600.0
+        assert round(json.loads(restored.events_path.read_text().splitlines()[-1])["max_drawdown_inr"], 2) == -600.0
+        restored.close()
+
+
 
 def test_rising_rv_signal_opens_long_paper_position(tmp_path, monkeypatch):
     from types import SimpleNamespace

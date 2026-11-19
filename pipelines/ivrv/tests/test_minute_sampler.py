@@ -47,7 +47,7 @@ def test_sampler_emits_one_snapshot_with_last_spot_option_and_first_future():
 
 
 def test_live_paper_marks_continue_while_minute_model_is_busy(monkeypatch):
-    entered=threading.Event();release=threading.Event();marked=[]
+    entered=threading.Event();release=threading.Event();marked=[];demo_marked=[]
 
     class FakeEngine:
         def __init__(self,*args):
@@ -56,6 +56,7 @@ def test_live_paper_marks_continue_while_minute_model_is_busy(monkeypatch):
         def _finalize_minute(self,minute):
             entered.set();release.wait(5)
         def _mark_paper_position(self,second,**kwargs):marked.append((second,kwargs))
+        def _mark_demo_positions(self,second,**kwargs):demo_marked.append((second,kwargs))
         def status(self):return {}
         def recent(self,limit):return []
         def close(self):pass
@@ -77,6 +78,7 @@ def test_live_paper_marks_continue_while_minute_model_is_busy(monkeypatch):
         assert entered.wait(2)
         adapter.market(SimpleNamespace(token=11,log_time=61,last_traded_price=10.0))
         assert marked[-1]==(61,{'updated_token':11})
+        assert demo_marked[-1]==(61,{'updated_token':11})
         assert adapter.engine.latest_option_ticks[11]==(10.0,61)
     finally:
         release.set();adapter.close()

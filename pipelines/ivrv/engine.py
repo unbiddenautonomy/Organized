@@ -8,6 +8,7 @@ import logging
 import math
 import threading
 from typing import Any, TextIO
+import numpy as np
 import pandas as pd
 from .model import FixedStrikeInferencePipeline
 from voltr.core.clock import NSE_EPOCH
@@ -15,6 +16,8 @@ from voltr.market.atm_features import LAGS, REQUIRED_FEATURE_MINUTES, AtmFeature
 from . import paths
 from .strategy import _json_value, current_costs, paper_entry_route
 from .book import PaperTradingEngine
+from .demo_positions import DemoPositionLedger
+from .paper_history import closed_paper_positions
 
 LOGGER = logging.getLogger("fixed_strike_live")  # one historic logger name for all IVRV modules
 
@@ -98,6 +101,10 @@ class LiveFeatureInference(AtmFeatureStream):
         self.paper_engine = PaperTradingEngine(config, lot_size)
         self.long_paper_engine = PaperTradingEngine(config, lot_size, "LONG_STRADDLE")
         self.long_paper_engine.convergence_probability_threshold = pipeline.config.rising_rv_probability_threshold
+        self.demo_ledger = DemoPositionLedger(
+            self.prediction_path.with_name(self.prediction_path.stem + "_demo_positions.json"), lot_size
+        )
+        self.last_demo_csv_date: str | None = None
 
         self.required_feature_names = required_live_input_features(self.pipeline.artifacts)
 
@@ -217,7 +224,64 @@ class LiveFeatureInference(AtmFeatureStream):
         })
         paper_entry_decision = self._try_open_paper_position(minute, row, prediction)
         long_paper_entry_decision = self._try_open_long_paper_position(minute, row, prediction)
+        self._consider_demo_position(minute, row, prediction, paper_entry_decision,
+                                     self.paper_engine, "SHORT_STRADDLE",
+                                     "pred_convergence_probability_classifier")
+        self._consider_demo_position(minute, row, prediction, long_paper_entry_decision,
+                                     self.long_paper_engine, "LONG_STRADDLE",
+                                     "pred_rising_rv_convergence_probability")
         self._publish(minute, wide, prediction, paper_entry_decision, long_paper_entry_decision)
+
+    def _consider_demo_position(self, minute: int, row: dict, prediction: dict,
+                                paper_decision: dict, paper_engine: PaperTradingEngine,
+                                side: str, probability_field: str) -> None:
+        try:
+            probability = float(prediction.get(probability_field, math.nan))
+            if paper_decision.get("entered") or not math.isfinite(probability) or probability <= paper_engine.convergence_probability_threshold:
+                return
+            strike = float(row["entry_strike"])
+            pair = self.pairs.get(strike)
+            second = self.latest_exchange_second
+            if pair is None or second is None:
+                return
+            prices = self._fresh_paper_prices(pair["CE"], pair["PE"], second)
+            if prices is None:
+                return
+            self.demo_ledger.consider(
+                signal_time=NSE_EPOCH + timedelta(minutes=minute),
+                entry_time=NSE_EPOCH + timedelta(seconds=second),
+                expiry=self.expiry.isoformat(), strike=strike, probability=probability,
+                threshold=paper_engine.convergence_probability_threshold,
+                paper_entered=False, paper_skip_reason=str(paper_decision.get("reason", "")),
+                call_token=pair["CE"], put_token=pair["PE"],
+                call_price=prices[0], put_price=prices[1],
+                target=paper_engine.target, stop=paper_engine.stop, side=side,
+            )
+        except (OSError, ValueError, KeyError, TypeError):
+            LOGGER.exception("Demo position observer failed to record a signal")
+
+    def _mark_demo_positions(self, exchange_second: int, updated_token: int | None = None) -> None:
+        try:
+            stamp = NSE_EPOCH + timedelta(seconds=int(exchange_second))
+            self.demo_ledger.mark(
+                stamp, self.latest_option_ticks, int(exchange_second), updated_token,
+                max_age_seconds=int(self.config.get("paper_price_max_age_seconds", 60)),
+            )
+            if stamp.time() >= time(15, 15) and self.last_demo_csv_date != stamp.date().isoformat():
+                self.demo_ledger.close_session(stamp)
+                self.demo_ledger.save_session_csv(stamp.date().isoformat())
+                self.last_demo_csv_date = stamp.date().isoformat()
+        except (OSError, ValueError, TypeError):
+            LOGGER.exception("Demo position observer failed to mark or export")
+
+    def demo_positions(self) -> dict:
+        return self.demo_ledger.snapshot()
+
+    def demo_csv(self) -> bytes:
+        return self.demo_ledger.csv_bytes()
+
+    def closed_paper_positions(self) -> dict:
+        return closed_paper_positions(paths.BASE_DIR, self.config)
 
     def _fresh_paper_prices(
         self, call_token: int, put_token: int, exchange_second: int, *, enforce_age: bool = True
@@ -657,6 +721,85 @@ class LiveFeatureInference(AtmFeatureStream):
                 + "\n"
             )
 
+    def _probability_analysis(self, inputs: dict[str, Any], prediction: dict[str, Any]) -> dict:
+        """Record exact classifier inputs and per-feature log-odds contributions."""
+        short_payload = self.pipeline.artifacts["combined_convergence_classifier"]
+        short_inputs = dict(inputs)
+        rv_prediction = float(prediction["pred_rv_120m_xgboost"])
+        short_inputs["rv_pred_120m"] = rv_prediction
+        short_inputs["entry_gap_to_rv_pred_combined"] = float(inputs["entry_atm_iv_combined"]) - rv_prediction
+        short_matrix = self.pipeline._matrix(pd.DataFrame([short_inputs]), short_payload)
+
+        spot = float(inputs["spot_price"])
+        call_iv = float(inputs["entry_iv_call"])
+        put_iv = float(inputs["entry_iv_put"])
+        timestamp = pd.to_datetime(inputs["datetime"])
+        long_inputs = {
+            "current_iv": 50.0 * (call_iv + put_iv),
+            "rv_30": inputs.get("rv_sample_30m"),
+            "rv_60": inputs.get("rv_sample_60m"),
+            "iv_skew": 100.0 * (put_iv - call_iv),
+            "spot_price": spot,
+            "strike": inputs["entry_strike"],
+            "moneyness": (spot - float(inputs["entry_strike"])) / spot if spot else math.nan,
+            "days_to_expiry": inputs.get("days_to_expiry"),
+            "minute_of_day": timestamp.hour * 60 + timestamp.minute,
+            "weekday": timestamp.weekday(),
+        }
+        long_payload = self.pipeline.artifacts["iv_gt_rv_rising_120m"]
+        for name in long_payload["features"]:
+            if name not in long_inputs:
+                long_inputs[name] = inputs.get(name)
+        long_matrix = self.pipeline._matrix(pd.DataFrame([long_inputs]), long_payload)
+
+        def explain(payload: dict, matrix: pd.DataFrame, probability: Any,
+                    threshold: float, eligible: bool) -> dict:
+            feature_names = list(payload["features"])
+            values = matrix.iloc[0]
+            result = {
+                "model": "LightGBM classifier",
+                "probability": _json_value(probability),
+                "threshold": threshold,
+                "eligible": eligible,
+                "feature_count": len(feature_names),
+                "features": [{"name": name, "value": _json_value(values[name]),
+                              "contribution_log_odds": None} for name in feature_names],
+                "bias_log_odds": None,
+            }
+            if not eligible:
+                return result
+            contributions = np.asarray(payload["model"].booster_.predict(matrix, pred_contrib=True)).reshape(-1)
+            if len(contributions) != len(feature_names) + 1:
+                raise ValueError("Classifier contribution count differs from feature contract")
+            for feature, contribution in zip(result["features"], contributions[:-1]):
+                feature["contribution_log_odds"] = _json_value(contribution)
+            result["bias_log_odds"] = _json_value(contributions[-1])
+            raw_score = float(contributions.sum())
+            exp_score = math.exp(-abs(raw_score))
+            result["reconstructed_probability"] = (
+                1.0 / (1.0 + exp_score) if raw_score >= 0 else exp_score / (1.0 + exp_score)
+            )
+            return result
+
+        return {
+            "short": explain(short_payload, short_matrix,
+                             prediction.get("pred_convergence_probability_classifier"),
+                             self.paper_engine.convergence_probability_threshold, True),
+            "long": explain(long_payload, long_matrix,
+                            prediction.get("pred_rising_rv_convergence_probability"),
+                            self.pipeline.config.rising_rv_probability_threshold,
+                            bool(prediction.get("pred_rising_rv_eligible", False))),
+            "decision_context": {
+                name: _json_value(prediction.get(name)) for name in (
+                    "pred_convergence_vote_count", "pred_convergence_vote_fraction",
+                    "pred_converged_direct_lightgbm", "pred_converged_leg_hgb_average",
+                    "pred_converged_classifier", "pred_no120_gate_iv_near_or_below_rv",
+                    "pred_no120_event_score", "pred_rising_rv_current_iv_points",
+                    "pred_rising_rv_current_rv_points",
+                )
+            },
+        }
+
     def _publish(
         self,
         minute: int,
@@ -668,6 +811,11 @@ class LiveFeatureInference(AtmFeatureStream):
         stamp = NSE_EPOCH + timedelta(minutes=minute)
         clean_predictions = {name: _json_value(value) for name, value in prediction.items()}
         prediction_fields = {name: value for name, value in clean_predictions.items() if name.startswith("pred_")}
+        try:
+            probability_analysis = self._probability_analysis(inputs, prediction)
+        except Exception:
+            LOGGER.exception("Could not build probability input explanation")
+            probability_analysis = {"error": "probability_inputs_unavailable"}
         spot = float(inputs["spot_price"])
         entry_premium = float(inputs["entry_straddle_price"])
         costs = current_costs(entry_premium, entry_premium, self.lot_size, self.config)
@@ -787,6 +935,7 @@ class LiveFeatureInference(AtmFeatureStream):
             "paper_long_trading": self.long_paper_engine.snapshot(),
             "prediction_count": len(prediction_fields),
             "predictions": prediction_fields,
+            "probability_analysis": probability_analysis,
         }
         encoded = json.dumps(event, ensure_ascii=False, allow_nan=False, separators=(",", ":"))
         self.output.write(encoded + "\n")

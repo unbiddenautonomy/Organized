@@ -35,7 +35,9 @@ class FeedChannel:
         self.name=name;self.queue=queue.Queue(maxsize=capacity)
         self.journal=journal
         self.dropped=0;self.accepted=0;self.delivered=0;self.last_sequence=0
+        self.fault_lock=threading.Lock()
         self.fault='RESTART_AFTER_FEED_INTERRUPTION' if initial_gap else None
+        self.fault_generation=1 if initial_gap else 0
         self.closing=False;self.started=time.time();self.transport_error=None
         self.subscribed=not start_paused;self.subscribed_at=None;self.pre_ready_packets=0
         self.ready=threading.Event()
@@ -62,7 +64,10 @@ class FeedChannel:
             self.dropped+=1;return False
         try:self.queue.put_nowait((kind,sequence,received,datagram));self.accepted+=1;return True
         except queue.Full:
-            self.dropped+=1;self.fault='FEED_QUEUE_OVERFLOW';return False
+            self.dropped+=1
+            with self.fault_lock:
+                self.fault='FEED_QUEUE_OVERFLOW';self.fault_generation+=1
+            return False
 
     def activate(self):
         # Initial subscription starts a fresh history after model loading. It
@@ -88,13 +93,22 @@ class FeedChannel:
                 except queue.Empty:item=(b'H',self.last_sequence,time.time(),b'')
                 if item is None:break
                 kind,seq,received,data=item
-                packet=HEADER.pack(kind,seq,received,bool(self.fault),len(data))+data
+                with self.fault_lock:
+                    generation=self.fault_generation
+                    signal_gap=kind!=b'H' and self.fault is not None
+                packet=HEADER.pack(kind,seq,received,signal_gap,len(data))+data
                 view=memoryview(packet)
                 while view:
                     sent=self.process.stdin.write(view)
                     if not sent:raise BrokenPipeError('Worker stopped reading')
                     view=view[sent:]
-                if kind!=b'H':self.delivered+=1;self.last_sequence=seq
+                if kind!=b'H':
+                    self.delivered+=1;self.last_sequence=seq
+                    # One successful frame reports the gap. A new overflow
+                    # during the pipe write must remain pending.
+                    if signal_gap:
+                        with self.fault_lock:
+                            if self.fault_generation==generation:self.fault=None
         except (OSError,ValueError,RuntimeError) as exc:self.transport_error=type(exc).__name__;self.fault='WORKER_TRANSPORT_FAILED'
         finally:
             try:self.process.stdin.close()

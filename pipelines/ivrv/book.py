@@ -74,6 +74,10 @@ class PaperTradingEngine:
                 elif saved.get("status") == "OPEN" and isinstance(saved.get("active_position"), dict):
                     position = saved["active_position"]
                     self.positions[str(position["position_id"])] = position
+                for position in self.positions.values():
+                    current_pnl = float(position.get("unrealized_pnl_inr", 0.0))
+                    position.setdefault("peak_unrealized_pnl_inr", max(0.0, current_pnl))
+                    position.setdefault("max_drawdown_inr", min(0.0, current_pnl))
                 if isinstance(saved.get("last_event"), dict):
                     self.last_event = saved["last_event"]
                 self.replacement_history_seconds = [int(second) for second in saved.get("replacement_history_seconds", [])]
@@ -172,6 +176,8 @@ class PaperTradingEngine:
             "last_put_price": float(put_price),
             "last_straddle_price": entry_premium,
             "unrealized_pnl_inr": 0.0,
+            "peak_unrealized_pnl_inr": 0.0,
+            "max_drawdown_inr": 0.0,
             "target_inr": self.target,
             "stop_loss_inr": self.stop,
             "maximum_holding_minutes": self.horizon_minutes,
@@ -206,6 +212,8 @@ class PaperTradingEngine:
         exit_premium = float(call_price) + float(put_price)
         direction = -1 if position.get("side", self.side) == "LONG_STRADDLE" else 1
         pnl = (float(position["entry_straddle_price"]) - exit_premium) * self.lot_size * direction
+        peak_pnl = max(float(position.get("peak_unrealized_pnl_inr", 0.0)), pnl)
+        max_drawdown = min(float(position.get("max_drawdown_inr", 0.0)), pnl - peak_pnl)
         elapsed_seconds = int(exchange_second) - int(position["entry_exchange_second"])
         position.update({
             "last_mark_datetime": stamp.isoformat(sep=" "),
@@ -213,8 +221,11 @@ class PaperTradingEngine:
             "last_put_price": float(put_price),
             "last_straddle_price": exit_premium,
             "unrealized_pnl_inr": pnl,
+            "peak_unrealized_pnl_inr": peak_pnl,
+            "max_drawdown_inr": max_drawdown,
             "holding_seconds": elapsed_seconds,
         })
+        self._persist()
 
         reason: str | None = force_reason
         if reason is None and stamp.time() >= self.square_off_time:

@@ -169,6 +169,7 @@ class IVRVAdapter:
                 self.engine.latest_exchange_second=max(self.engine.latest_exchange_second or second,second)
                 self.engine.latest_spot_minute=self.sampler.latest_spot_minute
                 self.engine._mark_paper_position(second,time_only=True)
+                self.engine._mark_demo_positions(second)
             self.sampler.complete()
     def market(self,update):
         second=self.sampler.market(update)
@@ -180,11 +181,20 @@ class IVRVAdapter:
             if update.token in self.engine.contracts:
                 self.engine.latest_option_ticks[update.token]=(float(update.last_traded_price),int(second))
                 self.engine._mark_paper_position(second,updated_token=update.token)
-            else:self.engine._mark_paper_position(second,time_only=True)
+                self.engine._mark_demo_positions(second,updated_token=update.token)
+            else:
+                self.engine._mark_paper_position(second,time_only=True)
+                self.engine._mark_demo_positions(second,updated_token=update.token)
         self.sampler.complete()
     def oi(self,message):self.sampler.oi_message(message)
     def pulse(self):
-        with self.engine.risk_lock:self.engine._mark_paper_position(wall_second(),time_only=True)
+        with self.engine.risk_lock:
+            second=(self.engine.latest_exchange_second if
+                    self.engine.config.get('runtime_mode')=='historical_udp_replay'
+                    else wall_second())
+            if second is None:return
+            self.engine._mark_paper_position(second,time_only=True)
+            self.engine._mark_demo_positions(second)
     def fault(self,reason):
         self.transport_fault=reason;self.engine.entry_block_reason=reason or self.model_fault
     def note_feed_gap(self):

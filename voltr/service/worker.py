@@ -40,6 +40,7 @@ def run(context,name,status_path):
             b'C':source['NseFoUdpReceiver'](config,source['Lzo1zDecoder'](Path(config['lzo_dll'])))}
         tracked=set(contracts)|{future};last_seq=None;processed=0;stale=0;malformed=0;fault=context.get('entry_fault')
         last_status=0.;last_recent=None;processing_delay=0.;last_exchange=None;last_gap_flag=False
+        last_packet_wall=time.time();silence_limit=float(config.get('pipeline_feed_silence_seconds',10))
         def checkpoint(state):
             nonlocal last_recent
             value=dict(pipeline=name,pid=os.getpid(),session_id=context['session_id'],state=state,
@@ -47,13 +48,24 @@ def run(context,name,status_path):
                 malformed_packets=malformed,fault=fault,processing_delay_seconds=processing_delay,
                 contract_file=config['contract_file'],contract_asof_date=config['contract_asof_date'],
                 expiry=str(expiry),lot_size=lot)
+            value['feed_silence_seconds']=max(0.,value['heartbeat']-last_packet_wall)
+            if state=='RUNNING' and value['feed_silence_seconds']>silence_limit:
+                value['state']='DEGRADED';value['fault']=fault or 'FEED_SILENT'
             value['dashboard']=adapter.status()
             if state=='RUNNING' and (value['dashboard'].get('error') or value['dashboard'].get('fault')):
                 value['state']='DEGRADED'
-            atomic_json(status_path,value)
+            try:atomic_json(status_path,value)
+            except PermissionError:
+                # A dashboard or scanner can briefly hold the destination on
+                # Windows. The next heartbeat retries without losing the feed.
+                traceback.print_exc()
             if hasattr(adapter,'recent'):
                 recent=adapter.recent();key=(len(recent),recent[-1].get('exchange_minute') if recent else None)
-                if key!=last_recent:atomic_json(Path(status_path).with_name(name+'_recent.json'),recent);last_recent=key
+                if key!=last_recent:
+                    try:
+                        atomic_json(Path(status_path).with_name(name+'_recent.json'),recent)
+                        last_recent=key
+                    except PermissionError:traceback.print_exc()
         threading.Thread(target=reader,name='private-feed-reader',daemon=True).start()
         checkpoint('READY')
         try:
@@ -63,13 +75,15 @@ def run(context,name,status_path):
                 if item is None:break
                 kind,seq,received,gap,payload=item
                 if kind!=b'H':
+                    silence_gap=time.time()-last_packet_wall>silence_limit
+                    last_packet_wall=time.time()
                     processing_delay=time.time()-received
                     sequence_gap=last_seq is not None and seq!=last_seq+1
-                    if gap or sequence_gap:
+                    if gap or sequence_gap or silence_gap:
                         if fault in (None,'REPLAYING_FEED_NEW_ENTRIES_DISABLED'):
                             fault='FEED_GAP_NEW_ENTRIES_DISABLED'
                             adapter.fault(fault)
-                        if fault=='FEED_GAP_NEW_ENTRIES_DISABLED' and (sequence_gap or not last_gap_flag) and hasattr(adapter,'note_feed_gap'):
+                        if fault=='FEED_GAP_NEW_ENTRIES_DISABLED' and (sequence_gap or silence_gap or not last_gap_flag) and hasattr(adapter,'note_feed_gap'):
                             adapter.note_feed_gap()
                     last_gap_flag=gap
                     last_seq=seq
